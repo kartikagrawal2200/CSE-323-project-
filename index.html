@@ -11,6 +11,9 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://kartikagrawal2200.github.io/CSE-323-project-/">
   <meta property="og:site_name" content="AeroSim Aviation">
+  <script>
+    (function(){var s=localStorage.getItem('aerosim_theme'),p=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',s||(p?'dark':'light'));})();
+  </script>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
 </head>
@@ -25,9 +28,9 @@
   <!-- Main Hero Content -->
   <main id="main-content" class="main-content">
     <div class="hero-section">
-      <div class="badge-pill">Airport Baggage Handling Simulator</div>
-      <h1 class="hero-title">NEVER LOSE TRACK OF YOUR BAGS</h1>
-      <p class="hero-subtitle">
+      <div class="badge-pill" data-i18n="home_badge">Standard IATA Baggage Telemetry Simulation</div>
+      <h1 class="hero-title" data-i18n="home_hero_title">NEVER LOSE TRACK OF YOUR BAGS</h1>
+      <p class="hero-subtitle" data-i18n="home_hero_sub">
         Track your baggage in real-time and stay informed at every step of the journey.
       </p>
 
@@ -61,11 +64,22 @@
               value="LHR-123456"
               required
             >
-            <button type="submit" class="btn-search-action" id="btn-landing-track">
+            <button type="submit" class="btn-search-action" id="btn-landing-track" data-i18n="home_track_btn">
               TRACK
             </button>
           </div>
         </form>
+      </div>
+
+      <!-- Live Operations Ticker -->
+      <div class="live-ops-ticker-bar" role="region" aria-label="Simulated Live Operations Telemetry Feed">
+        <div class="live-ops-badge">
+          <span class="live-ops-pulse-dot" aria-hidden="true"></span>
+          <span data-i18n="home_live_ops">LIVE OPERATIONS</span>
+        </div>
+        <div class="live-ops-ticker-content" id="live-ops-ticker" aria-live="polite">
+          <span class="live-ops-text" id="live-ops-text">Bag DEL-557201 scanned at X-ray sortation – 1 min ago</span>
+        </div>
       </div>
     </div>
 
@@ -520,6 +534,28 @@
         obs.observe(statsSection);
       } else {
         animateCounters();
+      }
+
+      // Live Operations Ticker Rotator
+      const tickerEvents = [
+        "Bag DEL-557201 scanned at X-ray sortation – 1 min ago",
+        "Bag LHR-123456 loaded onto Flight LH247 cargo hold – 2 min ago",
+        "Bag DXB-309481 transferred to Concourse C conveyor – 3 min ago",
+        "Bag JFK-882194 arrived at Terminal 4 carousel belt 2 – 4 min ago",
+        "Bag IDR-100245 optical barcode verified at apron ramp – 5 min ago",
+        "Bag SIN-771920 departing Gate B12 for Tokyo Haneda – just now"
+      ];
+      let tickerIndex = 0;
+      const tickerTextEl = document.getElementById('live-ops-text');
+      if (tickerTextEl) {
+        setInterval(() => {
+          tickerTextEl.style.opacity = '0';
+          setTimeout(() => {
+            tickerIndex = (tickerIndex + 1) % tickerEvents.length;
+            tickerTextEl.textContent = tickerEvents[tickerIndex];
+            tickerTextEl.style.opacity = '1';
+          }, 300);
+        }, 4500);
       }
     });
   </script>

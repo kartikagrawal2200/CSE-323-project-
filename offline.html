@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline - AeroSim Aviation</title>
+  <meta name="description" content="You are currently offline. AeroSim Aviation cached simulation data remains accessible.">
+  <script>
+    (function(){var s=localStorage.getItem('aerosim_theme'),p=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',s||(p?'dark':'light'));})();
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
+  <style>
+    .offline-container {
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--space-8, 2rem) var(--space-4, 1rem);
+    }
+    .offline-icon-circle {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: var(--surface-card, rgba(255, 255, 255, 0.9));
+      border: 2px dashed var(--border-color, #cbd5e1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-6, 1.5rem);
+      color: var(--warning, #d97706);
+      box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+    }
+    .offline-title {
+      font-size: var(--font-3xl, 1.875rem);
+      font-weight: 800;
+      color: var(--navy, #0a192f);
+      margin-bottom: var(--space-3, 0.75rem);
+    }
+    .offline-desc {
+      color: var(--text-secondary, #3b506e);
+      max-width: 480px;
+      margin: 0 auto var(--space-6, 1.5rem) auto;
+      line-height: 1.6;
+    }
+    .offline-actions {
+      display: flex;
+      gap: var(--space-3, 0.75rem);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to content</a>
+  <div class="page-bg bg-terminal"></div>
+  <div class="page-overlay page-overlay-subtle"></div>
+
+  <!-- Shared Header -->
+  <div id="site-header"></div>
+
+  <main id="main-content" class="main-content">
+    <div class="offline-container">
+      <div class="offline-icon-circle" aria-hidden="true">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="1" y1="1" x2="23" y2="23"></line>
+          <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path>
+          <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path>
+          <path d="M10.71 5.05A16 16 0 0 1 22.58 9"></path>
+          <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path>
+          <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+          <line x1="12" y1="20" x2="12.01" y2="20"></line>
+        </svg>
+      </div>
+
+      <span class="badge-pill" style="margin-bottom: 0.75rem;">Offline Mode</span>
+      <h1 class="offline-title">No Internet Connection</h1>
+      <p class="offline-desc">
+        You seem to be disconnected from the internet. AeroSim stores simulated baggage telemetry in your browser, so previously cached pages and your local tracked bags remain available.
+      </p>
+
+      <div class="offline-actions">
+        <button type="button" class="btn-primary-action" onclick="window.location.reload();" style="display: inline-flex; align-items: center; gap: 8px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+          </svg>
+          Retry Connection
+        </button>
+        <a href="my-bags.html" class="btn-secondary-action">
+          Open My Tracked Bags
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <div id="site-footer"></div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -11,6 +11,9 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://kartikagrawal2200.github.io/CSE-323-project-/my-bags.html">
   <meta property="og:site_name" content="AeroSim Aviation">
+  <script>
+    (function(){var s=localStorage.getItem('aerosim_theme'),p=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',s||(p?'dark':'light'));})();
+  </script>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
 </head>
@@ -102,11 +105,15 @@
       </div>
       <h2 style="font-size: 1.3rem; font-weight: 800; color: var(--navy); margin-top: 1rem;">No Baggage Tags Tracked Yet</h2>
       <p style="color: var(--text-secondary); max-width: 420px; margin: 8px auto 20px auto;">
-        You have no registered bags in your active tracking list. Add a tag ID above or select a preset to monitor live progress.
+        You have no registered bags in your active tracking list. Add a tag ID above, search our telemetry network, or load our pre-configured demo fleet.
       </p>
-      <div style="display: flex; gap: 12px; justify-content: center;">
-        <button type="button" class="btn-cta-track" id="btn-seed-my-bags">
-          Load Sample Baggage List
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <a href="track.html" class="btn-primary-action" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          Track a Bag Now
+        </a>
+        <button type="button" class="btn-secondary-action" id="btn-seed-my-bags">
+          Load Sample Bags Fleet
         </button>
       </div>
     </div>

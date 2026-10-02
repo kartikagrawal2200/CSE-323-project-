@@ -67,22 +67,35 @@
   // 3. Session & Auth State Helpers
   // -------------------------------------------------------------
   function getCurrentUser() {
-    return localStorage.getItem('aerosim_user') || sessionStorage.getItem('aerosim_user') || null;
+    try {
+      return localStorage.getItem('aerosim_user') || sessionStorage.getItem('aerosim_user') || null;
+    } catch (e) {
+      console.warn('Storage read error in getCurrentUser:', e);
+      return null;
+    }
   }
 
   function setCurrentUser(username, rememberMe = true) {
-    if (rememberMe) {
-      localStorage.setItem('aerosim_user', username);
-      sessionStorage.removeItem('aerosim_user');
-    } else {
-      sessionStorage.setItem('aerosim_user', username);
-      localStorage.removeItem('aerosim_user');
+    try {
+      if (rememberMe) {
+        localStorage.setItem('aerosim_user', username);
+        sessionStorage.removeItem('aerosim_user');
+      } else {
+        sessionStorage.setItem('aerosim_user', username);
+        localStorage.removeItem('aerosim_user');
+      }
+    } catch (e) {
+      console.warn('Storage write error in setCurrentUser:', e);
     }
   }
 
   function clearCurrentUser() {
-    localStorage.removeItem('aerosim_user');
-    sessionStorage.removeItem('aerosim_user');
+    try {
+      localStorage.removeItem('aerosim_user');
+      sessionStorage.removeItem('aerosim_user');
+    } catch (e) {
+      console.warn('Storage remove error in clearCurrentUser:', e);
+    }
   }
 
   // Auth Guard: protect pages requiring login
@@ -99,6 +112,7 @@
   // Expose global session getters/setters for legacy compatibility
   window.getCurrentUser = getCurrentUser;
   window.setCurrentUser = setCurrentUser;
+  window.clearCurrentUser = clearCurrentUser;
 
   // -------------------------------------------------------------
   // 4. Toast Notifications
@@ -132,96 +146,74 @@
   };
 
   // -------------------------------------------------------------
-  // 5. Custom Modal Component (Confirm Dialogs with Esc & Focus Trap)
+  // 5. Custom Confirm Modal using native <dialog> element
+  //    (meets WCAG, semantic HTML5, and ARIA requirements)
   // -------------------------------------------------------------
   window.showConfirmModal = function ({ title, message, confirmText = 'Confirm', confirmClass = 'btn-primary-action', onConfirm }) {
-    let modal = document.getElementById('aerosim-confirm-modal');
-    if (!modal) {
-      modal = document.createElement('div');
-      modal.id = 'aerosim-confirm-modal';
-      modal.className = 'custom-modal-backdrop';
-      modal.setAttribute('role', 'dialog');
-      modal.setAttribute('aria-modal', 'true');
-      modal.setAttribute('aria-labelledby', 'confirm-modal-title');
-      modal.innerHTML = `
-        <div class="custom-modal-dialog">
-          <div class="custom-modal-header">
-            <h3 class="custom-modal-title" id="confirm-modal-title">Confirm Action</h3>
-            <button type="button" class="btn-modal-close" id="btn-modal-close-x" aria-label="Close modal">&times;</button>
-          </div>
-          <div class="custom-modal-body" id="confirm-modal-body">
-            Are you sure you want to proceed?
-          </div>
-          <div class="custom-modal-actions">
-            <button type="button" class="btn-secondary-action" id="btn-modal-cancel">Cancel</button>
-            <button type="button" class="btn-primary-action" id="btn-modal-confirm">Confirm</button>
-          </div>
-        </div>
-      `;
-      document.body.appendChild(modal);
+    // Create once, reuse
+    let dlg = document.getElementById('aerosim-confirm-dialog');
+    if (!dlg) {
+      dlg = document.createElement('dialog');
+      dlg.id = 'aerosim-confirm-dialog';
+      dlg.className = 'confirm-dialog';
+      dlg.setAttribute('aria-labelledby', 'confirm-dialog-heading');
+      dlg.innerHTML =
+        '<div class="confirm-dialog__inner">' +
+          '<div class="confirm-dialog__header">' +
+            '<h2 class="confirm-dialog__heading" id="confirm-dialog-heading">Confirm Action</h2>' +
+            '<button type="button" class="confirm-dialog__close" id="btn-confirm-dialog-close" aria-label="Close">&times;</button>' +
+          '</div>' +
+          '<p class="confirm-dialog__body" id="confirm-dialog-body">Are you sure you want to proceed?</p>' +
+          '<div class="confirm-dialog__actions">' +
+            '<button type="button" class="btn-secondary-action" id="btn-confirm-dialog-cancel">Cancel</button>' +
+            '<button type="button" class="btn-primary-action" id="btn-confirm-dialog-ok">Confirm</button>' +
+          '</div>' +
+        '</div>';
+      document.body.appendChild(dlg);
     }
 
-    const titleEl = document.getElementById('confirm-modal-title');
-    const bodyEl = document.getElementById('confirm-modal-body');
-    const confirmBtn = document.getElementById('btn-modal-confirm');
-    const cancelBtn = document.getElementById('btn-modal-cancel');
-    const closeX = document.getElementById('btn-modal-close-x');
+    const headingEl = document.getElementById('confirm-dialog-heading');
+    const bodyEl    = document.getElementById('confirm-dialog-body');
+    const okBtn     = document.getElementById('btn-confirm-dialog-ok');
+    const cancelBtn = document.getElementById('btn-confirm-dialog-cancel');
+    const closeBtn  = document.getElementById('btn-confirm-dialog-close');
     const previousActive = document.activeElement;
 
-    if (titleEl) titleEl.textContent = title;
-    if (bodyEl) bodyEl.innerHTML = message;
-    if (confirmBtn) {
-      confirmBtn.textContent = confirmText;
-      confirmBtn.className = confirmClass;
+    if (headingEl) headingEl.textContent = title;
+    if (bodyEl)    bodyEl.innerHTML = message;
+    if (okBtn) {
+      okBtn.textContent = confirmText;
+      okBtn.className = confirmClass;
     }
 
-    modal.classList.add('active');
-    setTimeout(() => {
-      if (confirmBtn) confirmBtn.focus();
-    }, 50);
-
-    function handleModalKeyDown(e) {
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        closeModal();
-      } else if (e.key === 'Tab') {
-        const focusable = [closeX, cancelBtn, confirmBtn].filter(Boolean);
-        if (focusable.length === 0) return;
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
+    function closeDlg() {
+      dlg.close();
+      if (previousActive && typeof previousActive.focus === 'function') previousActive.focus();
     }
 
-    function closeModal() {
-      modal.classList.remove('active');
-      document.removeEventListener('keydown', handleModalKeyDown);
-      confirmBtn.onclick = null;
-      cancelBtn.onclick = null;
-      closeX.onclick = null;
-      modal.onclick = null;
-      if (previousActive && typeof previousActive.focus === 'function') {
-        previousActive.focus();
-      }
-    }
+    // Re-clone buttons to remove stale event listeners
+    const freshOk     = okBtn.cloneNode(true);
+    const freshCancel = cancelBtn.cloneNode(true);
+    const freshClose  = closeBtn.cloneNode(true);
+    okBtn.parentNode.replaceChild(freshOk, okBtn);
+    cancelBtn.parentNode.replaceChild(freshCancel, cancelBtn);
+    closeBtn.parentNode.replaceChild(freshClose, closeBtn);
 
-    document.addEventListener('keydown', handleModalKeyDown);
-
-    confirmBtn.onclick = () => {
-      closeModal();
+    document.getElementById('btn-confirm-dialog-ok').addEventListener('click', function () {
+      closeDlg();
       if (typeof onConfirm === 'function') onConfirm();
-    };
-    cancelBtn.onclick = closeModal;
-    closeX.onclick = closeModal;
-    modal.onclick = (e) => {
-      if (e.target === modal) closeModal();
-    };
+    });
+    document.getElementById('btn-confirm-dialog-cancel').addEventListener('click', closeDlg);
+    document.getElementById('btn-confirm-dialog-close').addEventListener('click', closeDlg);
+
+    // Close on backdrop click (::backdrop)
+    dlg.addEventListener('click', function (e) {
+      if (e.target === dlg) closeDlg();
+    });
+
+    dlg.showModal();
+    const firstBtn = document.getElementById('btn-confirm-dialog-ok');
+    if (firstBtn) setTimeout(function () { firstBtn.focus(); }, 50);
   };
 
   // -------------------------------------------------------------
@@ -351,32 +343,16 @@
   }
 
   // -------------------------------------------------------------
-  // 8. User Dropdown Menu & Logout with Confirmation Modal
+  // 8. initUserDropdown — now handled by layout.js renderAuthHeader().
+  //    This function only updates the visible username text if the
+  //    element still exists (legacy pages that might render it differently).
   // -------------------------------------------------------------
   function initUserDropdown() {
-    const logoutBtn = document.getElementById('nav-logout-btn');
-    if (logoutBtn) {
-      logoutBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.showConfirmModal({
-          title: 'Confirm Logout',
-          message: 'Are you sure you want to log out of your AeroSim session?',
-          confirmText: 'Log Out',
-          confirmClass: 'btn-danger-action',
-          onConfirm: () => {
-            clearCurrentUser();
-            window.showToast('Logged out successfully');
-            setTimeout(() => {
-              window.location.href = 'index.html';
-            }, 500);
-          }
-        });
-      });
-    }
-
+    // Account menu is fully managed by layout.js / renderAuthHeader().
+    // Nothing extra needed here. The logout button is wired in initHeaderEvents().
     const userNameEl = document.getElementById('header-username');
     if (userNameEl) {
-      userNameEl.textContent = getCurrentUser() || 'User2244';
+      userNameEl.textContent = getCurrentUser() || '';
     }
   }
 
@@ -453,6 +429,9 @@
           `;
         }
 
+        // Save to Recent Searches
+        addRecentSearch(rawTag);
+
         if (window.AeroSimData) {
           window.AeroSimData.syncToActiveBagData(foundBag);
         }
@@ -462,6 +441,248 @@
         }, 450);
       });
     });
+
+    // Helper: Add and Render Recent Searches
+    function getRecentSearches() {
+      const saved = window.safeGetJSON ? window.safeGetJSON('aerosim_recent_searches', []) : null;
+      return Array.isArray(saved) ? saved : [];
+    }
+
+    function addRecentSearch(tag) {
+      if (!tag) return;
+      let list = getRecentSearches();
+      list = [tag, ...list.filter(t => t !== tag)].slice(0, 6);
+      if (window.safeSetStorage) {
+        window.safeSetStorage('aerosim_recent_searches', list);
+      }
+      renderRecentSearches();
+    }
+
+    function renderRecentSearches() {
+      const container = document.getElementById('recent-searches-section');
+      const listEl = document.getElementById('recent-searches-list');
+      if (!container || !listEl) return;
+      const list = getRecentSearches();
+      if (list.length === 0) {
+        container.style.display = 'none';
+        return;
+      }
+      container.style.display = 'block';
+      listEl.innerHTML = list.map(tag => `
+        <button type="button" class="recent-chip-btn" data-tag="${tag}">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          ${tag}
+        </button>
+      `).join('');
+
+      listEl.querySelectorAll('.recent-chip-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tag = btn.dataset.tag;
+          const input = document.getElementById('track-tag-input');
+          if (input) {
+            input.value = tag;
+            const form = document.getElementById('track-search-form');
+            if (form) form.dispatchEvent(new Event('submit'));
+          }
+        });
+      });
+    }
+
+    const clearRecentBtn = document.getElementById('btn-clear-recent-searches');
+    if (clearRecentBtn) {
+      clearRecentBtn.addEventListener('click', () => {
+        if (window.safeRemoveStorage) window.safeRemoveStorage('aerosim_recent_searches');
+        renderRecentSearches();
+        if (typeof window.showToast === 'function') {
+          window.showToast('Search history cleared');
+        }
+      });
+    }
+
+    renderRecentSearches();
+
+    // Helper: Autocomplete Suggestions Dropdown
+    const trackInput = document.getElementById('track-tag-input');
+    const autocompleteDropdown = document.getElementById('track-autocomplete-dropdown');
+    if (trackInput && autocompleteDropdown) {
+      trackInput.addEventListener('input', () => {
+        const val = trackInput.value.trim().toUpperCase();
+        if (val.length < 1) {
+          autocompleteDropdown.style.display = 'none';
+          return;
+        }
+
+        const allBags = (window.AeroSimData && window.AeroSimData.SAMPLE_BAGS) ? window.AeroSimData.SAMPLE_BAGS : [];
+        const matches = allBags.filter(b => b.tagId.toUpperCase().includes(val) || (b.originCode + ' ' + b.destCode).includes(val)).slice(0, 5);
+
+        if (matches.length === 0) {
+          autocompleteDropdown.style.display = 'none';
+          return;
+        }
+
+        autocompleteDropdown.innerHTML = matches.map(b => `
+          <div class="autocomplete-item" data-tag="${b.tagId}" role="option">
+            <div>
+              <strong>${b.tagId}</strong>
+              <span class="autocomplete-meta" style="margin-left: 8px;">${b.airline} (${b.flight})</span>
+            </div>
+            <span class="autocomplete-meta">${b.originCode} &rarr; ${b.destCode}</span>
+          </div>
+        `).join('');
+        autocompleteDropdown.style.display = 'block';
+
+        autocompleteDropdown.querySelectorAll('.autocomplete-item').forEach(item => {
+          item.addEventListener('click', () => {
+            trackInput.value = item.dataset.tag;
+            autocompleteDropdown.style.display = 'none';
+            const form = document.getElementById('track-search-form');
+            if (form) form.dispatchEvent(new Event('submit'));
+          });
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!trackInput.contains(e.target) && !autocompleteDropdown.contains(e.target)) {
+          autocompleteDropdown.style.display = 'none';
+        }
+      });
+    }
+
+    // Helper: Compare Mode Tabs & Comparison Engine
+    const tabSingle = document.getElementById('tab-single-track');
+    const tabCompare = document.getElementById('tab-compare-track');
+    const panelSingle = document.getElementById('single-track-panel');
+    const panelCompare = document.getElementById('compare-track-panel');
+
+    if (tabSingle && tabCompare && panelSingle && panelCompare) {
+      tabSingle.addEventListener('click', () => {
+        tabSingle.classList.add('active');
+        tabSingle.setAttribute('aria-selected', 'true');
+        tabCompare.classList.remove('active');
+        tabCompare.setAttribute('aria-selected', 'false');
+        panelSingle.style.display = 'block';
+        panelCompare.style.display = 'none';
+      });
+
+      tabCompare.addEventListener('click', () => {
+        tabCompare.classList.add('active');
+        tabCompare.setAttribute('aria-selected', 'true');
+        tabSingle.classList.remove('active');
+        tabSingle.setAttribute('aria-selected', 'false');
+        panelCompare.style.display = 'block';
+        panelSingle.style.display = 'none';
+      });
+    }
+
+    // Compare Preset Button
+    const comparePresetBtn = document.getElementById('btn-compare-preset');
+    if (comparePresetBtn) {
+      comparePresetBtn.addEventListener('click', () => {
+        const inp1 = document.getElementById('compare-tag-1');
+        const inp2 = document.getElementById('compare-tag-2');
+        if (inp1) inp1.value = 'LHR-123456';
+        if (inp2) inp2.value = 'DXB-309481';
+      });
+    }
+
+    // Compare Form Submit
+    const compareForm = document.getElementById('compare-search-form');
+    const compareResults = document.getElementById('compare-results-container');
+    const compareErr = document.getElementById('compare-error-msg');
+
+    if (compareForm && compareResults) {
+      compareForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const tag1 = (document.getElementById('compare-tag-1').value || '').trim().toUpperCase();
+        const tag2 = (document.getElementById('compare-tag-2').value || '').trim().toUpperCase();
+
+        if (compareErr) compareErr.style.display = 'none';
+
+        const tagRegex = /^[A-Z]{3}-\d{6}$/;
+        if (!tagRegex.test(tag1) || !tagRegex.test(tag2)) {
+          if (compareErr) {
+            compareErr.style.display = 'block';
+            compareErr.textContent = 'Both baggage tags must match the standard format ^[A-Z]{3}-\\d{6}$ (e.g. LHR-123456).';
+          }
+          return;
+        }
+
+        const bag1 = window.AeroSimData ? window.AeroSimData.getBagByTag(tag1) : null;
+        const bag2 = window.AeroSimData ? window.AeroSimData.getBagByTag(tag2) : null;
+
+        if (!bag1 || !bag2) {
+          if (compareErr) {
+            compareErr.style.display = 'block';
+            compareErr.textContent = `Could not locate telemetry for: ${!bag1 ? tag1 : ''} ${!bag2 ? tag2 : ''}`;
+          }
+          return;
+        }
+
+        const stagesList = window.AeroSimData.STAGES;
+        const stage1Name = stagesList[bag1.currentStepIndex]?.title || 'Processing';
+        const stage2Name = stagesList[bag2.currentStepIndex]?.title || 'Processing';
+        const pct1 = Math.round(((bag1.currentStepIndex + 1) / 6) * 100);
+        const pct2 = Math.round(((bag2.currentStepIndex + 1) / 6) * 100);
+
+        compareResults.innerHTML = `
+          <div class="compare-grid">
+            <div class="compare-col-card">
+              <div class="compare-col-header">
+                <div>
+                  <strong style="font-size: 1.1rem; color: #1672ec;">${bag1.tagId}</strong>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);">${bag1.airline} • ${bag1.flight}</div>
+                </div>
+                <span class="badge-pill" style="color: #10b981; border-color: #10b981;">Stage ${bag1.currentStepIndex + 1}/6</span>
+              </div>
+              <p style="margin: 6px 0; font-size: 0.85rem;"><strong>Route:</strong> ${bag1.originCode} &rarr; ${bag1.destCode}</p>
+              <p style="margin: 6px 0; font-size: 0.85rem;"><strong>Current Stage:</strong> ${stage1Name}</p>
+              <p style="margin: 6px 0; font-size: 0.85rem;"><strong>Weight / Color:</strong> ${bag1.weightKg || 23} kg (${bag1.bagColor || 'Navy Blue'})</p>
+              <div style="margin-top: 10px;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 4px;">
+                  <span>Sortation Progress</span>
+                  <strong>${pct1}%</strong>
+                </div>
+                <div style="height: 8px; border-radius: 4px; background: #e2e8f0; overflow: hidden;">
+                  <div style="width: ${pct1}%; height: 100%; background: #1672ec;"></div>
+                </div>
+              </div>
+              <div style="margin-top: 14px;">
+                <a href="journey.html?tag=${encodeURIComponent(bag1.tagId)}" class="btn-primary-action" style="display: block; text-align: center; font-size: 0.85rem; padding: 8px;">View Full Journey</a>
+              </div>
+            </div>
+
+            <div class="compare-col-card">
+              <div class="compare-col-header">
+                <div>
+                  <strong style="font-size: 1.1rem; color: #7c3aed;">${bag2.tagId}</strong>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);">${bag2.airline} • ${bag2.flight}</div>
+                </div>
+                <span class="badge-pill" style="color: #10b981; border-color: #10b981;">Stage ${bag2.currentStepIndex + 1}/6</span>
+              </div>
+              <p style="margin: 6px 0; font-size: 0.85rem;"><strong>Route:</strong> ${bag2.originCode} &rarr; ${bag2.destCode}</p>
+              <p style="margin: 6px 0; font-size: 0.85rem;"><strong>Current Stage:</strong> ${stage2Name}</p>
+              <p style="margin: 6px 0; font-size: 0.85rem;"><strong>Weight / Color:</strong> ${bag2.weightKg || 21} kg (${bag2.bagColor || 'Silver Grey'})</p>
+              <div style="margin-top: 10px;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 4px;">
+                  <span>Sortation Progress</span>
+                  <strong>${pct2}%</strong>
+                </div>
+                <div style="height: 8px; border-radius: 4px; background: #e2e8f0; overflow: hidden;">
+                  <div style="width: ${pct2}%; height: 100%; background: #7c3aed;"></div>
+                </div>
+              </div>
+              <div style="margin-top: 14px;">
+                <a href="journey.html?tag=${encodeURIComponent(bag2.tagId)}" class="btn-primary-action" style="display: block; text-align: center; font-size: 0.85rem; padding: 8px; background: #7c3aed;">View Full Journey</a>
+              </div>
+            </div>
+          </div>
+        `;
+        compareResults.style.display = 'block';
+        if (typeof window.showToast === 'function') {
+          window.showToast(`Compared ${tag1} vs ${tag2}`);
+        }
+      });
+    }
 
     // Sample Tag Pills click handler
     document.querySelectorAll('.sample-tag-btn, .btn-suggestion-chip').forEach(btn => {
@@ -1115,6 +1336,24 @@
           stageSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="6" width="16" height="15" rx="3"></rect><path d="M9 6V4a3 3 0 0 1 6 0v2"></path><circle cx="9" cy="18" r="1"></circle><circle cx="15" cy="18" r="1"></circle></svg>`;
         }
 
+        // Stage ETA and Duration estimate
+        const stageEtas = ['15 min', '25 min', '30 min', '1 hr 45 min', '20 min', '10 min'];
+        let etaText = '';
+        if (idx === currentBag.currentStepIndex) {
+          etaText = `
+            <div class="step-eta-badge" style="display: inline-flex; align-items: center; gap: 4px; font-size: 0.75rem; color: #1672ec; font-weight: 700; margin-top: 4px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Est. Remaining: ${stageEtas[idx]}
+            </div>
+          `;
+        } else if (idx > currentBag.currentStepIndex) {
+          etaText = `
+            <div class="step-eta-badge" style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">
+              Est. Duration: ~${stageEtas[idx]}
+            </div>
+          `;
+        }
+
         stepRow.className = stepClass;
         stepRow.innerHTML = `
           ${nodeContent}
@@ -1124,6 +1363,7 @@
           <div class="step-info">
             <div class="step-title">${idx + 1}. ${stage.title}</div>
             <div class="step-desc">${stage.desc}</div>
+            ${etaText}
             ${ts ? `<div class="step-timestamp-tag">✓ ${ts}</div>` : ''}
           </div>
           <span class="${badgeClass}">
@@ -1279,6 +1519,44 @@
           });
         } else {
           window.showToast(`Tracking URL: ${fullUrl}`);
+        }
+      });
+    }
+
+    // Download Summary (.txt file)
+    const downloadSummaryBtn = document.getElementById('btn-download-summary');
+    if (downloadSummaryBtn) {
+      downloadSummaryBtn.addEventListener('click', () => {
+        const textSummary = [
+          '========================================',
+          'AEROSIM AVIATION - BAGGAGE TELEMETRY SUMMARY',
+          '========================================',
+          `Tag ID:        ${currentBag.tagId}`,
+          `Airline:       ${currentBag.airline} • Flight: ${currentBag.flight}`,
+          `Route:         ${currentBag.originCode} (${currentBag.originCity}) -> ${currentBag.destCode} (${currentBag.destCity})`,
+          `Current Stage: Stage ${currentBag.currentStepIndex + 1} of 6`,
+          `Status:        ${currentBag.currentStepIndex >= 5 ? 'Completed (Ready for Carousel Claim)' : 'In Transit / Handling Active'}`,
+          `Passenger:     ${currentBag.passenger}`,
+          `Weight/Color:  ${currentBag.weightKg} kg (${currentBag.bagColor || 'Navy Blue'})`,
+          `Gate & Belt:   Gate ${currentBag.gate || 'B22'} -> Carousel ${currentBag.carousel || 'Belt 4'}`,
+          `Generated At:  ${new Date().toLocaleString()}`,
+          `Tracking URL:  ${window.location.origin}${window.location.pathname}?tag=${currentBag.tagId}`,
+          '========================================',
+          'Academic Simulation Project - AeroSim Aviation',
+          '========================================'
+        ].join('\n');
+
+        const blob = new Blob([textSummary], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `AeroSim_Telemetry_${currentBag.tagId}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        if (typeof window.showToast === 'function') {
+          window.showToast(`Telemetry report downloaded for ${currentBag.tagId}`);
         }
       });
     }

@@ -1,30 +1,35 @@
-// AeroSim Aviation PWA Service Worker
-const CACHE_NAME = 'aerosim-cache-v1';
+// AeroSim Aviation PWA Service Worker - v2.8.0
+const CACHE_NAME = 'aerosim-cache-v2.8.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './login.html',
   './register.html',
+  './forgot-password.html',
   './track.html',
   './journey.html',
   './stage.html',
-  './check-in.html',
-  './boarding-pass.html',
-  './bag-tag.html',
-  './flight-status.html',
   './my-bags.html',
-  './airports.html',
   './report-issue.html',
-  './analytics.html',
   './how-it-works.html',
   './faq.html',
   './contact.html',
-  './profile.html',
+  './about.html',
+  './terms.html',
+  './privacy.html',
+  './404.html',
+  './offline.html',
   './css/style.css',
   './js/data.js',
   './js/layout.js',
   './js/app.js',
-  './manifest.json'
+  './manifest.json',
+  './assets/stage1.jpg',
+  './assets/stage2.jpg',
+  './assets/stage3.jpg',
+  './assets/stage4.jpg',
+  './assets/stage5.jpg',
+  './assets/stage6.jpg'
 ];
 
 self.addEventListener('install', (event) => {
@@ -76,11 +81,20 @@ self.addEventListener('fetch', (event) => {
         });
         return networkResponse;
       }).catch(() => {
-        // Fallback for HTML documents
+        // Fallback for HTML documents to offline fallback page
         if (event.request.headers.get('accept') && event.request.headers.get('accept').includes('text/html')) {
-          return caches.match('./index.html');
+          return caches.match('./offline.html').then((offlineRes) => {
+            return offlineRes || caches.match('./index.html');
+          });
         }
       });
     })
   );
+});
+
+// Listen for skip waiting message from app
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.action === 'skipWaiting') {
+    self.skipWaiting();
+  }
 });

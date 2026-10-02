@@ -11,6 +11,9 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://kartikagrawal2200.github.io/CSE-323-project-/track.html">
   <meta property="og:site_name" content="AeroSim Aviation">
+  <script>
+    (function(){var s=localStorage.getItem('aerosim_theme'),p=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',s||(p?'dark':'light'));})();
+  </script>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
 </head>
@@ -32,60 +35,128 @@
         </p>
       </div>
 
-      <!-- Search Box Card -->
-      <div class="search-card-wrapper search-card-center">
-        <div class="search-label-group">
-          <svg class="search-icon-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="4" y="6" width="16" height="15" rx="3"></rect>
-            <path d="M9 6V4a3 3 0 0 1 6 0v2"></path>
-            <circle cx="9" cy="18" r="1"></circle>
-            <circle cx="15" cy="18" r="1"></circle>
-          </svg>
-          <span class="search-label-text">Baggage Tag ID</span>
+      <!-- Mode Tabs: Single vs Compare -->
+      <div style="display: flex; justify-content: center; margin-bottom: 1.25rem;">
+        <div class="track-mode-tabs" role="tablist" aria-label="Tracking Mode Selection">
+          <button type="button" class="track-tab-btn active" id="tab-single-track" role="tab" aria-selected="true" aria-controls="single-track-panel">Single Tag Track</button>
+          <button type="button" class="track-tab-btn" id="tab-compare-track" role="tab" aria-selected="false" aria-controls="compare-track-panel">Compare Two Bags</button>
         </div>
+      </div>
 
-        <form class="baggage-search-form" id="track-search-form" novalidate>
-          <div class="search-form-row">
-            <input 
-              type="text" 
-              class="search-input-box" 
-              id="track-tag-input"
-              placeholder="e.g. LHR-123456" 
-              value="LHR-123456"
-              required
-              autocomplete="off"
-            >
-            <button type="submit" class="btn-search-action" id="btn-track-submit">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-              TRACK
-            </button>
+      <!-- Single Tag Panel -->
+      <div id="single-track-panel" role="tabpanel" aria-labelledby="tab-single-track">
+        <!-- Search Box Card -->
+        <div class="search-card-wrapper search-card-center">
+          <div class="search-label-group">
+            <svg class="search-icon-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="6" width="16" height="15" rx="3"></rect>
+              <path d="M9 6V4a3 3 0 0 1 6 0v2"></path>
+              <circle cx="9" cy="18" r="1"></circle>
+              <circle cx="15" cy="18" r="1"></circle>
+            </svg>
+            <span class="search-label-text">Baggage Tag ID</span>
           </div>
-          <div class="input-error-msg" id="track-input-error" role="alert" aria-live="assertive" style="display: none;"></div>
 
-          <!-- Sample Quick Tags for Convenience -->
-          <div class="sample-tags-pills">
-            <span>Quick tags:</span>
-            <button type="button" class="sample-tag-btn" data-tag="LHR-123456">LHR-123456</button>
-            <button type="button" class="sample-tag-btn" data-tag="JFK-882194">JFK-882194</button>
-            <button type="button" class="sample-tag-btn" data-tag="DXB-309481">DXB-309481</button>
-            <button type="button" class="sample-tag-btn" data-tag="DEL-557201">DEL-557201</button>
-            <button type="button" class="sample-tag-btn" data-tag="IDR-100245">IDR-100245</button>
-          </div>
-        </form>
+          <form class="baggage-search-form" id="track-search-form" novalidate>
+            <div class="search-form-row">
+              <div class="autocomplete-wrapper" style="flex: 1; position: relative;">
+                <input 
+                  type="text" 
+                  class="search-input-box" 
+                  id="track-tag-input"
+                  placeholder="e.g. LHR-123456" 
+                  value="LHR-123456"
+                  required
+                  autocomplete="off"
+                  aria-autocomplete="list"
+                  aria-controls="track-autocomplete-dropdown"
+                >
+                <div id="track-autocomplete-dropdown" class="autocomplete-dropdown" style="display: none;" role="listbox"></div>
+              </div>
+              <button type="submit" class="btn-search-action" id="btn-track-submit">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                TRACK
+              </button>
+            </div>
+            <div class="input-error-msg" id="track-input-error" role="alert" aria-live="assertive" style="display: none;"></div>
 
-        <!-- Skeleton Loading State (simulated 400ms delay) -->
-        <div id="track-loading-state" class="track-skeleton-card" role="status" aria-live="polite" style="display: none;">
-          <div class="skeleton-line skeleton-title"></div>
-          <div class="skeleton-row">
-            <div class="skeleton-box"></div>
-            <div class="skeleton-box"></div>
-            <div class="skeleton-box"></div>
+            <!-- Recent Searches Section -->
+            <div id="recent-searches-section" class="recent-searches-box" style="margin-top: 14px; text-align: left; display: none;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Recent Searches:</span>
+                <button type="button" class="btn-text-action" id="btn-clear-recent-searches" style="font-size: 0.75rem; color: var(--danger, #ef4444); background: none; border: none; cursor: pointer;">Clear History</button>
+              </div>
+              <div class="recent-searches-chips" id="recent-searches-list"></div>
+            </div>
+
+            <!-- Sample Quick Tags for Convenience -->
+            <div class="sample-tags-pills" style="margin-top: 14px;">
+              <span>Quick tags:</span>
+              <button type="button" class="sample-tag-btn" data-tag="LHR-123456">LHR-123456</button>
+              <button type="button" class="sample-tag-btn" data-tag="JFK-882194">JFK-882194</button>
+              <button type="button" class="sample-tag-btn" data-tag="DXB-309481">DXB-309481</button>
+              <button type="button" class="sample-tag-btn" data-tag="DEL-557201">DEL-557201</button>
+              <button type="button" class="sample-tag-btn" data-tag="IDR-100245">IDR-100245</button>
+            </div>
+          </form>
+
+          <!-- Skeleton Loading State (simulated 400ms delay) -->
+          <div id="track-loading-state" class="track-skeleton-card" role="status" aria-live="polite" style="display: none;">
+            <div class="skeleton-line skeleton-title"></div>
+            <div class="skeleton-row">
+              <div class="skeleton-box"></div>
+              <div class="skeleton-box"></div>
+              <div class="skeleton-box"></div>
+            </div>
+            <p class="skeleton-status-text">Querying IATA Global Telemetry Network...</p>
           </div>
-          <p class="skeleton-status-text">Querying IATA Global Telemetry Network...</p>
         </div>
+      </div>
+
+      <!-- Compare Two Bags Panel -->
+      <div id="compare-track-panel" role="tabpanel" aria-labelledby="tab-compare-track" style="display: none;">
+        <div class="search-card-wrapper search-card-center" style="max-width: 780px;">
+          <div class="search-label-group">
+            <svg class="search-icon-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="4" y="6" width="16" height="15" rx="3"></rect>
+              <path d="M9 6V4a3 3 0 0 1 6 0v2"></path>
+            </svg>
+            <span class="search-label-text">Compare Two Baggage Tags</span>
+          </div>
+
+          <form id="compare-search-form" style="display: flex; flex-direction: column; gap: 12px; margin-top: 1rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px;">
+              <div>
+                <label for="compare-tag-1" style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px; text-align: left;">Baggage Tag 1</label>
+                <input type="text" id="compare-tag-1" class="search-input-box" placeholder="e.g. LHR-123456" value="LHR-123456" style="width: 100%;">
+              </div>
+              <div>
+                <label for="compare-tag-2" style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px; text-align: left;">Baggage Tag 2</label>
+                <input type="text" id="compare-tag-2" class="search-input-box" placeholder="e.g. DXB-309481" value="DXB-309481" style="width: 100%;">
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+              <button type="button" class="btn-text-action" id="btn-compare-preset" style="font-size: 0.8rem;">
+                Load Demo Pair: LHR-123456 vs DXB-309481
+              </button>
+              <button type="submit" class="btn-primary-action" id="btn-run-compare" style="display: inline-flex; align-items: center; gap: 8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+                Compare Bags
+              </button>
+            </div>
+            <div id="compare-error-msg" class="input-error-msg" style="display: none;"></div>
+          </form>
+
+          <!-- Compare Results Container -->
+          <div id="compare-results-container" style="display: none; margin-top: 1.5rem;">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+      </div>
 
         <!-- Bag Not Found State (Red Alert + Tips) -->
         <div id="track-notfound-card" class="track-notfound-alert" role="alert" aria-live="polite" style="display: none;">

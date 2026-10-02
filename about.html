@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -11,6 +11,9 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://kartikagrawal2200.github.io/CSE-323-project-/about.html">
   <meta property="og:site_name" content="AeroSim Aviation">
+  <script>
+    (function(){var s=localStorage.getItem('aerosim_theme'),p=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',s||(p?'dark':'light'));})();
+  </script>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
 </head>
@@ -97,9 +100,74 @@
       </div>
     </div>
 
+    <!-- Project Goal & Educational Vision Card -->
+    <div class="content-card" style="margin-top: 2rem;">
+      <div class="card-section-header">
+        <div class="feature-icon-wrapper">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <polyline points="9 12 11 14 15 10"></polyline>
+          </svg>
+        </div>
+        <div>
+          <h2 class="card-section-title">Project Goal &amp; Educational Vision</h2>
+          <p class="card-section-desc">Modeling airport logistics with modern web engineering standards.</p>
+        </div>
+      </div>
+      <div class="text-body-prose">
+        <p>
+          The primary objective of <strong>AeroSim Aviation</strong> is to provide a transparent, accessible, and realistic educational model of the international airport baggage handling ecosystem. Commercial air passengers often experience anxiety during airport transfers due to a lack of visibility into behind-the-scenes sortation.
+        </p>
+        <p>
+          By implementing realistic IATA tag conventions (<code>^[A-Z]{3}-\d{6}$</code>), simulating optical barcode scans, conveyor redirects, ULD aircraft loading, and baggage belt distribution, AeroSim serves as both an educational case study for aviation logistics and a showcase of zero-dependency Vanilla web architecture.
+        </p>
+      </div>
+    </div>
+
+    <!-- Core Features List Section -->
+    <div class="content-card" style="margin-top: 2rem;">
+      <h2 class="card-section-title" style="margin-bottom: 0.5rem;">Core Simulation Features</h2>
+      <p class="card-section-desc" style="margin-bottom: 1.5rem;">Key capabilities engineered across the AeroSim platform.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
+        <div style="display: flex; gap: 10px; align-items: flex-start;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" style="flex-shrink: 0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"/></svg>
+          <div>
+            <strong style="color: var(--navy);">Bilingual Localization (EN / à¤¹à¤¿à¤¨à¥à¤¦à¥€)</strong>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 2px 0 0 0;">Instant client-side language switching between English and Hindi for universal accessibility.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: flex-start;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" style="flex-shrink: 0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"/></svg>
+          <div>
+            <strong style="color: var(--navy);">Recent Searches &amp; Autocomplete</strong>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 2px 0 0 0;">Stored in safe localStorage with instant quick-chips and tag format autocomplete suggestions.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: flex-start;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" style="flex-shrink: 0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"/></svg>
+          <div>
+            <strong style="color: var(--navy);">Offline PWA &amp; Service Worker Cache</strong>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 2px 0 0 0;">Versioned caching engine with offline fallback page and visible update notifications.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Technology Stack Section -->
     <div class="content-card" style="margin-top: 2rem;">
-      <h2 class="card-section-title" style="margin-bottom: 1.5rem;">Architecture &amp; Technologies Used</h2>
+      <h2 class="card-section-title" style="margin-bottom: 0.5rem;">Architecture &amp; Tech Stack Badges</h2>
+      <p class="card-section-desc" style="margin-bottom: 1.5rem;">Built strictly with web platform standards â€” zero external libraries, npm dependencies, or CDNs.</p>
+      
+      <!-- Tech Badges Cloud -->
+      <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.5rem;">
+        <span class="badge-pill" style="background: rgba(22, 114, 236, 0.1); border-color: #1672ec; color: #1672ec; font-size: 0.8rem; font-weight: 700;">HTML5 Semantic Landmarks</span>
+        <span class="badge-pill" style="background: rgba(14, 165, 233, 0.1); border-color: #0ea5e9; color: #0284c7; font-size: 0.8rem; font-weight: 700;">Vanilla CSS3 Custom Tokens</span>
+        <span class="badge-pill" style="background: rgba(245, 158, 11, 0.1); border-color: #f59e0b; color: #d97706; font-size: 0.8rem; font-weight: 700;">ES6+ JavaScript Modular</span>
+        <span class="badge-pill" style="background: rgba(16, 185, 129, 0.1); border-color: #10b981; color: #059669; font-size: 0.8rem; font-weight: 700;">Pure SVG Vector Graphics</span>
+        <span class="badge-pill" style="background: rgba(124, 58, 237, 0.1); border-color: #7c3aed; color: #7c3aed; font-size: 0.8rem; font-weight: 700;">PWA Service Worker Cache</span>
+        <span class="badge-pill" style="background: rgba(239, 68, 68, 0.1); border-color: #ef4444; color: #dc2626; font-size: 0.8rem; font-weight: 700;">Safe LocalStorage Engine</span>
+      </div>
+
       <div class="tech-stack-grid">
         <div class="tech-item-box">
           <div class="tech-badge">HTML5 Semantic</div>
@@ -128,28 +196,28 @@
       </div>
     </div>
 
-    <!-- Team & Credits Section -->
+    <!-- Meet The Team & Project Credits Section -->
     <div class="content-card" style="margin-top: 2rem;">
-      <h2 class="card-section-title" style="margin-bottom: 0.5rem;">Project Credits &amp; Contributors</h2>
+      <h2 class="card-section-title" style="margin-bottom: 0.5rem;">Meet the Team &amp; Contributors</h2>
       <p class="card-section-desc" style="margin-bottom: 1.5rem;">Engineered as part of the CSE326 Web Development &amp; Systems Curriculum.</p>
       <div class="team-grid">
         <div class="team-card">
           <div class="team-avatar-initials">KA</div>
           <div class="team-name">Kartik</div>
           <div class="team-role">Lead Architect &amp; Frontend Engineer</div>
-          <p class="team-bio">Spearheaded the simulation state engine, timeline animations, and responsive system design.</p>
+          <p class="team-bio">Spearheaded the simulation state engine, telemetry charts, bilingual i18n module, and responsive design system.</p>
         </div>
         <div class="team-card">
           <div class="team-avatar-initials">AS</div>
           <div class="team-name">AeroSim Core Team</div>
           <div class="team-role">Systems &amp; Logistics Research</div>
-          <p class="team-bio">Researched standard IATA baggage handling specifications, barcode schemas, and flight route data.</p>
+          <p class="team-bio">Researched standard IATA baggage handling specifications, barcode tag schemas, and global flight routes.</p>
         </div>
         <div class="team-card">
           <div class="team-avatar-initials">UX</div>
           <div class="team-name">Aviation UX Lab</div>
           <div class="team-role">Design &amp; Accessibility</div>
-          <p class="team-bio">Created high-contrast glassmorphic components, dark mode colorways, and accessible navigation.</p>
+          <p class="team-bio">Created high-contrast glassmorphic components, dark mode colorways, WCAG AA compliance, and keyboard navigation.</p>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -11,6 +11,9 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://kartikagrawal2200.github.io/CSE-323-project-/journey.html">
   <meta property="og:site_name" content="AeroSim Aviation">
+  <script>
+    (function(){var s=localStorage.getItem('aerosim_theme'),p=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',s||(p?'dark':'light'));})();
+  </script>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
 </head>
@@ -95,7 +98,7 @@
               </svg>
               <div class="bag-detail-content">
                 <span class="bag-detail-title">Airline &amp; Flight</span>
-                <span class="bag-detail-info" id="journey-airline-flight">Lufthansa • LH247</span>
+                <span class="bag-detail-info" id="journey-airline-flight">Lufthansa â€¢ LH247</span>
               </div>
             </div>
 
@@ -120,7 +123,7 @@
               </svg>
               <div class="bag-detail-content">
                 <span class="bag-detail-title">Passenger &amp; Weight</span>
-                <span class="bag-detail-info" id="journey-passenger-weight">R*** S. • 23.5 kg (Navy Blue)</span>
+                <span class="bag-detail-info" id="journey-passenger-weight">R*** S. â€¢ 23.5 kg (Navy Blue)</span>
               </div>
             </div>
 
@@ -155,6 +158,14 @@
                 <rect x="6" y="14" width="12" height="8"></rect>
               </svg>
               Print Receipt
+            </button>
+            <button type="button" class="btn-action-small" id="btn-download-summary">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Download
             </button>
           </div>
         </div>
