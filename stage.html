@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Baggage Stage Details - AeroSim Aviation</title>
+  <meta name="description" content="Explore detailed operational visuals, handling equipment, and security checkpoints across each of the 6 airport baggage tracking stages.">
+  <!-- Open Graph / Social Tags -->
+  <meta property="og:title" content="Baggage Handling Stage Explorer - AeroSim Aviation">
+  <meta property="og:description" content="Interactive visual deep-dive into standard IATA baggage handling stages from check-in to arrival carousel.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kartikagrawal2200.github.io/CSE-323-project-/stage.html">
+  <meta property="og:site_name" content="AeroSim Aviation">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
 </head>
@@ -361,6 +368,7 @@
       const stageImg = document.getElementById('stage-img');
       const stageCaption = document.getElementById('stage-img-caption');
       stageImg.src = conf.image;
+      stageImg.alt = `${conf.title}: ${conf.desc}`;
 
       // Distinguish Stage 5 from Stage 3 visually
       if (stepNum === 5) {

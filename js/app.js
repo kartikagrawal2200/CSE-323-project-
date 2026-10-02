@@ -103,14 +103,18 @@
   // -------------------------------------------------------------
   // 4. Toast Notifications
   // -------------------------------------------------------------
+  // 4. Toast Notifications (with ARIA live region)
+  // -------------------------------------------------------------
   window.showToast = function (message, duration = 3200) {
     let toast = document.getElementById('aerosim-toast');
     if (!toast) {
       toast = document.createElement('div');
       toast.id = 'aerosim-toast';
       toast.className = 'toast-box';
+      toast.setAttribute('role', 'status');
+      toast.setAttribute('aria-live', 'polite');
       toast.innerHTML = `
-        <svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
           <polyline points="22 4 12 14.01 9 11.01"></polyline>
         </svg>
@@ -128,7 +132,7 @@
   };
 
   // -------------------------------------------------------------
-  // 5. Custom Modal Component (Confirm Dialogs)
+  // 5. Custom Modal Component (Confirm Dialogs with Esc & Focus Trap)
   // -------------------------------------------------------------
   window.showConfirmModal = function ({ title, message, confirmText = 'Confirm', confirmClass = 'btn-primary-action', onConfirm }) {
     let modal = document.getElementById('aerosim-confirm-modal');
@@ -136,6 +140,9 @@
       modal = document.createElement('div');
       modal.id = 'aerosim-confirm-modal';
       modal.className = 'custom-modal-backdrop';
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-modal', 'true');
+      modal.setAttribute('aria-labelledby', 'confirm-modal-title');
       modal.innerHTML = `
         <div class="custom-modal-dialog">
           <div class="custom-modal-header">
@@ -159,6 +166,7 @@
     const confirmBtn = document.getElementById('btn-modal-confirm');
     const cancelBtn = document.getElementById('btn-modal-cancel');
     const closeX = document.getElementById('btn-modal-close-x');
+    const previousActive = document.activeElement;
 
     if (titleEl) titleEl.textContent = title;
     if (bodyEl) bodyEl.innerHTML = message;
@@ -168,13 +176,42 @@
     }
 
     modal.classList.add('active');
+    setTimeout(() => {
+      if (confirmBtn) confirmBtn.focus();
+    }, 50);
+
+    function handleModalKeyDown(e) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeModal();
+      } else if (e.key === 'Tab') {
+        const focusable = [closeX, cancelBtn, confirmBtn].filter(Boolean);
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
 
     function closeModal() {
       modal.classList.remove('active');
+      document.removeEventListener('keydown', handleModalKeyDown);
       confirmBtn.onclick = null;
       cancelBtn.onclick = null;
       closeX.onclick = null;
+      modal.onclick = null;
+      if (previousActive && typeof previousActive.focus === 'function') {
+        previousActive.focus();
+      }
     }
+
+    document.addEventListener('keydown', handleModalKeyDown);
 
     confirmBtn.onclick = () => {
       closeModal();
@@ -182,6 +219,9 @@
     };
     cancelBtn.onclick = closeModal;
     closeX.onclick = closeModal;
+    modal.onclick = (e) => {
+      if (e.target === modal) closeModal();
+    };
   };
 
   // -------------------------------------------------------------
@@ -367,6 +407,8 @@
         const tagRegex = /^[A-Z]{3}-\d{6}$/;
         if (!tagRegex.test(rawTag)) {
           if (errorEl) {
+            errorEl.setAttribute('role', 'alert');
+            errorEl.setAttribute('aria-live', 'assertive');
             errorEl.style.display = 'block';
             errorEl.textContent = 'Invalid format. Baggage tag must match 3 capital letters, a hyphen, and 6 digits (e.g. LHR-123456).';
           } else {
@@ -385,6 +427,8 @@
         // 3. Unknown Tag -> Show Not Found Card
         if (!foundBag) {
           if (notFoundCard) {
+            notFoundCard.setAttribute('role', 'alert');
+            notFoundCard.setAttribute('aria-live', 'polite');
             const notFoundTagDisplay = document.getElementById('notfound-tag-display');
             if (notFoundTagDisplay) notFoundTagDisplay.textContent = rawTag;
             notFoundCard.style.display = 'block';
@@ -397,6 +441,8 @@
 
         // 4. Found Tag -> Show Skeleton Loader (400ms delay) & Transition
         if (loadingSkeleton) {
+          loadingSkeleton.setAttribute('role', 'status');
+          loadingSkeleton.setAttribute('aria-live', 'polite');
           loadingSkeleton.style.display = 'block';
         }
         if (submitBtn) {
@@ -1265,12 +1311,29 @@
         }
 
         printModal.style.display = 'flex';
+        printModal.setAttribute('role', 'dialog');
+        printModal.setAttribute('aria-modal', 'true');
+        printModal.setAttribute('aria-label', 'Print Baggage Receipt');
       });
     }
 
     if (closeReceiptBtn && printModal) {
       closeReceiptBtn.addEventListener('click', () => {
         printModal.style.display = 'none';
+      });
+
+      // Escape key to close print modal
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && printModal.style.display === 'flex') {
+          printModal.style.display = 'none';
+        }
+      });
+
+      // Outside click to close
+      printModal.addEventListener('click', (e) => {
+        if (e.target === printModal) {
+          printModal.style.display = 'none';
+        }
       });
     }
   }

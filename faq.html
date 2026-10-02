@@ -1,10 +1,16 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Baggage FAQ &amp; Help Center - AeroSim Aviation</title>
   <meta name="description" content="Find answers to common airport baggage questions regarding lost luggage, tracking tag numbers, weight limits, claim process, and connecting flight transfers.">
+  <!-- Open Graph / Social Tags -->
+  <meta property="og:title" content="Baggage FAQ &amp; Help Center - AeroSim Aviation">
+  <meta property="og:description" content="Find answers to common airport baggage questions regarding tracking tag numbers, weight limits, claim process, and connecting flight transfers.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kartikagrawal2200.github.io/CSE-323-project-/faq.html">
+  <meta property="og:site_name" content="AeroSim Aviation">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
 </head>
@@ -81,13 +87,13 @@
 
       <!-- Item 2 -->
       <div class="faq-item" data-category="before">
-        <button type="button" class="faq-question" aria-expanded="false">
-          <span class="faq-q-text">Where can I find my 10-digit baggage tag number?</span>
-          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        <button type="button" class="faq-question" aria-expanded="false" id="faq-q-2" aria-controls="faq-a-2">
+          <span class="faq-q-text">Where can I find my baggage tag number?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </button>
-        <div class="faq-answer">
+        <div class="faq-answer" id="faq-a-2" role="region" aria-labelledby="faq-q-2">
           <p>
-            When you check in your luggage at the airport counter, an agent hands you a small barcode sticker stuck either to the back of your physical boarding pass or your passport cover. It consists of a 2-letter airline code or 3-letter airport code followed by 6 digits (e.g. <code>LHR-123456</code>). Digital boarding passes in airline apps also reflect this under "Checked Bags".
+            When you check in your luggage at the airport counter or self-service drop, an agent hands you a small barcode sticker stuck either to the back of your physical boarding pass or your passport cover. In this simulator, tracking tag numbers follow the standard format: a 3-letter IATA airport code followed by a hyphen and 6 digits (e.g. <code>LHR-123456</code>, <code>DXB-309481</code>). Digital boarding passes in airline apps also reflect this under "Checked Bags".
           </p>
         </div>
       </div>
@@ -263,26 +269,65 @@
       let currentCategory = 'all';
       let currentQuery = '';
 
-      // Accordion toggle
-      items.forEach(item => {
+      // Accordion toggle & keyboard navigation
+      const questionBtns = Array.from(document.querySelectorAll('.faq-question'));
+      items.forEach((item, index) => {
         const btn = item.querySelector('.faq-question');
-        btn.addEventListener('click', () => {
-          const isOpen = item.classList.contains('open');
-          // Close others for clean accordion experience
-          items.forEach(i => {
-            if (i !== item) {
-              i.classList.remove('open');
-              i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        const answer = item.querySelector('.faq-answer');
+        const qId = `faq-q-${index + 1}`;
+        const aId = `faq-a-${index + 1}`;
+        if (btn) {
+          btn.id = qId;
+          btn.setAttribute('aria-controls', aId);
+        }
+        if (answer) {
+          answer.id = aId;
+          answer.setAttribute('role', 'region');
+          answer.setAttribute('aria-labelledby', qId);
+        }
+
+        if (btn) {
+          btn.addEventListener('click', () => {
+            const isOpen = item.classList.contains('open');
+            // Close others for clean accordion experience
+            items.forEach(i => {
+              if (i !== item) {
+                i.classList.remove('open');
+                const b = i.querySelector('.faq-question');
+                if (b) b.setAttribute('aria-expanded', 'false');
+              }
+            });
+            if (isOpen) {
+              item.classList.remove('open');
+              btn.setAttribute('aria-expanded', 'false');
+            } else {
+              item.classList.add('open');
+              btn.setAttribute('aria-expanded', 'true');
             }
           });
-          if (isOpen) {
-            item.classList.remove('open');
-            btn.setAttribute('aria-expanded', 'false');
-          } else {
-            item.classList.add('open');
-            btn.setAttribute('aria-expanded', 'true');
-          }
-        });
+
+          // Keyboard navigation across accordion headers
+          btn.addEventListener('keydown', (e) => {
+            const visibleBtns = questionBtns.filter(b => b.closest('.faq-item').style.display !== 'none');
+            const currentIndex = visibleBtns.indexOf(btn);
+
+            if (e.key === 'ArrowDown') {
+              e.preventDefault();
+              const nextBtn = visibleBtns[(currentIndex + 1) % visibleBtns.length];
+              if (nextBtn) nextBtn.focus();
+            } else if (e.key === 'ArrowUp') {
+              e.preventDefault();
+              const prevBtn = visibleBtns[(currentIndex - 1 + visibleBtns.length) % visibleBtns.length];
+              if (prevBtn) prevBtn.focus();
+            } else if (e.key === 'Home') {
+              e.preventDefault();
+              if (visibleBtns[0]) visibleBtns[0].focus();
+            } else if (e.key === 'End') {
+              e.preventDefault();
+              if (visibleBtns[visibleBtns.length - 1]) visibleBtns[visibleBtns.length - 1].focus();
+            }
+          });
+        }
       });
 
       // Filter function

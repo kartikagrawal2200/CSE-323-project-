@@ -1,9 +1,16 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Track Your Baggage - AeroSim Aviation</title>
+  <meta name="description" content="Track your airline baggage in real-time. Enter your 9-character IATA tag (e.g. LHR-123456) to monitor current handling stage and flight transit status.">
+  <!-- Open Graph / Social Tags -->
+  <meta property="og:title" content="Track Your Baggage - AeroSim Aviation">
+  <meta property="og:description" content="Instant baggage telemetry query. Follow checked luggage across security sorting, aircraft hold loading, and arrival claim carousels.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kartikagrawal2200.github.io/CSE-323-project-/track.html">
+  <meta property="og:site_name" content="AeroSim Aviation">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
 </head>
@@ -56,7 +63,7 @@
               TRACK
             </button>
           </div>
-          <div class="input-error-msg" id="track-input-error" style="display: none;"></div>
+          <div class="input-error-msg" id="track-input-error" role="alert" aria-live="assertive" style="display: none;"></div>
 
           <!-- Sample Quick Tags for Convenience -->
           <div class="sample-tags-pills">
@@ -70,7 +77,7 @@
         </form>
 
         <!-- Skeleton Loading State (simulated 400ms delay) -->
-        <div id="track-loading-state" class="track-skeleton-card" style="display: none;">
+        <div id="track-loading-state" class="track-skeleton-card" role="status" aria-live="polite" style="display: none;">
           <div class="skeleton-line skeleton-title"></div>
           <div class="skeleton-row">
             <div class="skeleton-box"></div>
@@ -81,7 +88,7 @@
         </div>
 
         <!-- Bag Not Found State (Red Alert + Tips) -->
-        <div id="track-notfound-card" class="track-notfound-alert" style="display: none;">
+        <div id="track-notfound-card" class="track-notfound-alert" role="alert" aria-live="polite" style="display: none;">
           <div class="notfound-alert-header">
             <svg class="notfound-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="10"></circle>
@@ -137,8 +144,8 @@
             <polyline points="9 12 11 14 15 10"></polyline>
           </svg>
         </div>
-        <h3 class="feature-title">Secure Tracking</h3>
-        <p class="feature-desc">Your baggage information is safe and protected.</p>
+        <h3 class="feature-title">Simulated Secure Tracking</h3>
+        <p class="feature-desc">Simulated secure tracking – all data stays in your browser.</p>
       </div>
 
       <!-- Card 3 -->

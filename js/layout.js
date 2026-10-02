@@ -111,15 +111,15 @@
 
         <!-- Notification Bell Dropdown -->
         <div class="notif-dropdown-wrapper">
-          <button type="button" class="btn-nav-notif" id="btn-nav-notif" aria-label="Notifications" aria-expanded="false">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <button type="button" class="btn-nav-notif" id="btn-nav-notif" aria-label="Notifications" aria-expanded="false" aria-haspopup="true" aria-controls="notif-dropdown-menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
               <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
             </svg>
             ${unreadCount > 0 ? `<span class="notif-badge-count" id="notif-badge-count">${unreadCount}</span>` : ''}
           </button>
 
-          <div class="notif-dropdown-menu" id="notif-dropdown-menu">
+          <div class="notif-dropdown-menu" id="notif-dropdown-menu" role="region" aria-label="Notifications Panel">
             <div class="notif-dropdown-header">
               <span class="notif-title">Notifications</span>
               <div class="notif-actions-links">
@@ -127,7 +127,7 @@
                 <button type="button" class="btn-text-action" id="btn-clear-notifs">Clear</button>
               </div>
             </div>
-            <div class="notif-items-list" id="notif-items-list">
+            <div class="notif-items-list" id="notif-items-list" aria-live="polite">
               ${renderNotifItemsHtml(notifs)}
             </div>
           </div>
@@ -135,20 +135,20 @@
 
         <!-- User Profile Pill -->
         <div class="user-pill-dropdown">
-          <button class="user-pill" id="user-menu-btn" aria-label="User Menu" aria-expanded="false">
-            <span class="user-avatar-circle">
+          <button class="user-pill" id="user-menu-btn" aria-label="User Menu" aria-expanded="false" aria-haspopup="true" aria-controls="user-dropdown">
+            <span class="user-avatar-circle" aria-hidden="true">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
             </span>
             <span id="header-username">${currentUser}</span>
-            <svg class="user-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="user-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
           </button>
 
-          <div class="user-dropdown-menu" id="user-dropdown">
+          <div class="user-dropdown-menu" id="user-dropdown" role="menu">
             <a href="journey.html" class="dropdown-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="6" width="16" height="15" rx="3"></rect><path d="M9 6V4a3 3 0 0 1 6 0v2"></path></svg>
               Active Baggage
@@ -211,7 +211,7 @@
           ${authSectionHtml}
 
           <!-- Hamburger Button (Mobile) -->
-          <button type="button" class="btn-hamburger" id="btn-nav-hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+          <button type="button" class="btn-hamburger" id="btn-nav-hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-nav-drawer">
             <span class="hamburger-line"></span>
             <span class="hamburger-line"></span>
             <span class="hamburger-line"></span>
@@ -220,7 +220,7 @@
       </header>
 
       <!-- Mobile Navigation Drawer -->
-      <div class="mobile-nav-drawer" id="mobile-nav-drawer" aria-hidden="true">
+      <div class="mobile-nav-drawer" id="mobile-nav-drawer" aria-hidden="true" role="region" aria-label="Mobile Navigation Menu">
         <div class="mobile-nav-inner">
           <div class="mobile-nav-links">
             ${navLinks.map(l => `<a href="${l.href}" class="mobile-nav-link${(currentPage === l.key) ? ' active' : ''}">${l.label}</a>`).join('')}

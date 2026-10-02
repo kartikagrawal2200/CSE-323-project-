@@ -1,9 +1,16 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AeroSim Aviation - Airport Baggage Handling Simulator</title>
+  <meta name="description" content="AeroSim Aviation - Interactive real-time airport baggage handling simulator. Track bags across 6 standard IATA stages from check-in to arrival carousel.">
+  <!-- Open Graph / Social Tags -->
+  <meta property="og:title" content="AeroSim Aviation - Airport Baggage Handling Simulator">
+  <meta property="og:description" content="Simulate real-time airport baggage tracking across 6 IATA stages with live telemetry and departure-to-arrival status.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kartikagrawal2200.github.io/CSE-323-project-/">
+  <meta property="og:site_name" content="AeroSim Aviation">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
 </head>
@@ -84,8 +91,8 @@
             <polyline points="9 12 11 14 15 10"></polyline>
           </svg>
         </div>
-        <h3 class="feature-title">Secure Tracking</h3>
-        <p class="feature-desc">Your baggage information is safe and protected.</p>
+        <h3 class="feature-title">Simulated Secure Tracking</h3>
+        <p class="feature-desc">Simulated secure tracking – all data stays in your browser.</p>
       </div>
 
       <!-- Card 3 -->
@@ -159,7 +166,7 @@
           <div class="strip-step-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 16 10-4 10 4-10 4z"></path><path d="M12 12V3"></path><path d="m8 7 4-4 4 4"></path></svg>
           </div>
-          <h3 class="strip-step-title">Apron Unloading</h3>
+          <h3 class="strip-step-title">Aircraft Unloading</h3>
           <p class="strip-step-desc">Ground crew marshals containers to arrivals.</p>
         </a>
 
@@ -169,27 +176,30 @@
           <div class="strip-step-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="6" width="16" height="15" rx="3"></rect><path d="M9 6V4a3 3 0 0 1 6 0v2"></path><circle cx="9" cy="18" r="1"></circle><circle cx="15" cy="18" r="1"></circle></svg>
           </div>
-          <h3 class="strip-step-title">Arrival Claim</h3>
+          <h3 class="strip-step-title">Arrival Claim Stage</h3>
           <p class="strip-step-desc">Delivered to designated baggage carousel.</p>
         </a>
       </div>
     </section>
 
     <!-- =========================================================================
-         (b) ANIMATED STATS BAND
+         (b) ANIMATED STATS BAND (SIMULATED DATA)
          ========================================================================= -->
-    <section class="home-section-container" aria-label="Simulation Statistics">
+    <section class="home-section-container" aria-label="Simulated Statistics">
+      <div class="section-heading-center" style="margin-bottom: 1.5rem;">
+        <span class="badge-pill">Simulated Performance Metrics</span>
+      </div>
       <div class="stats-counter-grid" id="home-stats-counter">
         <div class="stat-counter-card">
           <div class="stat-counter-number" data-target="6">0</div>
           <div class="stat-counter-label">IATA Stages Tracked</div>
-          <div class="stat-counter-caption">Complete end-to-end simulation</div>
+          <div class="stat-counter-caption">Simulated end-to-end model</div>
         </div>
         <div class="stat-counter-card">
           <div class="stat-counter-number" data-target="120">0</div>
           <div class="stat-counter-suffix">+</div>
           <div class="stat-counter-label">Airports Simulated</div>
-          <div class="stat-counter-caption">Global hub network routing</div>
+          <div class="stat-counter-caption">Global simulated hub network</div>
         </div>
         <div class="stat-counter-card">
           <div class="stat-counter-number" data-target="99.9" data-decimal="1">0</div>
@@ -264,20 +274,20 @@
     </section>
 
     <!-- =========================================================================
-         (d) TESTIMONIALS CAROUSEL
+         (d) TESTIMONIALS CAROUSEL (SIMULATED REVIEWS)
          ========================================================================= -->
     <section class="home-section-container" aria-labelledby="section-testimonials-title">
       <div class="section-heading-center">
-        <span class="badge-pill">Passenger &amp; Student Reviews</span>
+        <span class="badge-pill">Simulated Reviews</span>
         <h2 class="section-title" id="section-testimonials-title">What Users Say</h2>
         <p class="section-subtitle">Simulated testimonials from travelers and aviation engineering students.</p>
       </div>
 
-      <div class="testimonials-carousel-wrapper" id="home-testimonials-carousel">
-        <div class="testimonial-track">
+      <div class="testimonials-carousel-wrapper" id="home-testimonials-carousel" role="region" aria-roledescription="carousel" aria-label="Simulated Passenger Reviews">
+        <div class="testimonial-track" aria-live="polite">
           <!-- Slide 1 -->
-          <div class="testimonial-slide active" data-slide="0">
-            <svg class="testimonial-quote-icon" viewBox="0 0 24 24" fill="currentColor">
+          <div class="testimonial-slide active" data-slide="0" role="group" aria-roledescription="slide" aria-label="Slide 1 of 3 (Simulated Review)">
+            <svg class="testimonial-quote-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
             </svg>
             <p class="testimonial-quote-text">
@@ -287,14 +297,14 @@
               <div class="testimonial-author-avatar">SJ</div>
               <div class="testimonial-author-meta">
                 <div class="testimonial-author-name">Sarah Jenkins</div>
-                <div class="testimonial-author-role">Frequent Flyer • London Heathrow</div>
+                <div class="testimonial-author-role">Frequent Flyer • London Heathrow (Simulated)</div>
               </div>
             </div>
           </div>
 
           <!-- Slide 2 -->
-          <div class="testimonial-slide" data-slide="1">
-            <svg class="testimonial-quote-icon" viewBox="0 0 24 24" fill="currentColor">
+          <div class="testimonial-slide" data-slide="1" role="group" aria-roledescription="slide" aria-label="Slide 2 of 3 (Simulated Review)">
+            <svg class="testimonial-quote-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
             </svg>
             <p class="testimonial-quote-text">
@@ -304,14 +314,14 @@
               <div class="testimonial-author-avatar">MC</div>
               <div class="testimonial-author-meta">
                 <div class="testimonial-author-name">Marcus Chen</div>
-                <div class="testimonial-author-role">Aerospace Engineering Undergrad • Singapore</div>
+                <div class="testimonial-author-role">Aerospace Engineering Undergrad • Singapore (Simulated)</div>
               </div>
             </div>
           </div>
 
           <!-- Slide 3 -->
-          <div class="testimonial-slide" data-slide="2">
-            <svg class="testimonial-quote-icon" viewBox="0 0 24 24" fill="currentColor">
+          <div class="testimonial-slide" data-slide="2" role="group" aria-roledescription="slide" aria-label="Slide 3 of 3 (Simulated Review)">
+            <svg class="testimonial-quote-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
             </svg>
             <p class="testimonial-quote-text">
@@ -321,17 +331,17 @@
               <div class="testimonial-author-avatar">PS</div>
               <div class="testimonial-author-meta">
                 <div class="testimonial-author-name">Priya Sharma</div>
-                <div class="testimonial-author-role">Flight Operations Trainee • Delhi IGI</div>
+                <div class="testimonial-author-role">Flight Operations Trainee • Delhi IGI (Simulated)</div>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Carousel Dots -->
-        <div class="carousel-dots-row" id="carousel-dots-container">
-          <button type="button" class="carousel-dot active" data-index="0" aria-label="Go to slide 1"></button>
-          <button type="button" class="carousel-dot" data-index="1" aria-label="Go to slide 2"></button>
-          <button type="button" class="carousel-dot" data-index="2" aria-label="Go to slide 3"></button>
+        <div class="carousel-dots-row" id="carousel-dots-container" role="tablist" aria-label="Testimonial slides">
+          <button type="button" class="carousel-dot active" data-index="0" aria-label="Go to slide 1" role="tab" aria-selected="true"></button>
+          <button type="button" class="carousel-dot" data-index="1" aria-label="Go to slide 2" role="tab" aria-selected="false"></button>
+          <button type="button" class="carousel-dot" data-index="2" aria-label="Go to slide 3" role="tab" aria-selected="false"></button>
         </div>
       </div>
     </section>
@@ -348,9 +358,9 @@
 
       <div class="faq-preview-grid">
         <div class="faq-preview-card">
-          <h3 class="faq-preview-question">Where can I find my 10-digit baggage tag number?</h3>
+          <h3 class="faq-preview-question">Where can I find my baggage tag number?</h3>
           <p class="faq-preview-snippet">
-            When you check in at the counter or bag drop, a sticker receipt with a barcode (e.g. LHR-123456) is handed to you or attached to your boarding pass.
+            When you check in at the counter or bag drop, a sticker receipt with a barcode (tag format: 3 airport letters and 6 digits, e.g. LHR-123456) is handed to you or attached to your boarding pass.
           </p>
           <a href="faq.html" class="faq-preview-link">Read full answer &rarr;</a>
         </div>
@@ -417,19 +427,25 @@
       // 1. Testimonials Carousel
       const slides = document.querySelectorAll('.testimonial-slide');
       const dots = document.querySelectorAll('.carousel-dot');
+      const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       let currentIdx = 0;
       let timer = null;
 
       function showSlide(index) {
         slides.forEach(s => s.classList.remove('active'));
-        dots.forEach(d => d.classList.remove('active'));
+        dots.forEach((d, i) => {
+          d.classList.remove('active');
+          d.setAttribute('aria-selected', i === index ? 'true' : 'false');
+        });
 
         currentIdx = (index + slides.length) % slides.length;
         slides[currentIdx].classList.add('active');
         dots[currentIdx].classList.add('active');
+        dots[currentIdx].setAttribute('aria-selected', 'true');
       }
 
       function startCarousel() {
+        if (prefersReducedMotion) return; // Respect prefers-reduced-motion
         if (timer) clearInterval(timer);
         timer = setInterval(() => {
           showSlide(currentIdx + 1);
@@ -448,9 +464,24 @@
       if (wrapper) {
         wrapper.addEventListener('mouseenter', () => clearInterval(timer));
         wrapper.addEventListener('mouseleave', () => startCarousel());
+
+        // Keyboard arrow navigation
+        wrapper.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            showSlide(currentIdx + 1);
+            if (!prefersReducedMotion) startCarousel();
+          } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            showSlide(currentIdx - 1);
+            if (!prefersReducedMotion) startCarousel();
+          }
+        });
       }
 
-      startCarousel();
+      if (!prefersReducedMotion) {
+        startCarousel();
+      }
 
       // 2. Animated Stats Band
       const statsSection = document.getElementById('home-stats-counter');

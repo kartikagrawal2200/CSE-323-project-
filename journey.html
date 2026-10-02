@@ -1,9 +1,16 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Baggage Journey - AeroSim Aviation</title>
+  <title>Baggage Journey Dashboard - AeroSim Aviation</title>
+  <meta name="description" content="Live baggage tracking telemetry dashboard with interactive route map, 6-stage lifecycle progress meter, and step advancement simulator.">
+  <!-- Open Graph / Social Tags -->
+  <meta property="og:title" content="Baggage Journey Dashboard - AeroSim Aviation">
+  <meta property="og:description" content="Live baggage tracking telemetry dashboard with interactive route map and 6-stage lifecycle progress meter.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kartikagrawal2200.github.io/CSE-323-project-/journey.html">
+  <meta property="og:site_name" content="AeroSim Aviation">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
 </head>
@@ -278,7 +285,7 @@
           </div>
 
           <!-- Dynamic Timeline Mount Point -->
-          <div class="timeline-container" id="baggage-timeline">
+          <div class="timeline-container" id="baggage-timeline" aria-live="polite">
             <!-- Rendered dynamically by app.js -->
           </div>
 
@@ -300,7 +307,7 @@
   </main>
 
   <!-- Printable Tracking Receipt Modal/Section -->
-  <div id="print-receipt-modal" class="print-receipt-modal" style="display: none;">
+  <div id="print-receipt-modal" class="print-receipt-modal" role="dialog" aria-modal="true" aria-label="Baggage Claim Receipt" style="display: none;">
     <div class="receipt-paper" id="receipt-paper">
       <div class="receipt-header">
         <div class="receipt-logo">
