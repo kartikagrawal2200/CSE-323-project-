@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baggage Stage Details - AeroSim Aviation</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
+</head>
+<body>
+  <!-- Background with Airplane in climb & tarmac overlay -->
+  <div class="page-bg bg-climb"></div>
+  <div class="page-overlay page-overlay-subtle"></div>
+
+  <!-- Shared Header Navigation -->
+  <div id="site-header"></div>
+
+  <!-- Stage Detail Main Content -->
+  <main id="main-content" class="main-content">
+    <!-- Breadcrumb Bar -->
+    <div class="breadcrumb-bar">
+      <a href="index.html" class="breadcrumb-link" title="Home">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+      </a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <a href="journey.html" class="breadcrumb-link">Baggage Dashboard</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <span class="breadcrumb-current" id="stage-breadcrumb-num">Stage 1</span>
+    </div>
+
+    <!-- Top Horizontal Progress Stepper Bar -->
+    <div class="horizontal-stepper-wrapper">
+      <div class="horizontal-stepper" id="horizontal-stepper">
+        <!-- Step 1 -->
+        <a href="stage.html?step=1" class="h-step-item" data-step="1">
+          <div class="h-step-circle">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <span class="h-step-badge-num">1</span>
+          <span class="h-step-label">CHECK-IN COMPLETE</span>
+        </a>
+
+        <!-- Step 2 -->
+        <a href="stage.html?step=2" class="h-step-item" data-step="2">
+          <div class="h-step-circle">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="6" width="16" height="15" rx="3"></rect><path d="M9 6V4a3 3 0 0 1 6 0v2"></path></svg>
+          </div>
+          <span class="h-step-badge-num">2</span>
+          <span class="h-step-label">BAGGAGE HANDLING</span>
+        </a>
+
+        <!-- Step 3 -->
+        <a href="stage.html?step=3" class="h-step-item" data-step="3">
+          <div class="h-step-circle">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z"></path></svg>
+          </div>
+          <span class="h-step-badge-num">3</span>
+          <span class="h-step-label">AIRCRAFT LOADING</span>
+        </a>
+
+        <!-- Step 4 -->
+        <a href="stage.html?step=4" class="h-step-item" data-step="4">
+          <div class="h-step-circle">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path></svg>
+          </div>
+          <span class="h-step-badge-num">4</span>
+          <span class="h-step-label">FLIGHT IN TRANSIT</span>
+        </a>
+
+        <!-- Step 5 -->
+        <a href="stage.html?step=5" class="h-step-item" data-step="5">
+          <div class="h-step-circle">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m16.5 9.4 4.5-2.8L12 2 3 6.6l4.5 2.8m0 0L12 12.2l4.5-2.8m-9 0v6.8L12 19v-6.8m0 6.8 4.5-2.8V9.4"></path></svg>
+          </div>
+          <span class="h-step-badge-num">5</span>
+          <span class="h-step-label">AIRCRAFT UNLOADING</span>
+        </a>
+
+        <!-- Step 6 -->
+        <a href="stage.html?step=6" class="h-step-item" data-step="6">
+          <div class="h-step-circle">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="12" rx="2"></rect><circle cx="7" cy="18" r="2"></circle><circle cx="17" cy="18" r="2"></circle><path d="M7 6V4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"></path></svg>
+          </div>
+          <span class="h-step-badge-num">6</span>
+          <span class="h-step-label">ARRIVAL CLAIM STAGE</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Stage Presentation Card -->
+    <div class="stage-main-card">
+      <!-- Left Photo Container -->
+      <div class="stage-image-container">
+        <img 
+          id="stage-img" 
+          src="assets/stage1.jpg" 
+          alt="Baggage stage visual" 
+          class="stage-image-display"
+        >
+        <div id="stage-img-caption" class="stage-caption-badge" style="display: none;"></div>
+      </div>
+
+      <!-- Right Details Column -->
+      <div class="stage-details-content">
+        <div class="stage-status-pill" id="stage-status-pill">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span id="stage-status-text">Completed</span>
+        </div>
+
+        <h1 class="stage-heading-title" id="stage-title">1. CHECK-IN COMPLETE</h1>
+        <p class="stage-heading-desc" id="stage-desc">
+          Your baggage has been successfully checked in at the airport.
+        </p>
+
+        <!-- Subcard with Bag ID and Status -->
+        <div class="stage-subcard">
+          <div class="stage-subcard-icon" id="stage-subcard-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="4" y="6" width="16" height="15" rx="3"></rect>
+              <path d="M9 6V4a3 3 0 0 1 6 0v2"></path>
+            </svg>
+          </div>
+
+          <div class="stage-subcard-col">
+            <span class="stage-subcard-label">Bag ID</span>
+            <span class="stage-subcard-val display-tag-id" id="stage-tag-display">LHR-123456</span>
+          </div>
+
+          <div class="stage-subcard-divider"></div>
+
+          <div class="stage-subcard-col">
+            <span class="stage-subcard-label">Status</span>
+            <span class="stage-subcard-status-val" id="stage-subcard-status">
+              Checked In
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <!-- Telemetry Metadata Strip (Flight, Route, Timestamp) -->
+        <div class="stage-telemetry-strip" id="stage-telemetry-strip">
+          <div class="stage-telemetry-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z"></path></svg>
+            <span id="stage-flight-display">LH247 • LHR &rarr; FRA</span>
+          </div>
+          <div class="stage-telemetry-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span id="stage-time-display">Today, 06:45 GMT - Stage Confirmed</span>
+          </div>
+        </div>
+
+        <!-- Warning Alert Banner for Stage 6 -->
+        <div class="stage-warning-banner" id="stage-warning-banner" style="display: none;">
+          <div class="stage-warning-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#f59e0b">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13" stroke="#fff" stroke-width="2" stroke-linecap="round"></line>
+              <circle cx="12" cy="17" r="1" fill="#fff"></circle>
+            </svg>
+          </div>
+          <span class="stage-warning-text">Failure to identify a bag's stage can result in delays.</span>
+        </div>
+
+        <!-- Back to Dashboard CTA Button -->
+        <a href="journey.html" class="btn-back-dashboard" id="btn-back-dashboard">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Back to Dashboard
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Navigation Pagination between stages -->
+    <div class="stage-pagination-row">
+      <button type="button" class="btn-stage-nav" id="btn-prev-stage">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        Previous Stage
+      </button>
+
+      <button type="button" class="btn-stage-nav" id="btn-next-stage">
+        Next Stage
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
+  </main>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Stage Detail Page Controller
+    const STAGE_ICONS = {
+      1: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>`,
+      2: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="6" width="16" height="15" rx="3"></rect><path d="M9 6V4a3 3 0 0 1 6 0v2"></path></svg>`,
+      3: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z"></path></svg>`,
+      4: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path></svg>`,
+      5: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m16.5 9.4 4.5-2.8L12 2 3 6.6l4.5 2.8m0 0L12 12.2l4.5-2.8m-9 0v6.8L12 19v-6.8m0 6.8 4.5-2.8V9.4"></path></svg>`,
+      6: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="12" rx="2"></rect><circle cx="7" cy="18" r="2"></circle><circle cx="17" cy="18" r="2"></circle><path d="M7 6V4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"></path></svg>`
+    };
+
+    const STAGE_CONFIGS = {
+      1: {
+        num: 1,
+        title: '1. CHECK-IN COMPLETE',
+        desc: 'Your baggage has been successfully checked in at the airport.',
+        image: 'assets/stage1.jpg',
+        statusPill: 'Completed',
+        statusPillStyle: 'background: #ecfdf5; color: #059669; border-color: #a7f3d0;',
+        subcardStatus: 'Checked In',
+        subcardHasCheck: true,
+        iconType: 'bag',
+        showWarning: false
+      },
+      2: {
+        num: 2,
+        title: '2. BAGGAGE HANDLING',
+        desc: 'Your baggage is being handled and moved to the aircraft.',
+        image: 'assets/stage2.jpg',
+        statusPill: 'Completed',
+        statusPillStyle: 'background: #ecfdf5; color: #059669; border-color: #a7f3d0;',
+        subcardStatus: 'Completed',
+        subcardHasCheck: true,
+        iconType: 'bag',
+        showWarning: false
+      },
+      3: {
+        num: 3,
+        title: '3. AIRCRAFT LOADING',
+        desc: 'Your baggage has been loaded onto the aircraft.',
+        image: 'assets/stage3.jpg',
+        statusPill: 'Completed',
+        statusPillStyle: 'background: #ecfdf5; color: #059669; border-color: #a7f3d0;',
+        subcardStatus: 'Completed',
+        subcardHasCheck: true,
+        iconType: 'plane',
+        showWarning: false
+      },
+      4: {
+        num: 4,
+        title: '4. FLIGHT IN TRANSIT',
+        desc: 'Your baggage is currently in transit on the flight.',
+        image: 'assets/stage4.jpg',
+        statusPill: 'Completed',
+        statusPillStyle: 'background: #ecfdf5; color: #059669; border-color: #a7f3d0;',
+        subcardStatus: 'Completed',
+        subcardHasCheck: true,
+        iconType: 'plane',
+        showWarning: false
+      },
+      5: {
+        num: 5,
+        title: '5. AIRCRAFT UNLOADING',
+        desc: 'Your baggage is being unloaded from the aircraft.',
+        image: 'assets/stage5.jpg',
+        statusPill: 'Completed',
+        statusPillStyle: 'background: #ecfdf5; color: #059669; border-color: #a7f3d0;',
+        subcardStatus: 'Completed',
+        subcardHasCheck: true,
+        iconType: 'bag',
+        showWarning: false
+      },
+      6: {
+        num: 6,
+        title: '6. ARRIVAL CLAIM STAGE',
+        desc: 'Your baggage is on its way to the baggage claim area.',
+        image: 'assets/stage6.jpg',
+        statusPill: 'Pending',
+        statusPillStyle: 'background: #eff6ff; color: #0284c7; border: 1.5px solid #bfdbfe;',
+        subcardStatus: 'Pending',
+        subcardHasCheck: false,
+        iconType: 'bag',
+        showWarning: true
+      }
+    };
+
+    function loadStage(stepNum) {
+      stepNum = parseInt(stepNum, 10);
+      if (!STAGE_CONFIGS[stepNum]) stepNum = 1;
+
+      const conf = STAGE_CONFIGS[stepNum];
+
+      // Retrieve current baggage progress from localStorage/data
+      let bagData = null;
+      const params = new URLSearchParams(window.location.search);
+      const tagParam = params.get('tag');
+
+      if (window.AeroSimData) {
+        if (tagParam) {
+          bagData = window.AeroSimData.getBagByTag(tagParam);
+        }
+        if (!bagData) {
+          bagData = window.AeroSimData.getActiveBagData();
+        }
+        if (bagData && (bagData.tagId || bagData.bagId)) {
+          const full = window.AeroSimData.getBagByTag(bagData.tagId || bagData.bagId);
+          if (full) bagData = { ...full, ...bagData };
+        }
+      } else {
+        try {
+          const raw = localStorage.getItem('aerosim_bag_data');
+          if (raw) bagData = JSON.parse(raw);
+        } catch (e) {}
+      }
+
+      const activeTag = (bagData && (bagData.tagId || bagData.bagId)) ? (bagData.tagId || bagData.bagId) : 'LHR-123456';
+      const flightNum = (bagData && bagData.flight) ? bagData.flight : 'LH247';
+      const routeText = (bagData && bagData.origin && bagData.destination) 
+        ? `${bagData.origin.split('-')[0].trim()} &rarr; ${bagData.destination.split('-')[0].trim()}`
+        : ((bagData && bagData.originCode && bagData.destCode) ? `${bagData.originCode} &rarr; ${bagData.destCode}` : 'LHR &rarr; FRA');
+
+      // Update Tag and Flight details in UI
+      const tagDisplays = document.querySelectorAll('.display-tag-id');
+      tagDisplays.forEach(el => el.textContent = activeTag);
+      
+      const flightDisplay = document.getElementById('stage-flight-display');
+      if (flightDisplay) {
+        const airline = (bagData && bagData.airline) ? bagData.airline : 'AeroSim Partner';
+        flightDisplay.innerHTML = `${airline} • Flight ${flightNum} (${routeText})`;
+      }
+
+      const timeDisplay = document.getElementById('stage-time-display');
+      if (timeDisplay) {
+        let ts = (bagData && bagData.timestamps && bagData.timestamps[stepNum - 1]) ? bagData.timestamps[stepNum - 1] : null;
+        if (!ts && bagData && bagData.steps && bagData.steps[stepNum - 1] && bagData.steps[stepNum - 1].timestamp) {
+          ts = bagData.steps[stepNum - 1].timestamp;
+        }
+        if (ts) {
+          timeDisplay.textContent = ts;
+        } else if (stepNum - 1 < (bagData ? bagData.currentStepIndex : 0)) {
+          timeDisplay.textContent = `Completed earlier during apron operations`;
+        } else if (stepNum - 1 === (bagData ? bagData.currentStepIndex : 0)) {
+          timeDisplay.textContent = `Active now - Processing live`;
+        } else {
+          timeDisplay.textContent = `Pending completion of previous flight stage`;
+        }
+      }
+
+      // Update Back to Dashboard button to preserve tag
+      const backBtn = document.getElementById('btn-back-dashboard');
+      if (backBtn) {
+        backBtn.href = `journey.html?tag=${encodeURIComponent(activeTag)}`;
+      }
+
+      const currentStepIndex = (bagData && typeof bagData.currentStepIndex === 'number') ? bagData.currentStepIndex : 0;
+      const stepIdx = stepNum - 1; // 0-based index
+
+      // Update Breadcrumb
+      document.getElementById('stage-breadcrumb-num').textContent = `Stage ${stepNum}`;
+
+      // Update Texts & Image
+      document.getElementById('stage-title').textContent = conf.title;
+      document.getElementById('stage-desc').textContent = conf.desc;
+      
+      const stageImg = document.getElementById('stage-img');
+      const stageCaption = document.getElementById('stage-img-caption');
+      stageImg.src = conf.image;
+
+      // Distinguish Stage 5 from Stage 3 visually
+      if (stepNum === 5) {
+        stageImg.classList.add('stage-5-distinct');
+        if (stageCaption) {
+          stageCaption.style.display = 'flex';
+          stageCaption.innerHTML = `
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="m2 16 10-4 10 4-10 4z"></path><path d="M12 12V3"></path><path d="m8 7 4-4 4 4"></path>
+            </svg>
+            <span>Stage 5: Apron Handling &amp; Cargo Offload Bay</span>
+          `;
+        }
+      } else {
+        stageImg.classList.remove('stage-5-distinct');
+        if (stageCaption) {
+          stageCaption.style.display = 'none';
+        }
+      }
+
+      // Dynamic Status Determination based on real currentStepIndex
+      let isCompleted = stepIdx < currentStepIndex;
+      let isInProgress = stepIdx === currentStepIndex;
+      let isPending = stepIdx > currentStepIndex;
+
+      // Status Pill
+      const pill = document.getElementById('stage-status-pill');
+      if (isCompleted) {
+        pill.style = 'background: #ecfdf5; color: #059669; border: 1.5px solid #a7f3d0;';
+        pill.innerHTML = `
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>Completed</span>
+        `;
+      } else if (isInProgress) {
+        pill.style = 'background: #fffbeb; color: #d97706; border: 1.5px solid #fde68a;';
+        pill.innerHTML = `
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span>In Progress</span>
+        `;
+      } else {
+        pill.style = 'background: #f8fafc; color: #64748b; border: 1.5px solid #cbd5e1;';
+        pill.innerHTML = `
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span>Pending</span>
+        `;
+      }
+      
+      // Subcard Status
+      const subStatus = document.getElementById('stage-subcard-status');
+      if (isCompleted) {
+        subStatus.style.color = '#059669';
+        subStatus.innerHTML = `
+          Completed
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        `;
+      } else if (isInProgress) {
+        subStatus.style.color = '#d97706';
+        subStatus.innerHTML = `
+          In Progress
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        `;
+      } else {
+        subStatus.style.color = '#64748b';
+        subStatus.innerHTML = `Pending`;
+      }
+
+      // Warning Banner
+      const warningBanner = document.getElementById('stage-warning-banner');
+      if (conf.showWarning) {
+        warningBanner.style.display = 'flex';
+      } else {
+        warningBanner.style.display = 'none';
+      }
+
+      // Icon in Subcard
+      const iconBox = document.getElementById('stage-subcard-icon');
+      if (conf.iconType === 'plane') {
+        iconBox.innerHTML = `
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z"></path>
+          </svg>
+        `;
+      } else {
+        iconBox.innerHTML = `
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="4" y="6" width="16" height="15" rx="3"></rect>
+            <path d="M9 6V4a3 3 0 0 1 6 0v2"></path>
+          </svg>
+        `;
+      }
+
+      // Update Stepper state matching screenshot progression & current bag progress
+      const stepItems = document.querySelectorAll('.h-step-item');
+      stepItems.forEach(item => {
+        const itemStep = parseInt(item.dataset.step, 10);
+        const itemIdx = itemStep - 1;
+        item.classList.remove('completed', 'active', 'pending', 'line-completed', 'current-view');
+        const circle = item.querySelector('.h-step-circle');
+
+        if (itemIdx < currentStepIndex) {
+          // Completed
+          item.classList.add('completed', 'line-completed');
+          circle.innerHTML = STAGE_ICONS[itemStep];
+        } else if (itemIdx === currentStepIndex) {
+          // In Progress in reality
+          item.classList.add('active');
+          circle.innerHTML = STAGE_ICONS[itemStep];
+        } else {
+          // Pending
+          item.classList.add('pending');
+          circle.innerHTML = STAGE_ICONS[itemStep];
+        }
+
+        // Highlight the currently viewed stage
+        if (itemStep === stepNum) {
+          item.classList.add('current-view');
+        }
+      });
+
+      // Update URL without page reload
+      const newUrl = new URL(window.location);
+      newUrl.searchParams.set('step', stepNum);
+      if (activeTag) newUrl.searchParams.set('tag', activeTag);
+      window.history.replaceState({}, '', newUrl);
+
+      // Previous / Next button listeners (disabled at bounds, no wrap)
+      const prevBtn = document.getElementById('btn-prev-stage');
+      const nextBtn = document.getElementById('btn-next-stage');
+
+      if (prevBtn) {
+        if (stepNum <= 1) {
+          prevBtn.disabled = true;
+          prevBtn.classList.add('disabled');
+          prevBtn.onclick = null;
+        } else {
+          prevBtn.disabled = false;
+          prevBtn.classList.remove('disabled');
+          prevBtn.onclick = () => loadStage(stepNum - 1);
+        }
+      }
+
+      if (nextBtn) {
+        if (stepNum >= 6) {
+          nextBtn.disabled = true;
+          nextBtn.classList.add('disabled');
+          nextBtn.onclick = null;
+        } else {
+          nextBtn.disabled = false;
+          nextBtn.classList.remove('disabled');
+          nextBtn.onclick = () => loadStage(stepNum + 1);
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const initialStep = parseInt(params.get('step') || '1', 10);
+      loadStage(initialStep);
+
+      // Stepper click handler
+      document.querySelectorAll('.h-step-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          loadStage(item.dataset.step);
+        });
+      });
+    });
+  </script>
+
+  <!-- Shared Footer -->
+  <div id="site-footer"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/layout.js"></script>
+</body>
+</html>

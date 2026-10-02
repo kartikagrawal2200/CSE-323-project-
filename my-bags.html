@@ -1,0 +1,415 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Tracked Bags - AeroSim Aviation</title>
+  <meta name="description" content="Manage and monitor all your tracked baggage tags in one central dashboard with live progress meters and flight route information.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
+</head>
+<body>
+  <div class="page-bg bg-terminal"></div>
+  <div class="page-overlay page-overlay-subtle"></div>
+
+  <!-- Shared Header -->
+  <div id="site-header"></div>
+
+  <main id="main-content" class="main-content">
+    <!-- Breadcrumb Bar -->
+    <div class="breadcrumb-bar">
+      <a href="index.html" class="breadcrumb-link" title="Home">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+      </a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <span class="breadcrumb-current">My Tracked Bags</span>
+    </div>
+
+    <!-- Header Area -->
+    <div class="my-bags-header-area">
+      <div>
+        <span class="badge-pill">Personal Baggage Hub</span>
+        <h1 class="info-hero-title" style="text-align: left; margin-top: 8px;">My Tracked Bags</h1>
+        <p class="info-hero-subtitle" style="text-align: left; margin: 4px 0 0 0;">
+          Logged in as <strong id="my-bags-current-user">User</strong> • Real-time status for all registered luggage tags.
+        </p>
+      </div>
+
+      <!-- Add Bag Quick Bar -->
+      <div class="add-bag-card">
+        <form id="form-add-bag" class="add-bag-form">
+          <div class="input-with-icon" style="flex: 1;">
+            <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="4" y="6" width="16" height="15" rx="3"></rect>
+              <path d="M9 6V4a3 3 0 0 1 6 0v2"></path>
+            </svg>
+            <input 
+              type="text" 
+              id="input-new-tag" 
+              class="auth-input" 
+              placeholder="Enter Tag ID (e.g. DXB-309481)" 
+              required
+            >
+          </div>
+          <button type="submit" class="btn-primary-action" id="btn-add-bag">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Add Bag
+          </button>
+        </form>
+        <div id="add-bag-error" class="field-error-msg" style="margin-top: 6px;"></div>
+      </div>
+    </div>
+
+    <!-- Filter / Stat Chips -->
+    <div class="my-bags-filter-bar">
+      <div class="my-bags-counts">
+        <span class="count-chip active" data-filter="all" id="chip-all">All (<span id="count-all">0</span>)</span>
+        <span class="count-chip" data-filter="in-progress" id="chip-inprogress">In Progress (<span id="count-inprogress">0</span>)</span>
+        <span class="count-chip" data-filter="completed" id="chip-completed">Completed (<span id="count-completed">0</span>)</span>
+      </div>
+      <div class="quick-add-demos">
+        <span style="font-size: 0.8rem; color: var(--text-muted);">Quick Add Demo:</span>
+        <button type="button" class="btn-quick-pill" data-tag="LHR-123456">+ LHR-123456</button>
+        <button type="button" class="btn-quick-pill" data-tag="JFK-882194">+ JFK-882194</button>
+        <button type="button" class="btn-quick-pill" data-tag="IDR-100245">+ IDR-100245</button>
+      </div>
+    </div>
+
+    <!-- Bags Grid Container -->
+    <div class="my-bags-grid" id="my-bags-grid">
+      <!-- Populated dynamically via JavaScript -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="my-bags-empty" class="my-bags-empty-state" style="display: none;">
+      <div class="empty-state-illustration">
+        <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="6" width="16" height="15" rx="3"></rect>
+          <path d="M9 6V4a3 3 0 0 1 6 0v2"></path>
+          <line x1="9" y1="12" x2="15" y2="12"></line>
+          <circle cx="9" cy="18" r="1"></circle>
+          <circle cx="15" cy="18" r="1"></circle>
+        </svg>
+      </div>
+      <h2 style="font-size: 1.3rem; font-weight: 800; color: var(--navy); margin-top: 1rem;">No Baggage Tags Tracked Yet</h2>
+      <p style="color: var(--text-secondary); max-width: 420px; margin: 8px auto 20px auto;">
+        You have no registered bags in your active tracking list. Add a tag ID above or select a preset to monitor live progress.
+      </p>
+      <div style="display: flex; gap: 12px; justify-content: center;">
+        <button type="button" class="btn-cta-track" id="btn-seed-my-bags">
+          Load Sample Baggage List
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <div id="site-footer"></div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // My Bags Page Controller
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Auth Guard
+      if (typeof window.requireLogin === 'function') {
+        window.requireLogin('my-bags.html');
+      }
+
+      const currentUser = localStorage.getItem('aerosim_user') || 'User2244';
+      const userDisplay = document.getElementById('my-bags-current-user');
+      if (userDisplay) userDisplay.textContent = currentUser;
+
+      const userBagsKey = `aerosim_user_bags_${currentUser}`;
+      
+      // Default seeded bags for this user if none exist
+      function getUserBags() {
+        try {
+          const stored = localStorage.getItem(userBagsKey);
+          if (stored) return JSON.parse(stored);
+        } catch (e) {
+          console.error(e);
+        }
+        const initialTags = ['LHR-123456', 'JFK-882194', 'DXB-309481'];
+        localStorage.setItem(userBagsKey, JSON.stringify(initialTags));
+        return initialTags;
+      }
+
+      function saveUserBags(tags) {
+        localStorage.setItem(userBagsKey, JSON.stringify(tags));
+      }
+
+      const gridEl = document.getElementById('my-bags-grid');
+      const emptyEl = document.getElementById('my-bags-empty');
+      const countAllEl = document.getElementById('count-all');
+      const countProgEl = document.getElementById('count-inprogress');
+      const countCompEl = document.getElementById('count-completed');
+      let activeFilter = 'all';
+
+      function renderBags() {
+        const tags = getUserBags();
+        const allBagsMap = window.AeroSimData ? window.AeroSimData.getAllBags() : {};
+        
+        let inProgressCount = 0;
+        let completedCount = 0;
+
+        const bagObjects = tags.map(tag => {
+          let bag = allBagsMap[tag];
+          if (!bag) {
+            bag = {
+              tagId: tag,
+              airline: 'Commercial Flight',
+              flight: 'FL100',
+              originCode: 'DEP',
+              originCity: 'Origin Hub',
+              destCode: 'ARR',
+              destCity: 'Destination Hub',
+              passenger: currentUser,
+              weightKg: 20.0,
+              bagColor: 'Standard',
+              currentStepIndex: 0,
+              timestamps: []
+            };
+          }
+          if (bag.currentStepIndex >= 5) completedCount++;
+          else inProgressCount++;
+          return bag;
+        });
+
+        if (countAllEl) countAllEl.textContent = tags.length;
+        if (countProgEl) countProgEl.textContent = inProgressCount;
+        if (countCompEl) countCompEl.textContent = completedCount;
+
+        if (tags.length === 0) {
+          gridEl.innerHTML = '';
+          emptyEl.style.display = 'flex';
+          return;
+        }
+
+        emptyEl.style.display = 'none';
+
+        const filtered = bagObjects.filter(bag => {
+          if (activeFilter === 'completed') return bag.currentStepIndex >= 5;
+          if (activeFilter === 'in-progress') return bag.currentStepIndex < 5;
+          return true;
+        });
+
+        if (filtered.length === 0) {
+          gridEl.innerHTML = `
+            <div style="grid-column: 1 / -1; padding: 40px; text-align: center; color: var(--text-secondary);">
+              No bags match the selected "${activeFilter}" filter.
+            </div>
+          `;
+          return;
+        }
+
+        gridEl.innerHTML = filtered.map(bag => {
+          const isDone = bag.currentStepIndex >= 5;
+          const statusText = isDone ? 'Completed' : `Stage ${bag.currentStepIndex + 1} of 6`;
+          const statusClass = isDone ? 'status-badge-completed' : 'status-badge-inprogress';
+          const pct = Math.round(((bag.currentStepIndex + 1) / 6) * 100);
+          const stageName = window.AeroSimData ? window.AeroSimData.STAGES[bag.currentStepIndex].title : 'In Progress';
+          const lastTime = (bag.timestamps && bag.timestamps[bag.currentStepIndex]) 
+            ? bag.timestamps[bag.currentStepIndex] 
+            : 'Active Telemetry Logged';
+
+          return `
+            <div class="my-bag-card">
+              <!-- Header Row -->
+              <div class="my-bag-card-header">
+                <div>
+                  <span class="my-bag-flight-chip">${bag.airline} • ${bag.flight}</span>
+                  <div class="my-bag-tag-title">${bag.tagId}</div>
+                </div>
+                <span class="${statusClass}">
+                  ${isDone 
+                    ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+                    : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>'
+                  }
+                  ${statusText}
+                </span>
+              </div>
+
+              <!-- Route Display -->
+              <div class="my-bag-route-strip">
+                <div class="route-point">
+                  <span class="route-code">${bag.originCode}</span>
+                  <span class="route-city">${bag.originCity}</span>
+                </div>
+                <div class="route-plane-divider">
+                  <span class="route-line"></span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--primary)"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+                  <span class="route-line"></span>
+                </div>
+                <div class="route-point" style="text-align: right;">
+                  <span class="route-code">${bag.destCode}</span>
+                  <span class="route-city">${bag.destCity}</span>
+                </div>
+              </div>
+
+              <!-- Progress Bar -->
+              <div class="my-bag-progress-wrap">
+                <div class="progress-labels">
+                  <span class="current-stage-name">${stageName}</span>
+                  <span class="progress-pct">${pct}%</span>
+                </div>
+                <div class="progress-track-bg">
+                  <div class="progress-bar-fill" style="width: ${pct}%;"></div>
+                </div>
+              </div>
+
+              <!-- Specs Meta -->
+              <div class="my-bag-meta-grid">
+                <div class="meta-item">
+                  <span class="meta-label">Passenger</span>
+                  <span class="meta-val">${bag.passenger}</span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">Weight</span>
+                  <span class="meta-val">${bag.weightKg} kg</span>
+                </div>
+                <div class="meta-item" style="grid-column: 1 / -1;">
+                  <span class="meta-label">Last Status Update</span>
+                  <span class="meta-val" style="font-size: 0.8rem; color: var(--text-secondary);">${lastTime}</span>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="my-bag-actions-row">
+                <a href="journey.html?tag=${encodeURIComponent(bag.tagId)}" class="btn-nav-primary" style="flex: 1; text-align: center;">
+                  View Journey
+                </a>
+                <button type="button" class="btn-remove-bag" data-tag="${bag.tagId}" title="Remove from tracking list">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        // Attach remove button listeners
+        document.querySelectorAll('.btn-remove-bag').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const tagToRemove = btn.getAttribute('data-tag');
+            if (typeof window.showConfirmModal === 'function') {
+              window.showConfirmModal({
+                title: 'Remove Bag from Tracking List',
+                message: `Are you sure you want to remove tag ${tagToRemove} from your active dashboard? The simulation data will remain intact in the database.`,
+                confirmText: 'Remove Bag',
+                confirmClass: 'btn-danger',
+                onConfirm: () => {
+                  let cur = getUserBags().filter(t => t !== tagToRemove);
+                  saveUserBags(cur);
+                  if (typeof window.showToast === 'function') {
+                    window.showToast(`Removed tag ${tagToRemove}`);
+                  }
+                  renderBags();
+                }
+              });
+            } else {
+              let cur = getUserBags().filter(t => t !== tagToRemove);
+              saveUserBags(cur);
+              renderBags();
+            }
+          });
+        });
+      }
+
+      renderBags();
+
+      // Add Bag Form Submit
+      const addForm = document.getElementById('form-add-bag');
+      const tagInput = document.getElementById('input-new-tag');
+      const errEl = document.getElementById('add-bag-error');
+
+      if (addForm) {
+        addForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          errEl.textContent = '';
+          const rawTag = tagInput.value.trim().toUpperCase();
+
+          if (!/^[A-Z]{3}-\d{6}$/.test(rawTag)) {
+            errEl.textContent = 'Invalid format. Must match 3 uppercase letters, a dash, and 6 digits (e.g. LHR-123456).';
+            return;
+          }
+
+          let tags = getUserBags();
+          if (tags.includes(rawTag)) {
+            errEl.textContent = `Tag ${rawTag} is already in your tracking dashboard.`;
+            return;
+          }
+
+          // Check if bag exists in data, otherwise register dynamic mock
+          if (window.AeroSimData && !window.AeroSimData.getBagByTag(rawTag)) {
+            const parts = rawTag.split('-');
+            const origin = parts[0];
+            const dynamicBag = {
+              tagId: rawTag,
+              airline: 'AeroSim Partner Flight',
+              flight: 'AS' + Math.floor(100 + Math.random() * 899),
+              originCode: origin,
+              originCity: `${origin} Airport`,
+              destCode: 'LHR',
+              destCity: 'London Heathrow',
+              passenger: currentUser,
+              weightKg: 22.0,
+              bagColor: 'Jet Black',
+              departureTime: '10:00 GMT',
+              arrivalTime: '14:30 GMT',
+              gate: 'Gate 12',
+              carousel: 'Belt 3',
+              currentStepIndex: 0,
+              timestamps: ['Today, 08:30 GMT - Check-in registered']
+            };
+            window.AeroSimData.saveBag(dynamicBag);
+          }
+
+          tags.unshift(rawTag);
+          saveUserBags(tags);
+          tagInput.value = '';
+          if (typeof window.showToast === 'function') {
+            window.showToast(`Baggage tag ${rawTag} added successfully!`);
+          }
+          renderBags();
+        });
+      }
+
+      // Filter chips
+      const chips = document.querySelectorAll('.count-chip');
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          chips.forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          activeFilter = chip.getAttribute('data-filter');
+          renderBags();
+        });
+      });
+
+      // Quick add preset buttons
+      document.querySelectorAll('.btn-quick-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const t = btn.getAttribute('data-tag');
+          tagInput.value = t;
+          tagInput.focus();
+        });
+      });
+
+      // Sample seed button in empty state
+      const seedBtn = document.getElementById('btn-seed-my-bags');
+      if (seedBtn) {
+        seedBtn.addEventListener('click', () => {
+          saveUserBags(['LHR-123456', 'JFK-882194', 'DXB-309481', 'DEL-557201']);
+          renderBags();
+          if (typeof window.showToast === 'function') {
+            window.showToast('Loaded 4 active baggage tracks');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

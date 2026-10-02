@@ -1,0 +1,12 @@
+# OS and system files
+.DS_Store
+Thumbs.db
+
+# IDE and environment
+.vscode/
+.idea/
+.gemini/
+*.log
+
+# Duplicate folder backup if present
+CSE326 CA2/

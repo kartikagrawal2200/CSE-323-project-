@@ -1,0 +1,208 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About AeroSim Aviation - Baggage Handling Simulator</title>
+  <meta name="description" content="Learn about AeroSim Aviation: An advanced academic baggage handling and airport logistics simulation project modeling IATA baggage tracking standards.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
+</head>
+<body>
+  <div class="page-bg bg-terminal"></div>
+  <div class="page-overlay page-overlay-subtle"></div>
+
+  <!-- Shared Header -->
+  <div id="site-header"></div>
+
+  <main id="main-content" class="main-content">
+    <!-- Breadcrumb Bar -->
+    <div class="breadcrumb-bar">
+      <a href="index.html" class="breadcrumb-link" title="Home">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+      </a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <span class="breadcrumb-current">About AeroSim</span>
+    </div>
+
+    <!-- About Hero Section -->
+    <div class="info-hero-section">
+      <span class="badge-pill">Academic Simulation Project</span>
+      <h1 class="info-hero-title">About AeroSim Aviation</h1>
+      <p class="info-hero-subtitle">
+        Bridging the gap between passenger visibility and behind-the-scenes airport baggage handling logistics.
+      </p>
+    </div>
+
+    <!-- Mission & Overview Card -->
+    <div class="content-card">
+      <div class="card-section-header">
+        <div class="feature-icon-wrapper">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+        </div>
+        <div>
+          <h2 class="card-section-title">Our Mission &amp; Purpose</h2>
+          <p class="card-section-desc">Demystifying air transit operations through interactive simulation.</p>
+        </div>
+      </div>
+      <div class="text-body-prose">
+        <p>
+          Every year, commercial airlines transport billions of checked bags worldwide. While passengers only interact with the check-in desk and arrival carousel, an intricate network of barcode sortation trays, high-speed automated conveyors, multi-level security X-ray stations, and ground apron handlers coordinate in sync to ensure bags safely reach their flight.
+        </p>
+        <p>
+          <strong>AeroSim Aviation</strong> was created as an educational web platform simulating the complete 6-stage IATA baggage handling lifecycle. By simulating realistic tracking tags, flight transfers, status changes, and exception reporting, this project gives aviation students and passengers transparent insights into how airport baggage sortation works in practice.
+        </p>
+        <div class="academic-disclaimer-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span><strong>Notice:</strong> AeroSim Aviation is an educational student project for simulation and demonstration purposes only. It is not affiliated with any commercial airline or airport authority.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Animated Stat Counters Band -->
+    <div class="stats-counter-grid" id="stats-counter-section">
+      <div class="stat-counter-card">
+        <div class="stat-counter-number" data-target="6" id="stat-stages">0</div>
+        <div class="stat-counter-label">IATA Stages Tracked</div>
+        <div class="stat-counter-caption">Complete end-to-end journey model</div>
+      </div>
+      <div class="stat-counter-card">
+        <div class="stat-counter-number" data-target="120" id="stat-airports">0</div>
+        <div class="stat-counter-suffix">+</div>
+        <div class="stat-counter-label">Airports Simulated</div>
+        <div class="stat-counter-caption">Global hub network routing</div>
+      </div>
+      <div class="stat-counter-card">
+        <div class="stat-counter-number" data-target="99.9" id="stat-accuracy" data-decimal="1">0</div>
+        <div class="stat-counter-suffix">%</div>
+        <div class="stat-counter-label">Simulation Reliability</div>
+        <div class="stat-counter-caption">Deterministic state engine</div>
+      </div>
+    </div>
+
+    <!-- Technology Stack Section -->
+    <div class="content-card" style="margin-top: 2rem;">
+      <h2 class="card-section-title" style="margin-bottom: 1.5rem;">Architecture &amp; Technologies Used</h2>
+      <div class="tech-stack-grid">
+        <div class="tech-item-box">
+          <div class="tech-badge">HTML5 Semantic</div>
+          <p class="tech-desc">Clean accessible landmarks (header, nav, main, footer) with full ARIA specifications.</p>
+        </div>
+        <div class="tech-item-box">
+          <div class="tech-badge">Vanilla CSS3</div>
+          <p class="tech-desc">Custom CSS variables, responsive CSS Grid &amp; Flexbox, glassmorphism overlays, and dark mode.</p>
+        </div>
+        <div class="tech-item-box">
+          <div class="tech-badge">ES6+ JavaScript</div>
+          <p class="tech-desc">Zero-dependency client-side router, dynamic DOM timeline rendering, and real-time state engine.</p>
+        </div>
+        <div class="tech-item-box">
+          <div class="tech-badge">Web Cryptography</div>
+          <p class="tech-desc">SubtleCrypto SHA-256 client-side credential hashing for realistic authentication security.</p>
+        </div>
+        <div class="tech-item-box">
+          <div class="tech-badge">LocalStorage Engine</div>
+          <p class="tech-desc">Isolated state management for multi-bag tracking, reports, user profiles, and notifications.</p>
+        </div>
+        <div class="tech-item-box">
+          <div class="tech-badge">Inline Vector Graphics</div>
+          <p class="tech-desc">Crisp, scalable SVGs for radar sweeps, flight path maps, baggage icons, and interactive controls.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team & Credits Section -->
+    <div class="content-card" style="margin-top: 2rem;">
+      <h2 class="card-section-title" style="margin-bottom: 0.5rem;">Project Credits &amp; Contributors</h2>
+      <p class="card-section-desc" style="margin-bottom: 1.5rem;">Engineered as part of the CSE326 Web Development &amp; Systems Curriculum.</p>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-avatar-initials">KA</div>
+          <div class="team-name">Kartik</div>
+          <div class="team-role">Lead Architect &amp; Frontend Engineer</div>
+          <p class="team-bio">Spearheaded the simulation state engine, timeline animations, and responsive system design.</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar-initials">AS</div>
+          <div class="team-name">AeroSim Core Team</div>
+          <div class="team-role">Systems &amp; Logistics Research</div>
+          <p class="team-bio">Researched standard IATA baggage handling specifications, barcode schemas, and flight route data.</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar-initials">UX</div>
+          <div class="team-name">Aviation UX Lab</div>
+          <div class="team-role">Design &amp; Accessibility</div>
+          <p class="team-bio">Created high-contrast glassmorphic components, dark mode colorways, and accessible navigation.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <div id="site-footer"></div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Animate stats counter on scroll
+    document.addEventListener('DOMContentLoaded', () => {
+      const counters = document.querySelectorAll('.stat-counter-number');
+      let animated = false;
+
+      function startCounters() {
+        counters.forEach(counter => {
+          const target = parseFloat(counter.getAttribute('data-target'));
+          const isDecimal = counter.getAttribute('data-decimal');
+          const duration = 1500;
+          const startTime = performance.now();
+
+          function updateNumber(now) {
+            const progress = Math.min((now - startTime) / duration, 1);
+            // Ease out quad
+            const easeProgress = 1 - (1 - progress) * (1 - progress);
+            const current = target * easeProgress;
+            
+            if (isDecimal) {
+              counter.textContent = current.toFixed(1);
+            } else {
+              counter.textContent = Math.floor(current);
+            }
+
+            if (progress < 1) {
+              requestAnimationFrame(updateNumber);
+            } else {
+              counter.textContent = isDecimal ? target.toFixed(1) : target;
+            }
+          }
+          requestAnimationFrame(updateNumber);
+        });
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !animated) {
+            animated = true;
+            startCounters();
+          }
+        });
+      }, { threshold: 0.3 });
+
+      const section = document.getElementById('stats-counter-section');
+      if (section) observer.observe(section);
+      else startCounters();
+    });
+  </script>
+</body>
+</html>

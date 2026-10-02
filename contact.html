@@ -1,0 +1,391 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Airport Operations - AeroSim Aviation</title>
+  <meta name="description" content="Get in touch with the AeroSim Aviation baggage operations desk. Submit technical inquiries, simulation feedback, or assistance requests.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
+</head>
+<body>
+  <div class="page-bg bg-terminal"></div>
+  <div class="page-overlay page-overlay-subtle"></div>
+
+  <!-- Shared Header -->
+  <div id="site-header"></div>
+
+  <main id="main-content" class="main-content">
+    <!-- Breadcrumb Bar -->
+    <div class="breadcrumb-bar">
+      <a href="index.html" class="breadcrumb-link" title="Home">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+      </a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <span class="breadcrumb-current">Contact Operations</span>
+    </div>
+
+    <!-- Contact Hero Area -->
+    <div class="info-hero-section">
+      <span class="badge-pill">Operations Desk Dispatch</span>
+      <h1 class="info-hero-title">Contact AeroSim Operations</h1>
+      <p class="info-hero-subtitle">
+        Have questions regarding simulation scenarios, tag telemetry, or system feedback? We are here to help.
+      </p>
+    </div>
+
+    <!-- 2-Column Contact Layout -->
+    <div class="contact-grid-container">
+      <!-- Left Column: Form -->
+      <div class="contact-form-card">
+        <h2 class="card-section-title" style="margin-bottom: 0.5rem;">Send a Message</h2>
+        <p class="card-section-desc" style="margin-bottom: 1.5rem;">Fill out the form below and our simulation controllers will respond promptly.</p>
+
+        <!-- Success Alert State -->
+        <div id="contact-success-state" class="contact-success-box" style="display: none;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+          <div>
+            <h3 style="font-size: 1.05rem; font-weight: 700; color: #065f46; margin-bottom: 2px;">Message Dispatched Successfully</h3>
+            <p style="font-size: 0.88rem; color: #047857;" id="contact-success-ref">Your submission has been logged into the operations queue.</p>
+          </div>
+        </div>
+
+        <form id="contact-form" novalidate>
+          <!-- Full Name -->
+          <div class="form-group">
+            <label class="form-label" for="contact-name">Full Name <span class="required-star">*</span></label>
+            <div class="input-with-icon">
+              <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input type="text" id="contact-name" class="auth-input" placeholder="e.g. John Doe" required>
+            </div>
+            <span class="field-error-msg" id="err-contact-name"></span>
+          </div>
+
+          <!-- Email & Phone in 2 Cols -->
+          <div class="form-row-2col">
+            <div class="form-group">
+              <label class="form-label" for="contact-email">Email Address <span class="required-star">*</span></label>
+              <div class="input-with-icon">
+                <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <input type="email" id="contact-email" class="auth-input" placeholder="you@example.com" required>
+              </div>
+              <span class="field-error-msg" id="err-contact-email"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="contact-phone">Phone Number <span class="required-star">*</span></label>
+              <div class="input-with-icon">
+                <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                  <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                </svg>
+                <input type="tel" id="contact-phone" class="auth-input" placeholder="+1 555-019-2834" required>
+              </div>
+              <span class="field-error-msg" id="err-contact-phone"></span>
+            </div>
+          </div>
+
+          <!-- Subject Dropdown -->
+          <div class="form-group">
+            <label class="form-label" for="contact-subject">Inquiry Subject <span class="required-star">*</span></label>
+            <div class="input-with-icon">
+              <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <select id="contact-subject" class="auth-input custom-select" required>
+                <option value="">Select subject category...</option>
+                <option value="tag-inquiry">Baggage Inquiries / Missing Tag Tracking</option>
+                <option value="technical">Simulation Engine Technical Support</option>
+                <option value="scenario-request">New Airport / Route Simulation Request</option>
+                <option value="academic">University Curriculum &amp; Student Project Inquiries</option>
+                <option value="general">General Operations Feedback</option>
+              </select>
+            </div>
+            <span class="field-error-msg" id="err-contact-subject"></span>
+          </div>
+
+          <!-- Message with Character Counter -->
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <label class="form-label" for="contact-message" style="margin-bottom: 0;">Message <span class="required-star">*</span></label>
+              <span class="char-counter" id="contact-char-count">0 / 500</span>
+            </div>
+            <textarea 
+              id="contact-message" 
+              class="auth-input contact-textarea" 
+              placeholder="Describe your inquiry, flight number, or question in detail..." 
+              maxlength="500" 
+              rows="5"
+              required
+            ></textarea>
+            <span class="field-error-msg" id="err-contact-message"></span>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-auth-submit" id="btn-contact-submit" style="margin-top: 10px;">
+            <span>TRANSMIT DISPATCH MESSAGE</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Right Column: Operations Desk Details & Map Placeholder -->
+      <div class="contact-info-col">
+        <div class="content-card">
+          <h2 class="card-section-title" style="margin-bottom: 1.25rem;">Operations Desk Contact</h2>
+          
+          <div class="contact-details-list">
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </div>
+              <div>
+                <span class="contact-info-label">Operations Email</span>
+                <span class="contact-info-value">ops@aerosim-aviation.simulator</span>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+              </div>
+              <div>
+                <span class="contact-info-label">Dispatch Hotline</span>
+                <span class="contact-info-value">+1 (800) 555-AERO (2376)</span>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </div>
+              <div>
+                <span class="contact-info-label">Hours of Operation</span>
+                <span class="contact-info-value">24 Hours / 7 Days Live Monitoring</span>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+              </div>
+              <div>
+                <span class="contact-info-label">Simulation Hub Location</span>
+                <span class="contact-info-value">Terminal 2 Central Baggage Basement, LHR Hub</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Embedded-style SVG Airport Vector Map -->
+          <div class="airport-vector-map-container" style="margin-top: 1.5rem;">
+            <svg class="airport-map-svg" viewBox="0 0 400 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="220" rx="14" fill="#0b1b33"/>
+              <!-- Runway 27L/09R -->
+              <rect x="20" y="30" width="360" height="12" rx="3" fill="#1e3256"/>
+              <line x1="30" y1="36" x2="370" y2="36" stroke="#f8fafc" stroke-width="1.5" stroke-dasharray="8 6"/>
+              <text x="25" y="24" fill="#94a3b8" font-size="10" font-weight="700">RUNWAY 27L</text>
+              <text x="330" y="24" fill="#94a3b8" font-size="10" font-weight="700">09R</text>
+
+              <!-- Runway 27R/09L -->
+              <rect x="20" y="180" width="360" height="12" rx="3" fill="#1e3256"/>
+              <line x1="30" y1="186" x2="370" y2="186" stroke="#f8fafc" stroke-width="1.5" stroke-dasharray="8 6"/>
+              <text x="25" y="174" fill="#94a3b8" font-size="10" font-weight="700">RUNWAY 27R</text>
+              <text x="330" y="174" fill="#94a3b8" font-size="10" font-weight="700">09L</text>
+
+              <!-- Taxiways -->
+              <path d="M80 42 V 180 M200 42 V 180 M320 42 V 180" stroke="#1672ec" stroke-width="2" stroke-opacity="0.4"/>
+              
+              <!-- Terminal Building -->
+              <rect x="130" y="80" width="140" height="60" rx="8" fill="#142c52" stroke="#1672ec" stroke-width="1.5"/>
+              <text x="145" y="105" fill="#ffffff" font-size="11" font-weight="800">TERMINAL 2 HUB</text>
+              <text x="148" y="122" fill="#38bdf8" font-size="9" font-weight="600">Baggage Automation Hub</text>
+
+              <!-- Pulse Pin on Baggage Hub -->
+              <circle cx="200" cy="138" r="7" fill="#10b981" fill-opacity="0.3"/>
+              <circle cx="200" cy="138" r="4" fill="#10b981"/>
+
+              <!-- Airplane vector on taxiway -->
+              <g transform="translate(192, 54)">
+                <path d="M8 2 L10 7 L16 8 L10 10 L9 15 L7 11 L1 10 L7 8 Z" fill="#1672ec"/>
+              </g>
+            </svg>
+            <div class="map-caption">
+              <span>● LHR Automated Baggage Control Center</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Submissions History -->
+        <div class="content-card" style="margin-top: 1.5rem;" id="recent-contacts-card">
+          <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.75rem;">Your Recent Dispatches</h3>
+          <div id="recent-contacts-list" class="recent-contacts-list">
+            <span style="font-size: 0.82rem; color: var(--text-muted);">No messages dispatched yet from this session.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <div id="site-footer"></div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Contact Form Handler & LocalStorage Persistence
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('contact-form');
+      const messageInput = document.getElementById('contact-message');
+      const charCounter = document.getElementById('contact-char-count');
+      const successState = document.getElementById('contact-success-state');
+      const successRef = document.getElementById('contact-success-ref');
+      const recentList = document.getElementById('recent-contacts-list');
+
+      // Realtime Char Counter
+      if (messageInput && charCounter) {
+        messageInput.addEventListener('input', () => {
+          const len = messageInput.value.length;
+          charCounter.textContent = `${len} / 500`;
+          if (len >= 480) charCounter.style.color = '#ef4444';
+          else charCounter.style.color = 'var(--text-muted)';
+        });
+      }
+
+      function renderRecentContacts() {
+        if (!recentList) return;
+        try {
+          const stored = localStorage.getItem('aerosim_contacts');
+          if (!stored) return;
+          const list = JSON.parse(stored);
+          if (list.length === 0) return;
+
+          recentList.innerHTML = list.slice(0, 3).map(item => `
+            <div class="recent-contact-item">
+              <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 0.85rem; color: var(--navy);">
+                <span>Ref: ${item.refId}</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal;">${new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+              </div>
+              <div style="font-size: 0.8rem; color: var(--primary); font-weight: 600;">${item.subjectLabel}</div>
+              <div style="font-size: 0.78rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.message}</div>
+            </div>
+          `).join('');
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      renderRecentContacts();
+
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          // Reset errors
+          document.querySelectorAll('.field-error-msg').forEach(el => el.textContent = '');
+          let isValid = true;
+
+          const name = document.getElementById('contact-name').value.trim();
+          const email = document.getElementById('contact-email').value.trim();
+          const phone = document.getElementById('contact-phone').value.trim();
+          const subject = document.getElementById('contact-subject').value;
+          const subjectLabel = document.getElementById('contact-subject').options[document.getElementById('contact-subject').selectedIndex].text;
+          const message = messageInput.value.trim();
+
+          if (name.length < 2) {
+            document.getElementById('err-contact-name').textContent = 'Please enter your name (min 2 characters).';
+            isValid = false;
+          }
+
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            document.getElementById('err-contact-email').textContent = 'Please enter a valid email address.';
+            isValid = false;
+          }
+
+          if (!/^\+?[\d\s-]{8,18}$/.test(phone)) {
+            document.getElementById('err-contact-phone').textContent = 'Please enter a valid phone number.';
+            isValid = false;
+          }
+
+          if (!subject) {
+            document.getElementById('err-contact-subject').textContent = 'Please select an inquiry subject.';
+            isValid = false;
+          }
+
+          if (message.length < 10) {
+            document.getElementById('err-contact-message').textContent = 'Message must be at least 10 characters.';
+            isValid = false;
+          }
+
+          if (!isValid) return;
+
+          // Generate reference number
+          const refId = 'AS-MSG-' + Math.floor(100000 + Math.random() * 900000);
+          const submission = {
+            refId,
+            name,
+            email,
+            phone,
+            subject,
+            subjectLabel,
+            message,
+            timestamp: Date.now()
+          };
+
+          // Save to localStorage (aerosim_contacts)
+          try {
+            const existing = JSON.parse(localStorage.getItem('aerosim_contacts') || '[]');
+            existing.unshift(submission);
+            localStorage.setItem('aerosim_contacts', JSON.stringify(existing));
+          } catch (err) {
+            console.error(err);
+          }
+
+          // Push in-app notification
+          if (typeof window.pushAeroSimNotification === 'function') {
+            window.pushAeroSimNotification('Message Received', `Inquiry ${refId} submitted to Operations Desk.`);
+          }
+
+          // Show success state
+          if (successState) {
+            successState.style.display = 'flex';
+            successRef.textContent = `Dispatch Reference #${refId}. A controller will review your transmission.`;
+          }
+
+          if (typeof window.showToast === 'function') {
+            window.showToast(`Dispatch Reference #${refId} created!`);
+          }
+
+          form.reset();
+          charCounter.textContent = '0 / 500';
+          renderRecentContacts();
+        });
+      }
+    });
+  </script>
+</body>
+</html>

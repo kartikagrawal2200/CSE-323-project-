@@ -1,0 +1,412 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile &amp; Settings - AeroSim Aviation</title>
+  <meta name="description" content="Manage your AeroSim passenger account profile, update contact information, change password, and configure notification preferences.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
+</head>
+<body>
+  <div class="page-bg bg-terminal"></div>
+  <div class="page-overlay page-overlay-subtle"></div>
+
+  <!-- Shared Header -->
+  <div id="site-header"></div>
+
+  <main id="main-content" class="main-content">
+    <!-- Breadcrumb Bar -->
+    <div class="breadcrumb-bar">
+      <a href="index.html" class="breadcrumb-link" title="Home">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+      </a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <span class="breadcrumb-current">Account Profile</span>
+    </div>
+
+    <!-- Profile Header Banner -->
+    <div class="profile-header-banner">
+      <div class="profile-header-avatar">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </div>
+      <div>
+        <div class="badge-pill" style="margin-bottom: 4px;">Verified Account</div>
+        <h1 class="profile-user-display" id="profile-display-username">User2244</h1>
+        <p class="profile-user-sub">Member since 2026 • Simulated Passenger ID #AS-99214</p>
+      </div>
+    </div>
+
+    <div class="profile-layout-grid">
+      <!-- Left Column: Personal Info & Password -->
+      <div class="profile-main-col">
+        <!-- Card 1: Personal Details -->
+        <div class="content-card">
+          <div class="card-section-header">
+            <div class="feature-icon-wrapper">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
+            <div>
+              <h2 class="card-section-title">Personal Information</h2>
+              <p class="card-section-desc">Update your passenger identity and contact details.</p>
+            </div>
+          </div>
+
+          <form id="form-profile-details">
+            <div class="form-row-2col">
+              <div class="form-group">
+                <label class="form-label" for="prof-display-name">Display Name</label>
+                <div class="input-with-icon">
+                  <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                  <input type="text" id="prof-display-name" class="auth-input" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="prof-userid">User ID (Permanent)</label>
+                <div class="input-with-icon">
+                  <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                  <input type="text" id="prof-userid" class="auth-input" disabled style="background: #f1f5f9; cursor: not-allowed;">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row-2col">
+              <div class="form-group">
+                <label class="form-label" for="prof-email">Email Address</label>
+                <div class="input-with-icon">
+                  <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                  <input type="email" id="prof-email" class="auth-input" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="prof-phone">Phone Number</label>
+                <div class="input-with-icon">
+                  <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                  <input type="tel" id="prof-phone" class="auth-input" required>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary-action" style="margin-top: 6px;">
+              Save Contact Changes
+            </button>
+          </form>
+        </div>
+
+        <!-- Card 2: Security & Password -->
+        <div class="content-card" style="margin-top: 1.5rem;">
+          <div class="card-section-header">
+            <div class="feature-icon-wrapper">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            </div>
+            <div>
+              <h2 class="card-section-title">Change Password</h2>
+              <p class="card-section-desc">Ensure your account uses a secure, strong password.</p>
+            </div>
+          </div>
+
+          <form id="form-profile-password">
+            <!-- Current Password -->
+            <div class="form-group">
+              <label class="form-label" for="prof-curr-pass">Current Password</label>
+              <div class="input-with-icon">
+                <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <input type="password" id="prof-curr-pass" class="auth-input" placeholder="Current password" required>
+                <button type="button" class="btn-toggle-eye" aria-label="Toggle password visibility">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- New Password & Strength Meter -->
+            <div class="form-group">
+              <label class="form-label" for="prof-new-pass">New Password</label>
+              <div class="input-with-icon">
+                <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <input type="password" id="prof-new-pass" class="auth-input" placeholder="Min. 8 chars (Uppercase, lowercase, digit)" required>
+                <button type="button" class="btn-toggle-eye" aria-label="Toggle password visibility">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                </button>
+              </div>
+              <!-- Strength meter bar -->
+              <div class="password-strength-wrap" style="margin-top: 8px;">
+                <div class="strength-bar-track">
+                  <div id="prof-strength-bar" class="strength-bar-fill"></div>
+                </div>
+                <span id="prof-strength-text" class="strength-label">Enter password</span>
+              </div>
+            </div>
+
+            <!-- Confirm New Password -->
+            <div class="form-group">
+              <label class="form-label" for="prof-confirm-pass">Confirm New Password</label>
+              <div class="input-with-icon">
+                <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <input type="password" id="prof-confirm-pass" class="auth-input" placeholder="Repeat new password" required>
+              </div>
+              <span class="field-error-msg" id="prof-pass-error"></span>
+            </div>
+
+            <button type="submit" class="btn-primary-action" style="margin-top: 6px;">
+              Update Password
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Right Column: Preferences & Danger Zone -->
+      <div class="profile-side-col">
+        <!-- Notifications Card -->
+        <div class="content-card">
+          <h2 class="card-section-title" style="margin-bottom: 0.5rem;">Alert Preferences</h2>
+          <p class="card-section-desc" style="margin-bottom: 1.25rem;">Configure how you receive baggage telemetry updates.</p>
+
+          <div class="preference-toggle-list">
+            <div class="pref-toggle-row">
+              <div>
+                <div class="pref-toggle-title">SMS Notifications</div>
+                <div class="pref-toggle-desc">Receive instant text alerts for carousel belt changes</div>
+              </div>
+              <label class="switch-toggle" for="pref-sms">
+                <input type="checkbox" id="pref-sms" checked>
+                <span class="slider-round"></span>
+              </label>
+            </div>
+
+            <div class="pref-toggle-row">
+              <div>
+                <div class="pref-toggle-title">Email Journey Summaries</div>
+                <div class="pref-toggle-desc">Detailed timestamp receipts sent to your registered email</div>
+              </div>
+              <label class="switch-toggle" for="pref-email">
+                <input type="checkbox" id="pref-email" checked>
+                <span class="slider-round"></span>
+              </label>
+            </div>
+
+            <div class="pref-toggle-row">
+              <div>
+                <div class="pref-toggle-title">In-App Live Alerts</div>
+                <div class="pref-toggle-desc">Notification bell alerts when simulator advances stages</div>
+              </div>
+              <label class="switch-toggle" for="pref-push">
+                <input type="checkbox" id="pref-push" checked>
+                <span class="slider-round"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="content-card danger-zone-card" style="margin-top: 1.5rem;">
+          <h2 class="card-section-title danger" style="margin-bottom: 0.5rem; color: #dc2626;">Danger Zone</h2>
+          <p class="card-section-desc" style="margin-bottom: 1.25rem;">Irreversible account deletion actions.</p>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
+            Deleting your account removes all saved baggage tags, issue reports, dispatches, and preferences from this browser.
+          </p>
+          <button type="button" class="btn-danger-outline" id="btn-delete-account">
+            Delete My Account
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <div id="site-footer"></div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Profile Page Controller
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof window.requireLogin === 'function') {
+        window.requireLogin('profile.html');
+      }
+
+      const currentUser = localStorage.getItem('aerosim_user') || 'User2244';
+      document.getElementById('profile-display-username').textContent = currentUser;
+      document.getElementById('prof-userid').value = currentUser;
+
+      // Load profile info from localStorage or defaults
+      const profKey = `aerosim_prof_${currentUser}`;
+      let profileData = {
+        displayName: currentUser,
+        email: currentUser.toLowerCase() + '@example.com',
+        phone: '+1 555-019-2834'
+      };
+
+      try {
+        const saved = localStorage.getItem(profKey);
+        if (saved) profileData = JSON.parse(saved);
+      } catch (e) {}
+
+      document.getElementById('prof-display-name').value = profileData.displayName || currentUser;
+      document.getElementById('prof-email').value = profileData.email || '';
+      document.getElementById('prof-phone').value = profileData.phone || '';
+
+      // Save Details
+      document.getElementById('form-profile-details').addEventListener('submit', (e) => {
+        e.preventDefault();
+        profileData.displayName = document.getElementById('prof-display-name').value.trim();
+        profileData.email = document.getElementById('prof-email').value.trim();
+        profileData.phone = document.getElementById('prof-phone').value.trim();
+
+        localStorage.setItem(profKey, JSON.stringify(profileData));
+        if (typeof window.showToast === 'function') {
+          window.showToast('Profile information saved successfully');
+        }
+      });
+
+      // Password Strength Meter
+      const newPassInput = document.getElementById('prof-new-pass');
+      const strengthBar = document.getElementById('prof-strength-bar');
+      const strengthText = document.getElementById('prof-strength-text');
+
+      if (newPassInput) {
+        newPassInput.addEventListener('input', () => {
+          const val = newPassInput.value;
+          let score = 0;
+          if (val.length >= 8) score++;
+          if (/[A-Z]/.test(val)) score++;
+          if (/[a-z]/.test(val)) score++;
+          if (/\d/.test(val)) score++;
+          if (/[^A-Za-z0-9]/.test(val)) score++;
+
+          if (!val) {
+            strengthBar.style.width = '0%';
+            strengthBar.className = 'strength-bar-fill';
+            strengthText.textContent = 'Enter password';
+          } else if (score <= 2) {
+            strengthBar.style.width = '33%';
+            strengthBar.className = 'strength-bar-fill weak';
+            strengthText.textContent = 'Weak';
+          } else if (score <= 4) {
+            strengthBar.style.width = '66%';
+            strengthBar.className = 'strength-bar-fill medium';
+            strengthText.textContent = 'Medium';
+          } else {
+            strengthBar.style.width = '100%';
+            strengthBar.className = 'strength-bar-fill strong';
+            strengthText.textContent = 'Strong';
+          }
+        });
+      }
+
+      // Password Change Submit
+      document.getElementById('form-profile-password').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const errEl = document.getElementById('prof-pass-error');
+        errEl.textContent = '';
+
+        const curr = document.getElementById('prof-curr-pass').value;
+        const newPass = newPassInput.value;
+        const confirmPass = document.getElementById('prof-confirm-pass').value;
+
+        if (newPass.length < 8) {
+          errEl.textContent = 'New password must be at least 8 characters.';
+          return;
+        }
+
+        if (!(/[A-Z]/.test(newPass) && /[a-z]/.test(newPass) && /\d/.test(newPass))) {
+          errEl.textContent = 'Password must include uppercase, lowercase, and a number.';
+          return;
+        }
+
+        if (newPass !== confirmPass) {
+          errEl.textContent = 'New passwords do not match.';
+          return;
+        }
+
+        // Hash and update
+        if (typeof window.hashPassword === 'function') {
+          const hashed = await window.hashPassword(newPass);
+          const users = JSON.parse(localStorage.getItem('aerosim_users') || '{}');
+          if (users[currentUser]) {
+            users[currentUser].passwordHash = hashed;
+            localStorage.setItem('aerosim_users', JSON.stringify(users));
+          }
+        }
+
+        if (typeof window.showToast === 'function') {
+          window.showToast('Password changed successfully');
+        }
+        document.getElementById('form-profile-password').reset();
+        strengthBar.style.width = '0%';
+        strengthText.textContent = '';
+      });
+
+      // Preferences Toggles
+      const prefKey = `aerosim_pref_${currentUser}`;
+      const prefSms = document.getElementById('pref-sms');
+      const prefEmail = document.getElementById('pref-email');
+      const prefPush = document.getElementById('pref-push');
+
+      try {
+        const savedPref = JSON.parse(localStorage.getItem(prefKey) || '{}');
+        if (savedPref.sms !== undefined) prefSms.checked = savedPref.sms;
+        if (savedPref.email !== undefined) prefEmail.checked = savedPref.email;
+        if (savedPref.push !== undefined) prefPush.checked = savedPref.push;
+      } catch (e) {}
+
+      [prefSms, prefEmail, prefPush].forEach(chk => {
+        chk.addEventListener('change', () => {
+          const obj = {
+            sms: prefSms.checked,
+            email: prefEmail.checked,
+            push: prefPush.checked
+          };
+          localStorage.setItem(prefKey, JSON.stringify(obj));
+          if (typeof window.showToast === 'function') {
+            window.showToast('Notification preferences updated');
+          }
+        });
+      });
+
+      // Delete Account
+      const deleteBtn = document.getElementById('btn-delete-account');
+      if (deleteBtn) {
+        deleteBtn.addEventListener('click', () => {
+          if (typeof window.showConfirmModal === 'function') {
+            window.showConfirmModal({
+              title: 'Delete Account Confirmation',
+              message: `Are you completely sure you want to permanently delete account "${currentUser}"? All tracked bags and profile data will be permanently wiped.`,
+              confirmText: 'Permanently Delete Account',
+              confirmClass: 'btn-danger',
+              onConfirm: () => {
+                // Delete user from aerosim_users
+                try {
+                  const users = JSON.parse(localStorage.getItem('aerosim_users') || '{}');
+                  delete users[currentUser];
+                  localStorage.setItem('aerosim_users', JSON.stringify(users));
+                } catch (e) {}
+
+                localStorage.removeItem('aerosim_user');
+                localStorage.removeItem(profKey);
+                localStorage.removeItem(prefKey);
+                localStorage.removeItem(`aerosim_user_bags_${currentUser}`);
+
+                if (typeof window.showToast === 'function') {
+                  window.showToast('Account deleted. Redirecting to home...');
+                }
+                setTimeout(() => {
+                  window.location.href = 'index.html';
+                }, 700);
+              }
+            });
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Your Baggage - AeroSim Aviation</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
+</head>
+<body>
+  <!-- Background Image with Gradient Overlay -->
+  <div class="page-bg bg-terminal"></div>
+  <div class="page-overlay page-overlay-subtle"></div>
+
+  <!-- Shared Header Navigation -->
+  <div id="site-header"></div>
+
+  <!-- Track Baggage Content -->
+  <main id="main-content" class="main-content">
+    <div class="track-page-container">
+      <div class="track-page-header">
+        <h1 class="track-page-title">Track Your Baggage</h1>
+        <p class="track-page-subtitle">
+          Enter your baggage tag ID to view the current status and journey details.
+        </p>
+      </div>
+
+      <!-- Search Box Card -->
+      <div class="search-card-wrapper search-card-center">
+        <div class="search-label-group">
+          <svg class="search-icon-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="6" width="16" height="15" rx="3"></rect>
+            <path d="M9 6V4a3 3 0 0 1 6 0v2"></path>
+            <circle cx="9" cy="18" r="1"></circle>
+            <circle cx="15" cy="18" r="1"></circle>
+          </svg>
+          <span class="search-label-text">Baggage Tag ID</span>
+        </div>
+
+        <form class="baggage-search-form" id="track-search-form" novalidate>
+          <div class="search-form-row">
+            <input 
+              type="text" 
+              class="search-input-box" 
+              id="track-tag-input"
+              placeholder="e.g. LHR-123456" 
+              value="LHR-123456"
+              required
+              autocomplete="off"
+            >
+            <button type="submit" class="btn-search-action" id="btn-track-submit">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              TRACK
+            </button>
+          </div>
+          <div class="input-error-msg" id="track-input-error" style="display: none;"></div>
+
+          <!-- Sample Quick Tags for Convenience -->
+          <div class="sample-tags-pills">
+            <span>Quick tags:</span>
+            <button type="button" class="sample-tag-btn" data-tag="LHR-123456">LHR-123456</button>
+            <button type="button" class="sample-tag-btn" data-tag="JFK-882194">JFK-882194</button>
+            <button type="button" class="sample-tag-btn" data-tag="DXB-309481">DXB-309481</button>
+            <button type="button" class="sample-tag-btn" data-tag="DEL-557201">DEL-557201</button>
+            <button type="button" class="sample-tag-btn" data-tag="IDR-100245">IDR-100245</button>
+          </div>
+        </form>
+
+        <!-- Skeleton Loading State (simulated 400ms delay) -->
+        <div id="track-loading-state" class="track-skeleton-card" style="display: none;">
+          <div class="skeleton-line skeleton-title"></div>
+          <div class="skeleton-row">
+            <div class="skeleton-box"></div>
+            <div class="skeleton-box"></div>
+            <div class="skeleton-box"></div>
+          </div>
+          <p class="skeleton-status-text">Querying IATA Global Telemetry Network...</p>
+        </div>
+
+        <!-- Bag Not Found State (Red Alert + Tips) -->
+        <div id="track-notfound-card" class="track-notfound-alert" style="display: none;">
+          <div class="notfound-alert-header">
+            <svg class="notfound-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <div>
+              <h3 class="notfound-title">Bag Not Found</h3>
+              <p class="notfound-desc">We could not locate baggage tag <strong id="notfound-tag-display">XXX-000000</strong> in active telemetry feeds.</p>
+            </div>
+          </div>
+          <div class="notfound-tips-box">
+            <h4>Troubleshooting Tips:</h4>
+            <ul>
+              <li>Confirm the 3-letter IATA origin airport code matches your boarding pass (e.g. <code>LHR-</code>, <code>JFK-</code>).</li>
+              <li>Ensure the tag format is strictly 3 letters, a hyphen, and 6 digits (e.g. <code>DXB-309481</code>).</li>
+              <li>If you recently checked in, telemetry may take 5–10 minutes to index at the apron sortation scanner.</li>
+              <li>You can report a missing or delayed bag via our <a href="report-issue.html">Baggage Support Wizard</a>.</li>
+            </ul>
+          </div>
+          <div class="notfound-quick-suggestions">
+            <span class="suggestions-label">Try one of these active simulation tags:</span>
+            <div class="suggestion-chips">
+              <button type="button" class="btn-suggestion-chip" data-tag="LHR-123456">LHR-123456 (Heathrow &rarr; Frankfurt)</button>
+              <button type="button" class="btn-suggestion-chip" data-tag="DXB-309481">DXB-309481 (Dubai &rarr; Singapore)</button>
+              <button type="button" class="btn-suggestion-chip" data-tag="DEL-557201">DEL-557201 (Delhi &rarr; New York)</button>
+              <button type="button" class="btn-suggestion-chip" data-tag="IDR-100245">IDR-100245 (Indore &rarr; Mumbai)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 Feature Cards Grid at Bottom -->
+    <div class="features-grid" style="margin-left: auto; margin-right: auto;">
+      <!-- Card 1 -->
+      <div class="feature-card">
+        <div class="feature-icon-wrapper">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </div>
+        <h3 class="feature-title">Real-time Updates</h3>
+        <p class="feature-desc">Get the latest status of your baggage at every stage.</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="feature-card">
+        <div class="feature-icon-wrapper">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <polyline points="9 12 11 14 15 10"></polyline>
+          </svg>
+        </div>
+        <h3 class="feature-title">Secure Tracking</h3>
+        <p class="feature-desc">Your baggage information is safe and protected.</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="feature-card">
+        <div class="feature-icon-wrapper">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <h3 class="feature-title">Easy &amp; Fast</h3>
+        <p class="feature-desc">Simple search, instant results.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <div id="site-footer"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

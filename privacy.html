@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - AeroSim Aviation</title>
+  <meta name="description" content="Privacy policy for the AeroSim Aviation simulator. Learn how your local storage data and simulation preferences are handled.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
+</head>
+<body>
+  <div class="page-bg bg-terminal"></div>
+  <div class="page-overlay page-overlay-subtle"></div>
+
+  <!-- Shared Header -->
+  <div id="site-header"></div>
+
+  <main id="main-content" class="main-content">
+    <!-- Breadcrumb Bar -->
+    <div class="breadcrumb-bar">
+      <a href="index.html" class="breadcrumb-link" title="Home">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+      </a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <span class="breadcrumb-current">Privacy Policy</span>
+    </div>
+
+    <!-- Header Section -->
+    <div class="info-hero-section">
+      <span class="badge-pill">Privacy &amp; Data Security</span>
+      <h1 class="info-hero-title">Privacy Policy</h1>
+      <p class="info-hero-subtitle">
+        Transparent overview of our client-side storage architecture and academic privacy commitments.
+      </p>
+    </div>
+
+    <!-- 2-Column Layout with Sticky TOC -->
+    <div class="legal-layout-container">
+      <!-- Sticky Table of Contents -->
+      <aside class="legal-toc-aside">
+        <div class="legal-toc-card">
+          <h3 class="legal-toc-title">Table of Contents</h3>
+          <ul class="legal-toc-list">
+            <li><a href="#academic-privacy" class="toc-link active">1. Academic Context</a></li>
+            <li><a href="#localstorage-data" class="toc-link">2. Client Data Storage</a></li>
+            <li><a href="#cryptography" class="toc-link">3. Credential Hashing</a></li>
+            <li><a href="#cookies-consent" class="toc-link">4. Cookies &amp; Consent</a></li>
+            <li><a href="#third-parties" class="toc-link">5. No Third-Party Trackers</a></li>
+            <li><a href="#data-purge" class="toc-link">6. Your Data Rights</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Main Legal Content -->
+      <article class="legal-content-card">
+        <section id="academic-privacy" class="legal-section">
+          <h2>1. Academic Context &amp; Commitment</h2>
+          <div class="academic-disclaimer-box" style="margin: 14px 0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <div>
+              <strong>Privacy First Architecture:</strong> AeroSim Aviation is built strictly as a client-side student simulator. We do not operate external logging servers, database backends, or data-collection pipelines.
+            </div>
+          </div>
+          <p>
+            Your privacy is preserved by architecture: all baggage tracking records, simulated accounts, contact inquiries, and irregularity filings remain entirely inside your local web browser session.
+          </p>
+        </section>
+
+        <section id="localstorage-data" class="legal-section">
+          <h2>2. Client-Side Data Storage (HTML5 LocalStorage)</h2>
+          <p>To preserve your simulation state across browser reloads, AeroSim uses standard browser <code>localStorage</code> under the following keys:</p>
+          <ul class="timeline-keypoints-list" style="margin-top: 10px;">
+            <li><code>aerosim_user</code>: Stores the currently active username session.</li>
+            <li><code>aerosim_users</code>: Stores registered user records with SHA-256 hashed credentials.</li>
+            <li><code>aerosim_bags</code>: Stores the simulation state and timeline progress for tracked bags.</li>
+            <li><code>aerosim_reports</code>: Stores filed irregularity reports (PIR records).</li>
+            <li><code>aerosim_contacts</code>: Stores dispatches submitted through the contact desk.</li>
+            <li><code>aerosim_notifications</code>: Stores in-app flight telemetry alerts.</li>
+            <li><code>aerosim_theme</code>: Saves your preferred color theme (Light / Dark).</li>
+          </ul>
+        </section>
+
+        <section id="cryptography" class="legal-section">
+          <h2>3. Web Cryptography &amp; Credential Hashing</h2>
+          <p>
+            In accordance with modern web engineering best practices, account passwords are never stored in plain text. When you register or change a password, your browser executes a cryptographic one-way SHA-256 digest via the native W3C <code>window.crypto.subtle</code> API before saving to storage.
+          </p>
+        </section>
+
+        <section id="cookies-consent" class="legal-section">
+          <h2>4. Cookies &amp; Consent</h2>
+          <p>
+            AeroSim does not set HTTP cookies. We display a standard user consent banner to inform users regarding client-side localStorage preferences. Your choice is remembered in <code>aerosim_cookie_consent</code>.
+          </p>
+        </section>
+
+        <section id="third-parties" class="legal-section">
+          <h2>5. No Third-Party Trackers or Ad Networks</h2>
+          <p>
+            We do not embed third-party analytics pixels, behavioral tracking beacons, advertising cookies, or cross-site fingerprinting scripts. Web fonts are served securely via Google Fonts CDN under their standard privacy terms.
+          </p>
+        </section>
+
+        <section id="data-purge" class="legal-section">
+          <h2>6. Your Data Rights &amp; Immediate Account Purge</h2>
+          <p>
+            You retain absolute sovereignty over your data. You can inspect, modify, or permanently delete your simulation history at any time:
+          </p>
+          <ul class="timeline-keypoints-list" style="margin-top: 10px;">
+            <li>Visit your <a href="profile.html">Profile Settings</a> to edit details or trigger an irreversible "Delete Account" wipe.</li>
+            <li>Clear your browser's site data and cookies at any moment to restore AeroSim Aviation to factory defaults.</li>
+          </ul>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <div id="site-footer"></div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Smooth scroll & TOC active highlight
+    document.addEventListener('DOMContentLoaded', () => {
+      const links = document.querySelectorAll('.toc-link');
+      const sections = document.querySelectorAll('.legal-section');
+
+      window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(sec => {
+          const top = sec.offsetTop - 120;
+          if (window.pageYOffset >= top) {
+            current = sec.getAttribute('id');
+          }
+        });
+
+        links.forEach(l => {
+          l.classList.remove('active');
+          if (l.getAttribute('href') === `#${current}`) {
+            l.classList.add('active');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

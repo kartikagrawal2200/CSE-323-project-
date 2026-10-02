@@ -1,0 +1,418 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baggage Journey - AeroSim Aviation</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
+</head>
+<body>
+  <!-- Background with Airplane in climb & tarmac overlay -->
+  <div class="page-bg bg-climb"></div>
+  <div class="page-overlay page-overlay-subtle"></div>
+
+  <!-- Shared Header Navigation -->
+  <div id="site-header"></div>
+
+  <!-- Main Dashboard Content -->
+  <main id="main-content" class="main-content">
+    <div class="dashboard-header-area">
+      <h1 class="dashboard-title">Welcome To AeroSim</h1>
+      <p class="dashboard-subtitle">Your baggage journey, in your hands.</p>
+    </div>
+
+    <!-- 2 Column Layout Matching Screenshot -->
+    <div class="dashboard-layout">
+      <!-- Left Column: User Profile & Baggage Specs -->
+      <div class="dashboard-left-col">
+        <!-- User Profile Card -->
+        <div class="user-profile-card">
+          <div class="user-profile-avatar">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <div class="user-profile-info">
+            <span class="user-profile-name display-user-name">User2244</span>
+            <span class="user-profile-status">Active Account</span>
+          </div>
+        </div>
+
+        <!-- Bag Overview & Details Card -->
+        <div class="bag-summary-card">
+          <!-- Top Row with Bag ID & Completed badge -->
+          <div class="bag-summary-header">
+            <div class="bag-id-group">
+              <div class="bag-icon-box">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="4" y="6" width="16" height="15" rx="3"></rect>
+                  <path d="M9 6V4a3 3 0 0 1 6 0v2"></path>
+                  <circle cx="9" cy="18" r="1"></circle>
+                  <circle cx="15" cy="18" r="1"></circle>
+                </svg>
+              </div>
+              <div class="bag-id-text-group">
+                <span class="bag-id-label">Bag ID:</span>
+                <span class="bag-id-value display-tag-id">LHR-123456</span>
+              </div>
+            </div>
+
+            <span class="status-badge-completed" id="journey-bag-status-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Completed
+            </span>
+          </div>
+
+          <!-- Light Blue Details Box -->
+          <div class="bag-details-list">
+            <!-- Row 1: Baggage Tag ID -->
+            <div class="bag-detail-row">
+              <svg class="bag-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"></path>
+                <circle cx="7.5" cy="7.5" r=".5" fill="currentColor"></circle>
+              </svg>
+              <div class="bag-detail-content">
+                <span class="bag-detail-title">Baggage Tag ID</span>
+                <span class="bag-detail-info display-tag-id">LHR-123456</span>
+              </div>
+            </div>
+
+            <!-- Row 2: Airline & Flight -->
+            <div class="bag-detail-row">
+              <svg class="bag-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z"></path>
+              </svg>
+              <div class="bag-detail-content">
+                <span class="bag-detail-title">Airline &amp; Flight</span>
+                <span class="bag-detail-info" id="journey-airline-flight">Lufthansa • LH247</span>
+              </div>
+            </div>
+
+            <!-- Row 3: Route -->
+            <div class="bag-detail-row">
+              <svg class="bag-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+              <div class="bag-detail-content">
+                <span class="bag-detail-title">Flight Route</span>
+                <span class="bag-detail-info" id="journey-route-text">LHR (London) &rarr; FRA (Frankfurt)</span>
+              </div>
+            </div>
+
+            <!-- Row 4: Passenger & Weight -->
+            <div class="bag-detail-row">
+              <svg class="bag-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="6" width="16" height="15" rx="3"></rect>
+                <path d="M9 6V4a3 3 0 0 1 6 0v2"></path>
+              </svg>
+              <div class="bag-detail-content">
+                <span class="bag-detail-title">Passenger &amp; Weight</span>
+                <span class="bag-detail-info" id="journey-passenger-weight">R*** S. • 23.5 kg (Navy Blue)</span>
+              </div>
+            </div>
+
+            <!-- Row 5: Gate & Carousel -->
+            <div class="bag-detail-row">
+              <svg class="bag-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <div class="bag-detail-content">
+                <span class="bag-detail-title">Departure &amp; Arrival</span>
+                <span class="bag-detail-info" id="journey-gate-carousel">Gate B22 &rarr; Carousel Belt 4</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Utility Action Buttons -->
+          <div class="bag-actions-row">
+            <button type="button" class="btn-action-small" id="btn-copy-tracking-link">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              Copy Link
+            </button>
+            <button type="button" class="btn-action-small" id="btn-print-receipt">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                <rect x="6" y="14" width="12" height="8"></rect>
+              </svg>
+              Print Receipt
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: SVG Route Map + Live Simulation Controls + Timeline Card -->
+      <div class="dashboard-right-col">
+        <!-- SVG Interactive Flight Route Map Card -->
+        <div class="route-map-card" id="flight-route-map-card">
+          <div class="route-map-header">
+            <div class="route-map-title-group">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+              </svg>
+              <h3 class="route-map-heading">Live Telemetry Route Map</h3>
+            </div>
+            <div class="flight-live-status-pill" id="route-map-stage-label">
+              In Transit
+            </div>
+          </div>
+
+          <!-- SVG Visual Arc Display -->
+          <div class="route-map-svg-wrapper">
+            <svg id="route-map-svg" viewBox="0 0 680 180" class="flight-svg-canvas">
+              <defs>
+                <linearGradient id="routeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#1672ec" stop-opacity="0.3"/>
+                  <stop offset="50%" stop-color="#0284c7" stop-opacity="0.9"/>
+                  <stop offset="100%" stop-color="#10b981" stop-opacity="0.9"/>
+                </linearGradient>
+                <filter id="planeGlow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0284c7" flood-opacity="0.4"/>
+                </filter>
+              </defs>
+
+              <!-- Background Curvature Flight Path Arc -->
+              <path id="flight-trajectory-bg" d="M 90 120 Q 340 20 590 120" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-dasharray="6,6"/>
+              
+              <!-- Completed Flight Path Arc (Dynamic Stroke Dash) -->
+              <path id="flight-trajectory-active" d="M 90 120 Q 340 20 590 120" fill="none" stroke="url(#routeGradient)" stroke-width="4" stroke-linecap="round"/>
+
+              <!-- Origin Airport Node -->
+              <g id="origin-node-group" transform="translate(90, 120)">
+                <circle r="10" fill="#1672ec" stroke="#ffffff" stroke-width="3"/>
+                <circle r="16" fill="none" stroke="#1672ec" stroke-opacity="0.3" stroke-width="2"/>
+                <text x="0" y="32" text-anchor="middle" font-weight="700" font-size="14" fill="#0f172a" id="svg-origin-code">LHR</text>
+                <text x="0" y="46" text-anchor="middle" font-size="11" fill="#64748b" id="svg-origin-city">London</text>
+              </g>
+
+              <!-- Destination Airport Node -->
+              <g id="dest-node-group" transform="translate(590, 120)">
+                <circle r="10" fill="#10b981" stroke="#ffffff" stroke-width="3"/>
+                <circle r="16" fill="none" stroke="#10b981" stroke-opacity="0.3" stroke-width="2"/>
+                <text x="0" y="32" text-anchor="middle" font-weight="700" font-size="14" fill="#0f172a" id="svg-dest-code">FRA</text>
+                <text x="0" y="46" text-anchor="middle" font-size="11" fill="#64748b" id="svg-dest-city">Frankfurt</text>
+              </g>
+
+              <!-- Airplane Marker Along Path -->
+              <g id="airplane-marker" filter="url(#planeGlow)" transform="translate(90, 120)">
+                <circle r="18" fill="#ffffff" stroke="#0284c7" stroke-width="2.5"/>
+                <!-- Airplane SVG Icon -->
+                <path transform="translate(-10, -10) scale(0.85)" d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" fill="#0284c7"/>
+              </g>
+            </svg>
+          </div>
+
+          <!-- Route Telemetry Info Bar -->
+          <div class="route-metrics-bar">
+            <div class="metric-item">
+              <span class="metric-label">Estimated Ground Speed</span>
+              <span class="metric-val" id="metric-speed">480 kts</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Telemetry Feed</span>
+              <span class="metric-val" id="metric-feed">Live ADS-B Active</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Altitude Status</span>
+              <span class="metric-val" id="metric-altitude">FL340 / Apron</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Simulation Mode Controller Banner -->
+        <div class="live-sim-banner">
+          <div class="live-sim-left">
+            <div class="live-sim-icon-pulse">
+              <span class="pulse-ring"></span>
+              <span class="pulse-dot"></span>
+            </div>
+            <div>
+              <div class="live-sim-title">Live Simulator Engine</div>
+              <div class="live-sim-desc" id="live-sim-desc">Automate stage transitions every 8 seconds with real-time alerts.</div>
+            </div>
+          </div>
+
+          <div class="live-sim-controls">
+            <label class="toggle-switch-label" for="live-sim-toggle">
+              <input type="checkbox" id="live-sim-toggle" aria-label="Toggle Live Simulation">
+              <span class="toggle-switch-slider"></span>
+              <span class="toggle-switch-text" id="toggle-status-text">OFF</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Live Simulation Progress Bar (visible when active) -->
+        <div class="sim-progress-container" id="sim-progress-bar-wrapper" style="display: none;">
+          <div class="sim-progress-info">
+            <span id="sim-progress-label">Next stage auto-advance:</span>
+            <span id="sim-countdown-label">8s</span>
+          </div>
+          <div class="sim-progress-track">
+            <div class="sim-progress-fill" id="sim-progress-fill"></div>
+          </div>
+        </div>
+
+        <!-- Baggage Journey Timeline Card -->
+        <div class="journey-main-card">
+          <div class="journey-card-header">
+            <div class="journey-card-title-group">
+              <svg class="journey-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="6" width="16" height="15" rx="3"></rect>
+                <path d="M9 6V4a3 3 0 0 1 6 0v2"></path>
+              </svg>
+              <h2 class="journey-card-heading">Baggage Journey</h2>
+            </div>
+            <span class="journey-card-subtitle-small">Click any stage to view complete operational telemetry</span>
+          </div>
+
+          <!-- Dynamic Timeline Mount Point -->
+          <div class="timeline-container" id="baggage-timeline">
+            <!-- Rendered dynamically by app.js -->
+          </div>
+
+          <!-- Interactive Simulator Controls for presentation / grading -->
+          <div class="timeline-actions-bar">
+            <button type="button" class="btn-secondary-action" id="btn-advance-step">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              Simulate Next Stage
+            </button>
+
+            <button type="button" class="btn-secondary-action" id="btn-reset-step">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+              Restart from Origin
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Printable Tracking Receipt Modal/Section -->
+  <div id="print-receipt-modal" class="print-receipt-modal" style="display: none;">
+    <div class="receipt-paper" id="receipt-paper">
+      <div class="receipt-header">
+        <div class="receipt-logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="#1672ec"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+          <strong>AeroSim Aviation</strong>
+        </div>
+        <div class="receipt-doc-title">OFFICIAL BAGGAGE TRACKING RECEIPT</div>
+      </div>
+
+      <div class="receipt-barcode-row">
+        <!-- SVG Barcode Representation -->
+        <svg class="receipt-barcode-svg" viewBox="0 0 300 60" preserveAspectRatio="none">
+          <rect x="0" y="0" width="4" height="60" fill="#000"/>
+          <rect x="8" y="0" width="8" height="60" fill="#000"/>
+          <rect x="20" y="0" width="4" height="60" fill="#000"/>
+          <rect x="28" y="0" width="12" height="60" fill="#000"/>
+          <rect x="44" y="0" width="4" height="60" fill="#000"/>
+          <rect x="52" y="0" width="8" height="60" fill="#000"/>
+          <rect x="68" y="0" width="6" height="60" fill="#000"/>
+          <rect x="80" y="0" width="14" height="60" fill="#000"/>
+          <rect x="100" y="0" width="4" height="60" fill="#000"/>
+          <rect x="110" y="0" width="8" height="60" fill="#000"/>
+          <rect x="124" y="0" width="10" height="60" fill="#000"/>
+          <rect x="140" y="0" width="4" height="60" fill="#000"/>
+          <rect x="150" y="0" width="12" height="60" fill="#000"/>
+          <rect x="168" y="0" width="8" height="60" fill="#000"/>
+          <rect x="182" y="0" width="4" height="60" fill="#000"/>
+          <rect x="194" y="0" width="14" height="60" fill="#000"/>
+          <rect x="214" y="0" width="6" height="60" fill="#000"/>
+          <rect x="226" y="0" width="8" height="60" fill="#000"/>
+          <rect x="240" y="0" width="4" height="60" fill="#000"/>
+          <rect x="250" y="0" width="12" height="60" fill="#000"/>
+          <rect x="268" y="0" width="8" height="60" fill="#000"/>
+          <rect x="282" y="0" width="4" height="60" fill="#000"/>
+          <rect x="292" y="0" width="8" height="60" fill="#000"/>
+        </svg>
+        <span class="receipt-tag-code display-tag-id">LHR-123456</span>
+      </div>
+
+      <div class="receipt-grid">
+        <div class="receipt-cell">
+          <span class="receipt-lbl">PASSENGER</span>
+          <span class="receipt-val" id="receipt-passenger">R*** S.</span>
+        </div>
+        <div class="receipt-cell">
+          <span class="receipt-lbl">FLIGHT NO.</span>
+          <span class="receipt-val" id="receipt-flight">LH247</span>
+        </div>
+        <div class="receipt-cell">
+          <span class="receipt-lbl">ROUTING</span>
+          <span class="receipt-val" id="receipt-route">LHR &rarr; FRA</span>
+        </div>
+        <div class="receipt-cell">
+          <span class="receipt-lbl">BAG WEIGHT</span>
+          <span class="receipt-val" id="receipt-weight">23.5 kg</span>
+        </div>
+        <div class="receipt-cell">
+          <span class="receipt-lbl">COLOR / TYPE</span>
+          <span class="receipt-val" id="receipt-color">Navy Blue Hardshell</span>
+        </div>
+        <div class="receipt-cell">
+          <span class="receipt-lbl">CURRENT STAGE</span>
+          <span class="receipt-val" id="receipt-stage">In Transit (FL370)</span>
+        </div>
+      </div>
+
+      <div class="receipt-qr-section">
+        <!-- SVG QR Code Placeholder -->
+        <svg class="receipt-qr-svg" viewBox="0 0 100 100">
+          <rect x="0" y="0" width="100" height="100" fill="#fff"/>
+          <rect x="10" y="10" width="25" height="25" fill="#000"/>
+          <rect x="14" y="14" width="17" height="17" fill="#fff"/>
+          <rect x="18" y="18" width="9" height="9" fill="#000"/>
+          <rect x="65" y="10" width="25" height="25" fill="#000"/>
+          <rect x="69" y="14" width="17" height="17" fill="#fff"/>
+          <rect x="73" y="18" width="9" height="9" fill="#000"/>
+          <rect x="10" y="65" width="25" height="25" fill="#000"/>
+          <rect x="14" y="69" width="17" height="17" fill="#fff"/>
+          <rect x="18" y="73" width="9" height="9" fill="#000"/>
+          <!-- Random blocks for QR realism -->
+          <rect x="42" y="12" width="6" height="6" fill="#000"/>
+          <rect x="52" y="18" width="6" height="6" fill="#000"/>
+          <rect x="42" y="28" width="8" height="8" fill="#000"/>
+          <rect x="12" y="42" width="6" height="6" fill="#000"/>
+          <rect x="24" y="48" width="8" height="6" fill="#000"/>
+          <rect x="42" y="42" width="16" height="16" fill="#000"/>
+          <rect x="46" y="46" width="8" height="8" fill="#fff"/>
+          <rect x="65" y="42" width="6" height="12" fill="#000"/>
+          <rect x="78" y="48" width="8" height="6" fill="#000"/>
+          <rect x="42" y="65" width="8" height="8" fill="#000"/>
+          <rect x="56" y="70" width="6" height="14" fill="#000"/>
+          <rect x="68" y="68" width="14" height="6" fill="#000"/>
+          <rect x="80" y="80" width="10" height="10" fill="#000"/>
+        </svg>
+        <div class="receipt-qr-text">
+          <p><strong>Scan for Instant Mobile Tracking</strong></p>
+          <p>Authorized IATA baggage tracking token issued by AeroSim Aviation Terminal Systems.</p>
+        </div>
+      </div>
+
+      <div class="receipt-footer-buttons">
+        <button type="button" class="btn-primary-action" onclick="window.print()">Print Now</button>
+        <button type="button" class="btn-secondary-action" id="btn-close-receipt">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Footer -->
+  <div id="site-footer"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

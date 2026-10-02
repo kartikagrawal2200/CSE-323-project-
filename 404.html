@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Flight Diverted | AeroSim Aviation</title>
+  <meta name="description" content="Flight diverted. The requested page on AeroSim Aviation airport baggage handling simulator was not found.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
+</head>
+<body>
+  <div class="page-bg bg-terminal"></div>
+  <div class="page-overlay"></div>
+
+  <!-- Shared Header -->
+  <div id="site-header"></div>
+
+  <main id="main-content" class="main-content">
+    <div class="not-found-card">
+      <!-- Animated Diverted Airplane Radar Graphic -->
+      <div class="diverted-plane-graphic">
+        <svg width="90" height="90" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" transform="rotate(-35 12 12)"/>
+        </svg>
+        <div class="radar-ping-ring"></div>
+      </div>
+
+      <div class="badge-pill" style="margin-bottom: 12px; background: #fee2e2; color: #dc2626; border-color: #fca5a5;">
+        Error 404 • Navigation Telemetry Lost
+      </div>
+
+      <h1 class="not-found-title">THIS FLIGHT HAS BEEN DIVERTED</h1>
+      <p class="not-found-desc">
+        The coordinates or flight waypoint you requested could not be located on the airport radar. The page may have been moved, renamed, or temporarily diverted to another gate.
+      </p>
+
+      <!-- Search Box to locate a bag or page -->
+      <div class="search-card-wrapper" style="max-width: 480px; margin: 24px auto;">
+        <form class="baggage-search-form" id="404-search-form" action="track.html" method="GET">
+          <div class="search-form-row">
+            <input 
+              type="text" 
+              name="tag" 
+              class="search-input-box" 
+              placeholder="Enter tag e.g. LHR-123456" 
+              required
+            >
+            <button type="submit" class="btn-search-action">
+              SEARCH
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="not-found-actions">
+        <a href="index.html" class="btn-cta-track" style="margin: 0;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          RETURN TO HOME
+        </a>
+        <a href="track.html" class="btn-stage-nav" style="padding: 14px 28px; font-size: 1rem;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          TRACK BAGGAGE
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <div id="site-footer"></div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

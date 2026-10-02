@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - AeroSim Aviation</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
+</head>
+<body>
+  <!-- Background Image with Gradient Overlay -->
+  <div class="page-bg bg-tarmac"></div>
+  <div class="page-overlay"></div>
+
+  <!-- Shared Header Navigation -->
+  <div id="site-header"></div>
+
+  <!-- Register Form Main Area -->
+  <main id="main-content" class="main-content">
+    <div class="auth-container">
+      <div class="auth-card">
+        <h1 class="auth-title">Register</h1>
+        <p class="auth-subtitle">Create your account to track your baggage and get real-time updates.</p>
+
+        <form id="form-register" novalidate>
+          <!-- Inline error alert -->
+          <div id="register-error-msg" class="auth-inline-error" style="display: none;"></div>
+
+          <!-- Quick Fill Demo Card -->
+          <div class="demo-credentials-card" id="demo-reg-card">
+            <div class="demo-cred-info">
+              <span class="demo-badge">QUICK FILL</span>
+              <span class="demo-cred-text">Fill sample traveler details &amp; auto-send OTP</span>
+            </div>
+            <button type="button" class="btn-demo-fill" id="btn-fill-demo-reg">
+              Fill Demo Data
+            </button>
+          </div>
+
+          <!-- Phone Number Field -->
+          <div class="form-group">
+            <div class="input-with-icon">
+              <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                <line x1="12" y1="18" x2="12.01" y2="18"></line>
+              </svg>
+              <input 
+                type="tel" 
+                class="auth-input" 
+                id="reg-phone" 
+                placeholder="Phone Number (10–15 digits)" 
+                required
+                autocomplete="tel"
+              >
+            </div>
+          </div>
+
+          <!-- OTP Field with Send OTP Button -->
+          <div class="form-group">
+            <div class="otp-group">
+              <div class="input-with-icon" style="flex: 1;">
+                <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  <polyline points="9 12 11 14 15 10"></polyline>
+                </svg>
+                <input 
+                  type="text" 
+                  class="auth-input" 
+                  id="reg-otp" 
+                  placeholder="Enter 4-digit OTP" 
+                  maxlength="6"
+                  required
+                  autocomplete="one-time-code"
+                >
+              </div>
+              <button type="button" class="btn-send-otp" id="btn-send-otp">
+                Send OTP
+              </button>
+            </div>
+            <span class="auth-field-hint">Click 'Send OTP' to receive your verification code.</span>
+          </div>
+
+          <!-- User ID Field -->
+          <div class="form-group">
+            <div class="input-with-icon">
+              <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input 
+                type="text" 
+                class="auth-input" 
+                id="reg-userid" 
+                placeholder="User ID (min. 4 characters)" 
+                required
+                autocomplete="username"
+              >
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-group">
+            <div class="input-with-icon">
+              <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <input 
+                type="password" 
+                class="auth-input" 
+                id="reg-password" 
+                placeholder="Password (min. 8 chars, 1 upper, 1 number)" 
+                required
+                autocomplete="new-password"
+              >
+              <button type="button" class="btn-toggle-eye" aria-label="Toggle password visibility">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Password Strength Meter -->
+            <div class="password-strength-container" id="reg-strength-container">
+              <div class="strength-bars">
+                <div class="strength-bar" id="str-bar-1"></div>
+                <div class="strength-bar" id="str-bar-2"></div>
+                <div class="strength-bar" id="str-bar-3"></div>
+              </div>
+              <span class="strength-text" id="str-text">Password strength: Empty</span>
+            </div>
+          </div>
+
+          <!-- Register Button -->
+          <button type="submit" class="btn-auth-submit" id="btn-register-submit">
+            Register
+          </button>
+
+          <!-- Footer link -->
+          <div class="auth-footer">
+            Already have an account? <a href="login.html">Login</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <div id="site-footer"></div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

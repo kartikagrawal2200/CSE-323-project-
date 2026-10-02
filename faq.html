@@ -1,0 +1,343 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baggage FAQ &amp; Help Center - AeroSim Aviation</title>
+  <meta name="description" content="Find answers to common airport baggage questions regarding lost luggage, tracking tag numbers, weight limits, claim process, and connecting flight transfers.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
+</head>
+<body>
+  <div class="page-bg bg-terminal"></div>
+  <div class="page-overlay page-overlay-subtle"></div>
+
+  <!-- Shared Header -->
+  <div id="site-header"></div>
+
+  <main id="main-content" class="main-content">
+    <!-- Breadcrumb Bar -->
+    <div class="breadcrumb-bar">
+      <a href="index.html" class="breadcrumb-link" title="Home">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+      </a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <span class="breadcrumb-current">Frequently Asked Questions</span>
+    </div>
+
+    <!-- FAQ Hero Area -->
+    <div class="info-hero-section">
+      <span class="badge-pill">Help &amp; Knowledge Base</span>
+      <h1 class="info-hero-title">Frequently Asked Questions</h1>
+      <p class="info-hero-subtitle">
+        Everything you need to know about baggage tracking, airport logistics, claims, and policies.
+      </p>
+
+      <!-- Live Search Box -->
+      <div class="faq-search-wrapper">
+        <svg class="faq-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input 
+          type="text" 
+          id="faq-search-input" 
+          class="faq-search-input" 
+          placeholder="Search by keyword (e.g., lost, weight, tag, claim, delay)..." 
+          aria-label="Search FAQ"
+        >
+        <button type="button" id="faq-search-clear" class="faq-search-clear" aria-label="Clear search" style="display: none;">
+          &times;
+        </button>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="faq-category-tabs" role="tablist">
+        <button type="button" class="faq-tab-btn active" data-category="all" role="tab">All Questions</button>
+        <button type="button" class="faq-tab-btn" data-category="before" role="tab">Before Flight</button>
+        <button type="button" class="faq-tab-btn" data-category="during" role="tab">During Flight</button>
+        <button type="button" class="faq-tab-btn" data-category="arrival" role="tab">At Arrival</button>
+        <button type="button" class="faq-tab-btn" data-category="lost" role="tab">Lost &amp; Delayed</button>
+      </div>
+    </div>
+
+    <!-- Accordion List Container -->
+    <div class="faq-accordion-container" id="faq-accordion-list">
+      <!-- Item 1 -->
+      <div class="faq-item" data-category="lost arrival">
+        <button type="button" class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">What should I do immediately if my baggage does not appear on the claim carousel?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p>
+            Remain inside the baggage reclaim hall and locate the airline's Baggage Service Office (or handling agent counter). File a Property Irregularity Report (PIR) immediately before passing customs. You will need your airline boarding pass, baggage tag receipt, and a physical description of your suitcase. In our simulator, you can also head to <a href="report-issue.html">Report a Problem</a> to simulate filing an instant digital claim.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="faq-item" data-category="before">
+        <button type="button" class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">Where can I find my 10-digit baggage tag number?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p>
+            When you check in your luggage at the airport counter, an agent hands you a small barcode sticker stuck either to the back of your physical boarding pass or your passport cover. It consists of a 2-letter airline code or 3-letter airport code followed by 6 digits (e.g. <code>LHR-123456</code>). Digital boarding passes in airline apps also reflect this under "Checked Bags".
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="faq-item" data-category="before">
+        <button type="button" class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">What are the standard checked baggage weight and dimension allowances?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p>
+            Standard international economy allowances generally permit one or two bags up to 23 kg (50 lbs) each, with total linear dimensions (Length + Width + Height) not exceeding 158 cm (62 inches). Business and First class allowances frequently permit bags up to 32 kg (70 lbs). Any individual bag exceeding 32 kg must be dispatched via specialized air freight due to occupational safety regulations.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 4 -->
+      <div class="faq-item" data-category="during">
+        <button type="button" class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">What does it mean when my tracking status displays "Flight in Transit"?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p>
+            "Flight in Transit" (Stage 4) confirms your bag was positively matched with the passenger manifest, loaded into the aircraft's belly hold or ULD container, and the aircraft has departed. During cruising flight, no ground barcode scanners interact with the bag until the aircraft touches down and apron unloading begins.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 5 -->
+      <div class="faq-item" data-category="during">
+        <button type="button" class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">How are bags handled during connecting / transit flights?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p>
+            If your journey was booked as a single ticket through a hub airport (e.g., LHR to FRA, then connecting onward to SIN), your bag is tagged all the way to your final destination. At the intermediate transfer hub, ground teams offload "transfer" containers and run them through high-speed automated transfer sorters without requiring you to collect and re-check your bags.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 6 -->
+      <div class="faq-item" data-category="before">
+        <button type="button" class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">Can I check fragile items, sports gear, or musical instruments?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p>
+            Yes. Fragile and out-of-gauge items (bicycles, surfboards, cellos, golf clubs) must be taken to the dedicated "Oversize / Out-of-Gauge Baggage" drop counter. These bags bypass standard high-speed automated conveyor shoots to prevent mechanical impact, and are hand-carried by ramp agents directly to aircraft cargo holds.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 7 -->
+      <div class="faq-item" data-category="arrival">
+        <button type="button" class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">How long after flight landing does baggage appear on the carousel?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p>
+            For domestic and narrow-body flights, first bags typically emerge within 15–25 minutes of wheel touchdown. For wide-body international flights (such as A380 or B777 with hundreds of checked bags), carousel delivery may take between 25 to 45 minutes. Priority-tagged bags (Business/First/Star Alliance Gold/SkyTeam Elite) are unloaded first.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 8 -->
+      <div class="faq-item" data-category="lost arrival">
+        <button type="button" class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">What is a Property Irregularity Report (PIR) and how does it work?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p>
+            A PIR is an official document generated across international WorldTracer systems documenting a baggage mishap (e.g. <code>AS-2026-881923</code>). It contains your delivery address, phone number, and physical suitcase attributes (brand, color, wheels, hard/soft shell). 98.5% of delayed bags are located and delivered to passengers' residences within 24 to 48 hours.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 9 -->
+      <div class="faq-item" data-category="during">
+        <button type="button" class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">Why was my checked suitcase opened by airport security screening?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p>
+            If automated computed tomography (CT) scanners detect an unresolved organic density or potential prohibited item (such as power banks, loose lithium batteries, or uncertified electronics), security personnel are authorized to conduct a physical inspection. Officers place an official TSA or national security notice inside your suitcase detailing the inspection.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 10 -->
+      <div class="faq-item" data-category="lost">
+        <button type="button" class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">What compensation is available for delayed or damaged baggage under the Montreal Convention?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p>
+            Under the Montreal Convention (1999), airlines are legally liable for proven losses up to approximately 1,288 Special Drawing Rights (SDR) — roughly $1,700 USD — per passenger for lost or damaged luggage. For delayed baggage away from home, airlines routinely reimburse necessary emergency toiletries and clothing purchases upon submission of receipts.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 11 -->
+      <div class="faq-item" data-category="before">
+        <button type="button" class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">Can I track multiple bags simultaneously on AeroSim?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p>
+            Yes! If you are logged in, visit the <a href="my-bags.html">My Bags</a> dashboard. You can add as many tracking tags as needed, view individual progress bars, monitor independent arrival times, and quickly jump to individual stage details without re-entering tags.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 12 -->
+      <div class="faq-item" data-category="before">
+        <button type="button" class="faq-question" aria-expanded="false">
+          <span class="faq-q-text">What items are strictly prohibited in checked baggage?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p>
+            Never pack loose lithium-ion batteries, power banks, e-cigarettes/vapes, safety matches, flare guns, or flammable compressed gases in checked luggage. These present severe in-flight fire hazards and must always be kept inside your carry-on luggage where crew fire extinguishers are readily accessible.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty search feedback -->
+    <div id="faq-empty-state" class="faq-empty-state" style="display: none;">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.8">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        <line x1="8" y1="11" x2="14" y2="11"></line>
+      </svg>
+      <h3>No matching questions found</h3>
+      <p>Try searching for different keywords, or switch the category filter above.</p>
+    </div>
+
+    <!-- Still need help CTA -->
+    <div class="content-card" style="margin-top: 3rem; text-align: center;">
+      <h2 class="card-section-title" style="margin-bottom: 0.5rem;">Still Have Questions?</h2>
+      <p class="card-section-desc" style="margin-bottom: 1.5rem;">Our simulation operations desk is always available to assist.</p>
+      <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+        <a href="contact.html" class="btn-nav-primary">Contact Operations Desk</a>
+        <a href="report-issue.html" class="btn-nav-outline">Report an Issue</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <div id="site-footer"></div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // FAQ Accordion & Filtering Logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('faq-search-input');
+      const clearBtn = document.getElementById('faq-search-clear');
+      const tabBtns = document.querySelectorAll('.faq-tab-btn');
+      const items = document.querySelectorAll('.faq-item');
+      const emptyState = document.getElementById('faq-empty-state');
+
+      let currentCategory = 'all';
+      let currentQuery = '';
+
+      // Accordion toggle
+      items.forEach(item => {
+        const btn = item.querySelector('.faq-question');
+        btn.addEventListener('click', () => {
+          const isOpen = item.classList.contains('open');
+          // Close others for clean accordion experience
+          items.forEach(i => {
+            if (i !== item) {
+              i.classList.remove('open');
+              i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+            }
+          });
+          if (isOpen) {
+            item.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
+          } else {
+            item.classList.add('open');
+            btn.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+
+      // Filter function
+      function filterFaqs() {
+        let visibleCount = 0;
+        items.forEach(item => {
+          const text = item.textContent.toLowerCase();
+          const category = item.getAttribute('data-category') || '';
+          const matchesCat = (currentCategory === 'all') || category.includes(currentCategory);
+          const matchesQuery = !currentQuery || text.includes(currentQuery);
+
+          if (matchesCat && matchesQuery) {
+            item.style.display = 'block';
+            visibleCount++;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        if (visibleCount === 0) {
+          emptyState.style.display = 'flex';
+        } else {
+          emptyState.style.display = 'none';
+        }
+      }
+
+      // Search event
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          currentQuery = e.target.value.trim().toLowerCase();
+          clearBtn.style.display = currentQuery ? 'block' : 'none';
+          filterFaqs();
+        });
+      }
+
+      if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+          searchInput.value = '';
+          currentQuery = '';
+          clearBtn.style.display = 'none';
+          searchInput.focus();
+          filterFaqs();
+        });
+      }
+
+      // Category tab events
+      tabBtns.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabBtns.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          currentCategory = tab.getAttribute('data-category');
+          filterFaqs();
+        });
+      });
+    });
+  </script>
+</body>
+</html>

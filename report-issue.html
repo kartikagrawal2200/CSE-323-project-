@@ -1,0 +1,542 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report Baggage Issue - AeroSim Aviation</title>
+  <meta name="description" content="File an official baggage claim or Property Irregularity Report (PIR) for delayed, lost, or damaged luggage with our 3-step claims wizard.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
+</head>
+<body>
+  <div class="page-bg bg-terminal"></div>
+  <div class="page-overlay page-overlay-subtle"></div>
+
+  <!-- Shared Header -->
+  <div id="site-header"></div>
+
+  <main id="main-content" class="main-content">
+    <!-- Breadcrumb Bar -->
+    <div class="breadcrumb-bar">
+      <a href="index.html" class="breadcrumb-link" title="Home">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+      </a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <span class="breadcrumb-current">Report a Problem</span>
+    </div>
+
+    <div class="info-hero-section">
+      <span class="badge-pill">Baggage Service Center</span>
+      <h1 class="info-hero-title">File an Irregularity Claim</h1>
+      <p class="info-hero-subtitle">
+        3-step wizard to report delayed, lost, or damaged luggage and obtain an official tracking reference.
+      </p>
+    </div>
+
+    <!-- 3-Step Wizard Card -->
+    <div class="wizard-card-container">
+      <!-- Wizard Step Indicator -->
+      <div class="wizard-steps-indicator">
+        <div class="wizard-step-node active" id="wizard-node-1">
+          <span class="wizard-step-num">1</span>
+          <span class="wizard-step-title">Select Bag &amp; Issue</span>
+        </div>
+        <div class="wizard-step-connector" id="wizard-conn-1"></div>
+        <div class="wizard-step-node" id="wizard-node-2">
+          <span class="wizard-step-num">2</span>
+          <span class="wizard-step-title">Description &amp; Proof</span>
+        </div>
+        <div class="wizard-step-connector" id="wizard-conn-2"></div>
+        <div class="wizard-step-node" id="wizard-node-3">
+          <span class="wizard-step-num">3</span>
+          <span class="wizard-step-title">Review &amp; Submit</span>
+        </div>
+      </div>
+
+      <!-- Step 1 Pane -->
+      <div class="wizard-pane active" id="pane-step-1">
+        <h2 class="card-section-title" style="margin-bottom: 0.5rem;">Step 1: Choose Baggage Tag &amp; Issue Type</h2>
+        <p class="card-section-desc" style="margin-bottom: 1.5rem;">Identify the affected baggage and the nature of the irregularity.</p>
+
+        <!-- Bag Tag Select -->
+        <div class="form-group">
+          <label class="form-label" for="report-bag-tag">Select Baggage Tag <span class="required-star">*</span></label>
+          <div class="input-with-icon">
+            <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="6" width="16" height="15" rx="3"></rect><path d="M9 6V4a3 3 0 0 1 6 0v2"></path></svg>
+            <select id="report-bag-tag" class="auth-input custom-select">
+              <!-- Populated dynamically with user's tracked bags -->
+            </select>
+          </div>
+          <span class="field-error-msg" id="err-report-tag"></span>
+        </div>
+
+        <!-- Issue Types Radio Grid -->
+        <div class="form-group">
+          <label class="form-label">Type of Baggage Issue <span class="required-star">*</span></label>
+          <div class="issue-types-grid">
+            <label class="issue-type-card active">
+              <input type="radio" name="issueType" value="Delayed Baggage" checked>
+              <div class="issue-icon-wrap">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </div>
+              <div class="issue-title">Delayed Baggage</div>
+              <div class="issue-desc">Bag did not arrive on the claim carousel after flight landing.</div>
+            </label>
+
+            <label class="issue-type-card">
+              <input type="radio" name="issueType" value="Lost Luggage">
+              <div class="issue-icon-wrap">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              </div>
+              <div class="issue-title">Lost Luggage (24h+)</div>
+              <div class="issue-desc">Luggage has been missing for more than 24 hours with no status updates.</div>
+            </label>
+
+            <label class="issue-type-card">
+              <input type="radio" name="issueType" value="Damaged Baggage">
+              <div class="issue-icon-wrap">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              </div>
+              <div class="issue-title">Damaged Suitcase</div>
+              <div class="issue-desc">Broken wheels, cracked hardshell, torn zipper, or structural tears.</div>
+            </label>
+
+            <label class="issue-type-card">
+              <input type="radio" name="issueType" value="Missing Item Inside">
+              <div class="issue-icon-wrap">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>
+              </div>
+              <div class="issue-title">Missing Item Inside</div>
+              <div class="issue-desc">Suitcase was delivered but specific internal contents are missing.</div>
+            </label>
+          </div>
+        </div>
+
+        <div class="wizard-actions-row" style="justify-content: flex-end;">
+          <button type="button" class="btn-primary-action" id="btn-next-step-1">
+            Next: Incident Details &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2 Pane -->
+      <div class="wizard-pane" id="pane-step-2">
+        <h2 class="card-section-title" style="margin-bottom: 0.5rem;">Step 2: Description &amp; Contact Details</h2>
+        <p class="card-section-desc" style="margin-bottom: 1.5rem;">Provide particulars about where your bag should be delivered once located.</p>
+
+        <div class="form-group">
+          <label class="form-label" for="report-desc">Description of Problem &amp; Baggage Features <span class="required-star">*</span></label>
+          <textarea 
+            id="report-desc" 
+            class="auth-input contact-textarea" 
+            rows="4" 
+            placeholder="E.g., Samsonite hardcase, navy blue, four spinner wheels, yellow baggage tag ribbon attached to handle. Last seen checking in at LHR Terminal 2..."
+            required
+          ></textarea>
+          <span class="field-error-msg" id="err-report-desc"></span>
+        </div>
+
+        <div class="form-row-2col">
+          <div class="form-group">
+            <label class="form-label" for="report-delivery-addr">Delivery Address for Baggage Return <span class="required-star">*</span></label>
+            <div class="input-with-icon">
+              <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <input type="text" id="report-delivery-addr" class="auth-input" placeholder="Hotel name or residential street address" required>
+            </div>
+            <span class="field-error-msg" id="err-report-addr"></span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="report-contact-phone">Contact Phone Number <span class="required-star">*</span></label>
+            <div class="input-with-icon">
+              <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <input type="tel" id="report-contact-phone" class="auth-input" placeholder="+1 555-019-2834" required>
+            </div>
+            <span class="field-error-msg" id="err-report-phone"></span>
+          </div>
+        </div>
+
+        <!-- Optional File Attachment Field -->
+        <div class="form-group">
+          <label class="form-label" for="report-filename">Optional Photo or Stub File Attachment</label>
+          <div class="input-with-icon">
+            <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+            <input type="text" id="report-filename" class="auth-input" placeholder="e.g. damaged_zipper_photo.jpg or claim_stub_scan.pdf">
+          </div>
+          <span style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; display: block;">Simulation prototype: Enter mock attachment filename for verification record.</span>
+        </div>
+
+        <div class="wizard-actions-row">
+          <button type="button" class="btn-stage-nav" id="btn-back-step-2">
+            &larr; Back
+          </button>
+          <button type="button" class="btn-primary-action" id="btn-next-step-2">
+            Next: Review Claim &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 3 Pane -->
+      <div class="wizard-pane" id="pane-step-3">
+        <h2 class="card-section-title" style="margin-bottom: 0.5rem;">Step 3: Review &amp; File Claim</h2>
+        <p class="card-section-desc" style="margin-bottom: 1.5rem;">Carefully verify all details before submitting to the airline operations system.</p>
+
+        <!-- Summary Review Box -->
+        <div class="claim-review-card">
+          <div class="claim-review-row">
+            <span class="review-label">Baggage Tag:</span>
+            <span class="review-value" id="rev-tag">LHR-123456</span>
+          </div>
+          <div class="claim-review-row">
+            <span class="review-label">Issue Category:</span>
+            <span class="review-value" id="rev-issue">Delayed Baggage</span>
+          </div>
+          <div class="claim-review-row">
+            <span class="review-label">Delivery Address:</span>
+            <span class="review-value" id="rev-addr">-</span>
+          </div>
+          <div class="claim-review-row">
+            <span class="review-label">Contact Phone:</span>
+            <span class="review-value" id="rev-phone">-</span>
+          </div>
+          <div class="claim-review-row">
+            <span class="review-label">Attachment:</span>
+            <span class="review-value" id="rev-file">None provided</span>
+          </div>
+          <div class="claim-review-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+            <span class="review-label">Description:</span>
+            <span class="review-value" id="rev-desc" style="font-weight: 500; font-size: 0.88rem; color: var(--text-secondary);">-</span>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top: 1.25rem;">
+          <label class="checkbox-label-row">
+            <input type="checkbox" id="chk-certify" required>
+            <span>I certify under penalty of airline terms that the baggage details provided above are true, accurate, and relate to my ticketed journey.</span>
+          </label>
+          <span class="field-error-msg" id="err-report-certify"></span>
+        </div>
+
+        <div class="wizard-actions-row">
+          <button type="button" class="btn-stage-nav" id="btn-back-step-3">
+            &larr; Back
+          </button>
+          <button type="button" class="btn-primary-action" id="btn-submit-claim">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            SUBMIT OFFICIAL CLAIM
+          </button>
+        </div>
+      </div>
+
+      <!-- Confirmation Screen Pane -->
+      <div class="wizard-pane" id="pane-confirmation" style="text-align: center; padding: 20px 0;">
+        <div class="confirmation-check-circle">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <h2 style="font-size: 1.7rem; font-weight: 800; color: var(--navy); margin-top: 1rem;">
+          Claim Successfully Lodged
+        </h2>
+        <p style="color: var(--text-secondary); max-width: 480px; margin: 8px auto 20px auto;">
+          Your Property Irregularity Report (PIR) has been transmitted across the WorldTracer global baggage matching network.
+        </p>
+
+        <div class="ref-badge-display">
+          <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 600;">OFFICIAL REFERENCE NUMBER</span>
+          <span class="ref-code-huge" id="confirm-ref-number">AS-2026-881902</span>
+          <span style="font-size: 0.82rem; color: #059669; font-weight: 700;">Status: Active Investigation</span>
+        </div>
+
+        <div style="display: flex; gap: 12px; justify-content: center; margin-top: 24px; flex-wrap: wrap;">
+          <a href="journey.html" class="btn-primary-action" id="confirm-journey-link">
+            Track Baggage Telemetry
+          </a>
+          <button type="button" class="btn-stage-nav" id="btn-file-another">
+            File Another Report
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Past Reports History Table -->
+    <div class="content-card" style="margin-top: 3rem;">
+      <div class="card-section-header">
+        <div class="feature-icon-wrapper">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        </div>
+        <div>
+          <h2 class="card-section-title">Your Filed Irregularity Reports</h2>
+          <p class="card-section-desc">History of all baggage irregularity notices lodged under your account.</p>
+        </div>
+      </div>
+
+      <div class="table-responsive-wrapper">
+        <table class="reports-table" id="reports-table">
+          <thead>
+            <tr>
+              <th>Reference ID</th>
+              <th>Baggage Tag</th>
+              <th>Issue Type</th>
+              <th>Date Filed</th>
+              <th>Status</th>
+              <th>Delivery Destination</th>
+            </tr>
+          </thead>
+          <tbody id="reports-table-body">
+            <!-- Populated via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+      <div id="reports-empty-state" style="display: none; padding: 30px; text-align: center; color: var(--text-secondary);">
+        No irregularity reports filed yet. If you encounter baggage issues, use the wizard above to lodge a claim.
+      </div>
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <div id="site-footer"></div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // 3-Step Wizard & Reports Manager
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof window.requireLogin === 'function') {
+        window.requireLogin('report-issue.html');
+      }
+
+      const currentUser = localStorage.getItem('aerosim_user') || 'User2244';
+      const bagSelect = document.getElementById('report-bag-tag');
+      
+      // Populate Bag Select with user bags + seeds
+      const userBagsKey = `aerosim_user_bags_${currentUser}`;
+      let tracked = [];
+      try {
+        const stored = localStorage.getItem(userBagsKey);
+        if (stored) tracked = JSON.parse(stored);
+      } catch (e) {}
+      if (tracked.length === 0) tracked = ['LHR-123456', 'JFK-882194', 'DXB-309481'];
+
+      bagSelect.innerHTML = tracked.map(t => `<option value="${t}">${t}</option>`).join('') +
+        `<option value="OTHER">Enter Another Tag ID...</option>`;
+
+      // Issue type radio card selection
+      const issueCards = document.querySelectorAll('.issue-type-card');
+      issueCards.forEach(card => {
+        card.addEventListener('click', () => {
+          issueCards.forEach(c => c.classList.remove('active'));
+          card.classList.add('active');
+        });
+      });
+
+      // Wizard Navigation
+      const p1 = document.getElementById('pane-step-1');
+      const p2 = document.getElementById('pane-step-2');
+      const p3 = document.getElementById('pane-step-3');
+      const pConf = document.getElementById('pane-confirmation');
+
+      const n1 = document.getElementById('wizard-node-1');
+      const n2 = document.getElementById('wizard-node-2');
+      const n3 = document.getElementById('wizard-node-3');
+      const c1 = document.getElementById('wizard-conn-1');
+      const c2 = document.getElementById('wizard-conn-2');
+
+      function goToStep(step) {
+        [p1, p2, p3, pConf].forEach(p => p.classList.remove('active'));
+        [n1, n2, n3].forEach(n => n.classList.remove('active', 'completed'));
+        [c1, c2].forEach(c => c.classList.remove('active'));
+
+        if (step === 1) {
+          p1.classList.add('active');
+          n1.classList.add('active');
+        } else if (step === 2) {
+          p2.classList.add('active');
+          n1.classList.add('completed');
+          c1.classList.add('active');
+          n2.classList.add('active');
+        } else if (step === 3) {
+          p3.classList.add('active');
+          n1.classList.add('completed');
+          c1.classList.add('active');
+          n2.classList.add('completed');
+          c2.classList.add('active');
+          n3.classList.add('active');
+        } else if (step === 4) {
+          pConf.classList.add('active');
+          n1.classList.add('completed');
+          c1.classList.add('active');
+          n2.classList.add('completed');
+          c2.classList.add('active');
+          n3.classList.add('completed');
+        }
+      }
+
+      // Step 1 -> Step 2
+      document.getElementById('btn-next-step-1').addEventListener('click', () => {
+        goToStep(2);
+      });
+
+      // Step 2 -> Back
+      document.getElementById('btn-back-step-2').addEventListener('click', () => {
+        goToStep(1);
+      });
+
+      // Step 2 -> Step 3
+      document.getElementById('btn-next-step-2').addEventListener('click', () => {
+        let valid = true;
+        document.querySelectorAll('.field-error-msg').forEach(el => el.textContent = '');
+
+        const desc = document.getElementById('report-desc').value.trim();
+        const addr = document.getElementById('report-delivery-addr').value.trim();
+        const phone = document.getElementById('report-contact-phone').value.trim();
+
+        if (desc.length < 10) {
+          document.getElementById('err-report-desc').textContent = 'Please describe the issue in detail (at least 10 characters).';
+          valid = false;
+        }
+
+        if (addr.length < 5) {
+          document.getElementById('err-report-addr').textContent = 'Please provide a valid delivery address.';
+          valid = false;
+        }
+
+        if (!/^\+?[\d\s-]{8,18}$/.test(phone)) {
+          document.getElementById('err-report-phone').textContent = 'Please provide a valid contact phone number.';
+          valid = false;
+        }
+
+        if (!valid) return;
+
+        // Populate Review Pane
+        const chosenBag = bagSelect.value;
+        const chosenIssue = document.querySelector('input[name="issueType"]:checked').value;
+        const filename = document.getElementById('report-filename').value.trim() || 'No file attached';
+
+        document.getElementById('rev-tag').textContent = chosenBag;
+        document.getElementById('rev-issue').textContent = chosenIssue;
+        document.getElementById('rev-addr').textContent = addr;
+        document.getElementById('rev-phone').textContent = phone;
+        document.getElementById('rev-file').textContent = filename;
+        document.getElementById('rev-desc').textContent = desc;
+
+        goToStep(3);
+      });
+
+      // Step 3 -> Back
+      document.getElementById('btn-back-step-3').addEventListener('click', () => {
+        goToStep(2);
+      });
+
+      // Step 3 -> Submit
+      document.getElementById('btn-submit-claim').addEventListener('click', () => {
+        const certify = document.getElementById('chk-certify').checked;
+        const certErr = document.getElementById('err-report-certify');
+        certErr.textContent = '';
+
+        if (!certify) {
+          certErr.textContent = 'You must certify the accuracy of your statement.';
+          return;
+        }
+
+        // Generate Reference Number AS-2026-XXXXXX
+        const randDigits = Math.floor(100000 + Math.random() * 900000);
+        const refNumber = `AS-2026-${randDigits}`;
+
+        const chosenBag = bagSelect.value;
+        const chosenIssue = document.querySelector('input[name="issueType"]:checked').value;
+        const desc = document.getElementById('report-desc').value.trim();
+        const addr = document.getElementById('report-delivery-addr').value.trim();
+        const phone = document.getElementById('report-contact-phone').value.trim();
+        const filename = document.getElementById('report-filename').value.trim();
+
+        const claimObj = {
+          refNumber,
+          user: currentUser,
+          tagId: chosenBag,
+          issueType: chosenIssue,
+          description: desc,
+          deliveryAddress: addr,
+          contactPhone: phone,
+          fileName: filename,
+          status: 'Under Investigation',
+          dateFiled: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+        };
+
+        // Save to aerosim_reports
+        try {
+          const reports = JSON.parse(localStorage.getItem('aerosim_reports') || '[]');
+          reports.unshift(claimObj);
+          localStorage.setItem('aerosim_reports', JSON.stringify(reports));
+        } catch (e) {
+          console.error(e);
+        }
+
+        // Push notification
+        if (typeof window.pushAeroSimNotification === 'function') {
+          window.pushAeroSimNotification('Claim Lodged', `PIR ${refNumber} filed for ${chosenBag}.`);
+        }
+
+        if (typeof window.showToast === 'function') {
+          window.showToast(`Claim ${refNumber} submitted successfully!`);
+        }
+
+        document.getElementById('confirm-ref-number').textContent = refNumber;
+        document.getElementById('confirm-journey-link').href = `journey.html?tag=${encodeURIComponent(chosenBag)}`;
+
+        goToStep(4);
+        renderReportsTable();
+      });
+
+      // File another report
+      document.getElementById('btn-file-another').addEventListener('click', () => {
+        document.getElementById('report-desc').value = '';
+        document.getElementById('report-delivery-addr').value = '';
+        document.getElementById('report-contact-phone').value = '';
+        document.getElementById('report-filename').value = '';
+        document.getElementById('chk-certify').checked = false;
+        goToStep(1);
+      });
+
+      // Render Past Reports Table
+      function renderReportsTable() {
+        const tbody = document.getElementById('reports-table-body');
+        const empty = document.getElementById('reports-empty-state');
+        if (!tbody) return;
+
+        let reports = [];
+        try {
+          reports = JSON.parse(localStorage.getItem('aerosim_reports') || '[]');
+        } catch (e) {}
+
+        const userReports = reports.filter(r => r.user === currentUser);
+
+        if (userReports.length === 0) {
+          tbody.innerHTML = '';
+          empty.style.display = 'block';
+          return;
+        }
+
+        empty.style.display = 'none';
+        tbody.innerHTML = userReports.map(rep => `
+          <tr>
+            <td><strong style="color: var(--primary); font-family: monospace;">${rep.refNumber}</strong></td>
+            <td><span class="badge-tag-id">${rep.tagId}</span></td>
+            <td><strong>${rep.issueType}</strong></td>
+            <td>${rep.dateFiled}</td>
+            <td><span class="status-badge-inprogress" style="font-size: 0.76rem;">● ${rep.status}</span></td>
+            <td style="font-size: 0.85rem; color: var(--text-secondary);">${rep.deliveryAddress}</td>
+          </tr>
+        `).join('');
+      }
+
+      renderReportsTable();
+    });
+  </script>
+</body>
+</html>
