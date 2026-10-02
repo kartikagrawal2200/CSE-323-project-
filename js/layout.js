@@ -280,11 +280,8 @@
     const dict = I18N[lang] || I18N.en;
     const user = getSessionUserObject(); // synchronous read
 
-    // -- Language toggle & theme toggle are shared in both states --
+    // -- Theme toggle is shared in both states --
     const utilBtns =
-      '<button type="button" class="btn-lang-toggle" id="btn-lang-toggle" aria-label="' + dict.lang_title + '" title="' + dict.lang_title + '">' +
-        '<span class="btn-lang-label" aria-hidden="true">' + dict.lang_label + '</span>' +
-      '</button>' +
       '<button type="button" class="btn-dark-toggle" id="btn-dark-toggle" aria-label="Switch theme"></button>';
 
     if (!user) {
@@ -578,11 +575,7 @@
   // initHeaderEvents() — wire up all interactive header behaviour
   // -----------------------------------------------------------------------
   function initHeaderEvents() {
-    // -- Lang and theme buttons (added via renderAuthHeader) --
-    const langBtn = document.getElementById('btn-lang-toggle');
-    if (langBtn) {
-      langBtn.addEventListener('click', function () { window.toggleAeroSimLang(); });
-    }
+    // -- Theme button (added via renderAuthHeader) --
     const themeBtn = document.getElementById('btn-dark-toggle');
     if (themeBtn) {
       themeBtn.addEventListener('click', function () { window.toggleAeroSimTheme(); });

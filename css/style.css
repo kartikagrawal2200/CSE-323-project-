@@ -2189,38 +2189,6 @@ body {
   transform: translateY(-1px);
 }
 
-/* Language Switcher Toggle */
-.btn-lang-toggle {
-  height: 44px;
-  min-height: 44px;
-  padding: 0 12px;
-  border-radius: var(--radius-full);
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  color: var(--navy);
-  font-size: 0.82rem;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition);
-  text-decoration: none;
-}
-
-.btn-lang-toggle:hover {
-  background: var(--primary-light);
-  color: var(--primary);
-  border-color: #cbdcf4;
-  transform: translateY(-1px);
-}
-
-[data-theme="dark"] .btn-lang-toggle {
-  background: var(--surface-card);
-  border-color: var(--border-color);
-  color: var(--text-primary);
-}
 
 /* Live Operations Telemetry Ticker */
 .live-ops-ticker-bar {
