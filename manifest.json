@@ -1,0 +1,26 @@
+{
+  "name": "AeroSim Aviation - Airport Baggage Handling Simulator",
+  "short_name": "AeroSim",
+  "description": "Real-time airport baggage tracking, telemetry and aviation operations simulator.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0f172a",
+  "theme_color": "#1672ec",
+  "categories": ["travel", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "assets/airplane_climb.jpg",
+      "sizes": "192x192 512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/airplane_climb.jpg",
+      "sizes": "192x192 512x512",
+      "type": "image/jpeg",
+      "purpose": "maskable"
+    }
+  ]
+}

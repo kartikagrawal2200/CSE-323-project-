@@ -224,7 +224,11 @@
         <div class="mobile-nav-inner">
           <div class="mobile-nav-links">
             ${navLinks.map(l => `<a href="${l.href}" class="mobile-nav-link${(currentPage === l.key) ? ' active' : ''}">${l.label}</a>`).join('')}
-            <a href="about.html" class="mobile-nav-link${(currentPage === 'about.html') ? ' active' : ''}">About AeroSim</a>
+            <!-- Install App Action (Mobile Drawer) -->
+            <button type="button" class="mobile-nav-link btn-pwa-install" onclick="window.installAeroSimApp()" style="display: flex; align-items: center; gap: 8px; color: #1672ec; font-weight: 600; background: none; border: none; text-align: left; cursor: pointer; padding: 10px 0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+              📲 Install Mobile App
+            </button>
             ${currentUser ? `
               <div class="mobile-nav-divider"></div>
               <a href="my-bags.html" class="mobile-nav-link">My Tracked Bags</a>
@@ -537,9 +541,77 @@
     }
   };
 
+  // Mobile PWA Setup & Installation Handler
+  function initPWA() {
+    // 1. Inject Manifest link if not present
+    if (!document.querySelector('link[rel="manifest"]')) {
+      const manifestLink = document.createElement('link');
+      manifestLink.rel = 'manifest';
+      manifestLink.href = 'manifest.json';
+      document.head.appendChild(manifestLink);
+    }
+    // 2. Inject mobile theme & iOS web-app metas
+    if (!document.querySelector('meta[name="theme-color"]')) {
+      const themeMeta = document.createElement('meta');
+      themeMeta.name = 'theme-color';
+      themeMeta.content = '#1672ec';
+      document.head.appendChild(themeMeta);
+    }
+    if (!document.querySelector('meta[name="apple-mobile-web-app-capable"]')) {
+      const appleMeta = document.createElement('meta');
+      appleMeta.name = 'apple-mobile-web-app-capable';
+      appleMeta.content = 'yes';
+      document.head.appendChild(appleMeta);
+    }
+    if (!document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')) {
+      const appleStatus = document.createElement('meta');
+      appleStatus.name = 'apple-mobile-web-app-status-bar-style';
+      appleStatus.content = 'black-translucent';
+      document.head.appendChild(appleStatus);
+    }
+
+    // 3. Register Service Worker if running under HTTP/HTTPS
+    if ('serviceWorker' in navigator && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
+      navigator.serviceWorker.register('./sw.js').then((reg) => {
+        console.log('AeroSim PWA ServiceWorker registered with scope:', reg.scope);
+      }).catch((err) => {
+        console.warn('ServiceWorker registration error:', err);
+      });
+    }
+
+    // 4. Capture native install prompt
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      window.deferredInstallPrompt = e;
+      const btns = document.querySelectorAll('.btn-pwa-install');
+      btns.forEach(btn => { btn.style.display = 'inline-flex'; });
+    });
+  }
+
+  // Global mobile install trigger
+  window.installAeroSimApp = function () {
+    if (window.deferredInstallPrompt) {
+      window.deferredInstallPrompt.prompt();
+      window.deferredInstallPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted AeroSim installation');
+        }
+        window.deferredInstallPrompt = null;
+      });
+    } else {
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      if (isIOS) {
+        alert('📲 To install AeroSim on iPhone/iPad:\n\n1. Tap the Share button (⎋ / square with arrow) at the bottom.\n2. Scroll down and tap "Add to Home Screen".\n3. Tap "Add" to launch AeroSim in full-screen standalone mode.');
+      } else {
+        alert('📲 To install AeroSim on Android / Mobile:\n\n1. Tap the three dots (⋮) in the top-right corner of Chrome.\n2. Select "Install app" or "Add to Home screen".\n3. AeroSim will install to your app drawer like a native application.');
+      }
+    }
+  };
+
   // Initialize layout when DOM is ready
   function initLayout() {
     initTheme();
+    initPWA();
     renderHeader();
     renderFooter();
   }
