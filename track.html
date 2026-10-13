@@ -18,9 +18,12 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
 </head>
 <body>
+  <!-- Skip link: lets keyboard users jump past the menu directly to main content -->
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
   <!-- Background Image with Gradient Overlay -->
-  <div class="page-bg bg-terminal"></div>
-  <div class="page-overlay page-overlay-subtle"></div>
+  <div class="page-bg bg-terminal" aria-hidden="true"></div>
+  <div class="page-overlay page-overlay-subtle" aria-hidden="true"></div>
 
   <!-- Shared Header Navigation -->
   <div id="site-header"></div>
@@ -35,6 +38,9 @@
         </p>
       </div>
 
+      <!-- Heading structure: h2 groups the tracking modes for screen readers -->
+      <h2 class="visually-hidden">Baggage Search and Comparison</h2>
+
       <!-- Mode Tabs: Single vs Compare -->
       <div style="display: flex; justify-content: center; margin-bottom: 1.25rem;">
         <div class="track-mode-tabs" role="tablist" aria-label="Tracking Mode Selection">
@@ -48,16 +54,21 @@
         <!-- Search Box Card -->
         <div class="search-card-wrapper search-card-center">
           <div class="search-label-group">
-            <svg class="search-icon-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Icon is decorative: hide from screen reader -->
+            <svg class="search-icon-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
               <rect x="4" y="6" width="16" height="15" rx="3"></rect>
               <path d="M9 6V4a3 3 0 0 1 6 0v2"></path>
               <circle cx="9" cy="18" r="1"></circle>
               <circle cx="15" cy="18" r="1"></circle>
             </svg>
-            <span class="search-label-text">Baggage Tag ID</span>
+            <!-- Visible label connected to input by id -->
+            <label for="track-tag-input" class="search-label-text">Baggage Tag ID</label>
           </div>
 
           <form class="baggage-search-form" id="track-search-form" novalidate>
+            <!-- Accessible hint for input format -->
+            <span id="track-tag-hint" class="input-hint-text">Format: 3-letter airport code + hyphen + 6 digits (e.g. LHR-123456)</span>
+
             <div class="search-form-row">
               <div class="autocomplete-wrapper" style="flex: 1; position: relative;">
                 <input 
@@ -67,21 +78,27 @@
                   placeholder="e.g. LHR-123456" 
                   value="LHR-123456"
                   required
+                  aria-required="true"
+                  aria-describedby="track-tag-hint track-input-error"
                   autocomplete="off"
                   aria-autocomplete="list"
                   aria-controls="track-autocomplete-dropdown"
                 >
-                <div id="track-autocomplete-dropdown" class="autocomplete-dropdown" style="display: none;" role="listbox"></div>
+                <div id="track-autocomplete-dropdown" class="autocomplete-dropdown" style="display: none;" role="listbox" aria-label="Suggested baggage tags"></div>
               </div>
-              <button type="submit" class="btn-search-action" id="btn-track-submit">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <button type="submit" class="btn-search-action" id="btn-track-submit" aria-label="Track baggage tag">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                   <circle cx="11" cy="11" r="8"></circle>
                   <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
                 TRACK
               </button>
             </div>
+            <!-- Live error message container with role="alert" -->
             <div class="input-error-msg" id="track-input-error" role="alert" aria-live="assertive" style="display: none;"></div>
+
+            <!-- Live announcer: screen readers speak search results instantly when TRACK is clicked -->
+            <div id="track-live-announcer" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
 
             <!-- Recent Searches Section -->
             <div id="recent-searches-section" class="recent-searches-box" style="margin-top: 14px; text-align: left; display: none;">
@@ -120,22 +137,22 @@
       <div id="compare-track-panel" role="tabpanel" aria-labelledby="tab-compare-track" style="display: none;">
         <div class="search-card-wrapper search-card-center" style="max-width: 780px;">
           <div class="search-label-group">
-            <svg class="search-icon-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="search-icon-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
               <rect x="4" y="6" width="16" height="15" rx="3"></rect>
               <path d="M9 6V4a3 3 0 0 1 6 0v2"></path>
             </svg>
             <span class="search-label-text">Compare Two Baggage Tags</span>
           </div>
 
-          <form id="compare-search-form" style="display: flex; flex-direction: column; gap: 12px; margin-top: 1rem;">
+          <form id="compare-search-form" style="display: flex; flex-direction: column; gap: 12px; margin-top: 1rem;" novalidate>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px;">
               <div>
                 <label for="compare-tag-1" style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px; text-align: left;">Baggage Tag 1</label>
-                <input type="text" id="compare-tag-1" class="search-input-box" placeholder="e.g. LHR-123456" value="LHR-123456" style="width: 100%;">
+                <input type="text" id="compare-tag-1" class="search-input-box" placeholder="e.g. LHR-123456" value="LHR-123456" required aria-required="true" style="width: 100%;">
               </div>
               <div>
                 <label for="compare-tag-2" style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px; text-align: left;">Baggage Tag 2</label>
-                <input type="text" id="compare-tag-2" class="search-input-box" placeholder="e.g. DXB-309481" value="DXB-309481" style="width: 100%;">
+                <input type="text" id="compare-tag-2" class="search-input-box" placeholder="e.g. DXB-309481" value="DXB-309481" required aria-required="true" style="width: 100%;">
               </div>
             </div>
 
@@ -144,61 +161,64 @@
                 Load Demo Pair: LHR-123456 vs DXB-309481
               </button>
               <button type="submit" class="btn-primary-action" id="btn-run-compare" style="display: inline-flex; align-items: center; gap: 8px;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" focusable="false"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
                 Compare Bags
               </button>
             </div>
-            <div id="compare-error-msg" class="input-error-msg" style="display: none;"></div>
+            <!-- Role alert for compare validation errors -->
+            <div id="compare-error-msg" class="input-error-msg" role="alert" aria-live="assertive" style="display: none;"></div>
           </form>
 
-          <!-- Compare Results Container -->
-          <div id="compare-results-container" style="display: none; margin-top: 1.5rem;">
+          <!-- Compare Results Container with live region -->
+          <div id="compare-results-container" aria-live="polite" aria-atomic="true" style="display: none; margin-top: 1.5rem;">
             <!-- Populated via JS -->
           </div>
         </div>
       </div>
 
-        <!-- Bag Not Found State (Red Alert + Tips) -->
-        <div id="track-notfound-card" class="track-notfound-alert" role="alert" aria-live="polite" style="display: none;">
-          <div class="notfound-alert-header">
-            <svg class="notfound-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="8" x2="12" y2="12"></line>
-              <line x1="12" y1="16" x2="12.01" y2="16"></line>
-            </svg>
-            <div>
-              <h3 class="notfound-title">Bag Not Found</h3>
-              <p class="notfound-desc">We could not locate baggage tag <strong id="notfound-tag-display">XXX-000000</strong> in active telemetry feeds.</p>
-            </div>
+      <!-- Bag Not Found State (Red Alert + Tips) -->
+      <div id="track-notfound-card" class="track-notfound-alert" role="alert" aria-live="polite" style="display: none;">
+        <div class="notfound-alert-header">
+          <svg class="notfound-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <div>
+            <h3 class="notfound-title">Bag Not Found</h3>
+            <p class="notfound-desc">We could not locate baggage tag <strong id="notfound-tag-display">XXX-000000</strong> in active telemetry feeds.</p>
           </div>
-          <div class="notfound-tips-box">
-            <h4>Troubleshooting Tips:</h4>
-            <ul>
-              <li>Confirm the 3-letter IATA origin airport code matches your boarding pass (e.g. <code>LHR-</code>, <code>JFK-</code>).</li>
-              <li>Ensure the tag format is strictly 3 letters, a hyphen, and 6 digits (e.g. <code>DXB-309481</code>).</li>
-              <li>If you recently checked in, telemetry may take 5–10 minutes to index at the apron sortation scanner.</li>
-              <li>You can report a missing or delayed bag via our <a href="report-issue.html">Baggage Support Wizard</a>.</li>
-            </ul>
-          </div>
-          <div class="notfound-quick-suggestions">
-            <span class="suggestions-label">Try one of these active simulation tags:</span>
-            <div class="suggestion-chips">
-              <button type="button" class="btn-suggestion-chip" data-tag="LHR-123456">LHR-123456 (Heathrow &rarr; Frankfurt)</button>
-              <button type="button" class="btn-suggestion-chip" data-tag="DXB-309481">DXB-309481 (Dubai &rarr; Singapore)</button>
-              <button type="button" class="btn-suggestion-chip" data-tag="DEL-557201">DEL-557201 (Delhi &rarr; New York)</button>
-              <button type="button" class="btn-suggestion-chip" data-tag="IDR-100245">IDR-100245 (Indore &rarr; Mumbai)</button>
-            </div>
+        </div>
+        <div class="notfound-tips-box">
+          <h4>Troubleshooting Tips:</h4>
+          <ul>
+            <li>Confirm the 3-letter IATA origin airport code matches your boarding pass (e.g. <code>LHR-</code>, <code>JFK-</code>).</li>
+            <li>Ensure the tag format is strictly 3 letters, a hyphen, and 6 digits (e.g. <code>DXB-309481</code>).</li>
+            <li>If you recently checked in, telemetry may take 5–10 minutes to index at the apron sortation scanner.</li>
+            <li>You can report a missing or delayed bag via our <a href="report-issue.html">Baggage Support Wizard</a>.</li>
+          </ul>
+        </div>
+        <div class="notfound-quick-suggestions">
+          <span class="suggestions-label">Try one of these active simulation tags:</span>
+          <div class="suggestion-chips">
+            <button type="button" class="btn-suggestion-chip" data-tag="LHR-123456">LHR-123456 (Heathrow <span aria-hidden="true">&rarr;</span> Frankfurt)</button>
+            <button type="button" class="btn-suggestion-chip" data-tag="DXB-309481">DXB-309481 (Dubai <span aria-hidden="true">&rarr;</span> Singapore)</button>
+            <button type="button" class="btn-suggestion-chip" data-tag="DEL-557201">DEL-557201 (Delhi <span aria-hidden="true">&rarr;</span> New York)</button>
+            <button type="button" class="btn-suggestion-chip" data-tag="IDR-100245">IDR-100245 (Indore <span aria-hidden="true">&rarr;</span> Mumbai)</button>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Hidden h2 maintains heading hierarchy before h3 feature cards -->
+    <h2 class="visually-hidden">Simulator Features</h2>
+
     <!-- 3 Feature Cards Grid at Bottom -->
     <div class="features-grid" style="margin-left: auto; margin-right: auto;">
       <!-- Card 1 -->
       <div class="feature-card">
-        <div class="feature-icon-wrapper">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="feature-icon-wrapper" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
             <circle cx="12" cy="12" r="10"></circle>
             <polyline points="12 6 12 12 16 14"></polyline>
           </svg>
@@ -209,8 +229,8 @@
 
       <!-- Card 2 -->
       <div class="feature-card">
-        <div class="feature-icon-wrapper">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="feature-icon-wrapper" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
             <polyline points="9 12 11 14 15 10"></polyline>
           </svg>
@@ -221,8 +241,8 @@
 
       <!-- Card 3 -->
       <div class="feature-card">
-        <div class="feature-icon-wrapper">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="feature-icon-wrapper" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
           </svg>
         </div>

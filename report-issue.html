@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -18,6 +18,9 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
 </head>
 <body>
+  <!-- Skip link: lets keyboard and screen reader users bypass header navigation -->
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
   <div class="page-bg bg-terminal"></div>
   <div class="page-overlay page-overlay-subtle"></div>
 
@@ -25,17 +28,18 @@
   <div id="site-header"></div>
 
   <main id="main-content" class="main-content">
-    <!-- Breadcrumb Bar -->
-    <div class="breadcrumb-bar">
+    <!-- Breadcrumb Bar with accessible navigation semantics -->
+    <nav class="breadcrumb-bar" aria-label="Breadcrumb">
       <a href="index.html" class="breadcrumb-link" title="Home">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Decorative home icon hidden from screen readers -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
           <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
           <polyline points="9 22 9 12 15 12 15 22"></polyline>
         </svg>
       </a>
-      <span class="breadcrumb-separator">&gt;</span>
-      <span class="breadcrumb-current">Report a Problem</span>
-    </div>
+      <span class="breadcrumb-separator" aria-hidden="true">&gt;</span>
+      <span class="breadcrumb-current" aria-current="page">Report a Problem</span>
+    </nav>
 
     <div class="info-hero-section">
       <span class="badge-pill">Baggage Service Center</span>
@@ -47,49 +51,49 @@
 
     <!-- 3-Step Wizard Card -->
     <div class="wizard-card-container">
-      <!-- Wizard Step Indicator -->
-      <div class="wizard-steps-indicator">
-        <div class="wizard-step-node active" id="wizard-node-1">
+      <!-- Wizard Step Indicator as an ordered list for screen reader awareness -->
+      <ol class="wizard-steps-indicator" role="list" aria-label="Claim filing progress">
+        <li class="wizard-step-node active" id="wizard-node-1" aria-current="step">
           <span class="wizard-step-num">1</span>
           <span class="wizard-step-title">Select Bag &amp; Issue</span>
-        </div>
-        <div class="wizard-step-connector" id="wizard-conn-1"></div>
-        <div class="wizard-step-node" id="wizard-node-2">
+        </li>
+        <li class="wizard-step-connector" id="wizard-conn-1" aria-hidden="true" role="presentation"></li>
+        <li class="wizard-step-node" id="wizard-node-2">
           <span class="wizard-step-num">2</span>
           <span class="wizard-step-title">Description &amp; Proof</span>
-        </div>
-        <div class="wizard-step-connector" id="wizard-conn-2"></div>
-        <div class="wizard-step-node" id="wizard-node-3">
+        </li>
+        <li class="wizard-step-connector" id="wizard-conn-2" aria-hidden="true" role="presentation"></li>
+        <li class="wizard-step-node" id="wizard-node-3">
           <span class="wizard-step-num">3</span>
           <span class="wizard-step-title">Review &amp; Submit</span>
-        </div>
-      </div>
+        </li>
+      </ol>
 
       <!-- Step 1 Pane -->
       <div class="wizard-pane active" id="pane-step-1">
         <h2 class="card-section-title" style="margin-bottom: 0.5rem;">Step 1: Choose Baggage Tag &amp; Issue Type</h2>
         <p class="card-section-desc" style="margin-bottom: 1.5rem;">Identify the affected baggage and the nature of the irregularity.</p>
 
-        <!-- Bag Tag Select -->
+        <!-- Bag Tag Select with accessible label and connected error span -->
         <div class="form-group">
-          <label class="form-label" for="report-bag-tag">Select Baggage Tag <span class="required-star">*</span></label>
+          <label class="form-label" for="report-bag-tag">Select Baggage Tag <span class="required-star" aria-hidden="true">*</span></label>
           <div class="input-with-icon">
-            <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="6" width="16" height="15" rx="3"></rect><path d="M9 6V4a3 3 0 0 1 6 0v2"></path></svg>
-            <select id="report-bag-tag" class="auth-input custom-select">
+            <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><rect x="4" y="6" width="16" height="15" rx="3"></rect><path d="M9 6V4a3 3 0 0 1 6 0v2"></path></svg>
+            <select id="report-bag-tag" class="auth-input custom-select" required aria-required="true" aria-describedby="err-report-tag">
               <!-- Populated dynamically with user's tracked bags -->
             </select>
           </div>
-          <span class="field-error-msg" id="err-report-tag"></span>
+          <span class="field-error-msg" id="err-report-tag" role="alert" aria-live="polite"></span>
         </div>
 
-        <!-- Issue Types Radio Grid -->
-        <div class="form-group">
-          <label class="form-label">Type of Baggage Issue <span class="required-star">*</span></label>
-          <div class="issue-types-grid">
+        <!-- Issue Types Radio Grid wrapped in semantic fieldset & legend -->
+        <fieldset class="form-group" style="border: none; padding: 0; margin: 0 0 1.25rem 0;">
+          <legend class="form-label" style="display: block; margin-bottom: 0.5rem;">Type of Baggage Issue <span class="required-star" aria-hidden="true">*</span></legend>
+          <div class="issue-types-grid" role="radiogroup" aria-label="Type of Baggage Issue">
             <label class="issue-type-card active">
               <input type="radio" name="issueType" value="Delayed Baggage" checked>
               <div class="issue-icon-wrap">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
               </div>
               <div class="issue-title">Delayed Baggage</div>
               <div class="issue-desc">Bag did not arrive on the claim carousel after flight landing.</div>
@@ -98,7 +102,7 @@
             <label class="issue-type-card">
               <input type="radio" name="issueType" value="Lost Luggage">
               <div class="issue-icon-wrap">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
               </div>
               <div class="issue-title">Lost Luggage (24h+)</div>
               <div class="issue-desc">Luggage has been missing for more than 24 hours with no status updates.</div>
@@ -107,7 +111,7 @@
             <label class="issue-type-card">
               <input type="radio" name="issueType" value="Damaged Baggage">
               <div class="issue-icon-wrap">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
               </div>
               <div class="issue-title">Damaged Suitcase</div>
               <div class="issue-desc">Broken wheels, cracked hardshell, torn zipper, or structural tears.</div>
@@ -116,17 +120,17 @@
             <label class="issue-type-card">
               <input type="radio" name="issueType" value="Missing Item Inside">
               <div class="issue-icon-wrap">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>
               </div>
               <div class="issue-title">Missing Item Inside</div>
               <div class="issue-desc">Suitcase was delivered but specific internal contents are missing.</div>
             </label>
           </div>
-        </div>
+        </fieldset>
 
         <div class="wizard-actions-row" style="justify-content: flex-end;">
           <button type="button" class="btn-primary-action" id="btn-next-step-1">
-            Next: Incident Details &rarr;
+            <span>Next: Incident Details</span> <span aria-hidden="true">&rarr;</span>
           </button>
         </div>
       </div>
@@ -137,34 +141,36 @@
         <p class="card-section-desc" style="margin-bottom: 1.5rem;">Provide particulars about where your bag should be delivered once located.</p>
 
         <div class="form-group">
-          <label class="form-label" for="report-desc">Description of Problem &amp; Baggage Features <span class="required-star">*</span></label>
+          <label class="form-label" for="report-desc">Description of Problem &amp; Baggage Features <span class="required-star" aria-hidden="true">*</span></label>
           <textarea 
             id="report-desc" 
             class="auth-input contact-textarea" 
             rows="4" 
-            placeholder="E.g., Samsonite hardcase, navy blue, four spinner wheels, yellow baggage tag ribbon attached to handle. Last seen checking in at LHR Terminal 2..."
-            required
+            placeholder="E.g., Samsonite hardcase, navy blue, four spinner wheels, yellow baggage tag ribbon attached to handle. Last seen checking in at LHR Terminal 2..." 
+            required 
+            aria-required="true"
+            aria-describedby="err-report-desc"
           ></textarea>
-          <span class="field-error-msg" id="err-report-desc"></span>
+          <span class="field-error-msg" id="err-report-desc" role="alert" aria-live="polite"></span>
         </div>
 
         <div class="form-row-2col">
           <div class="form-group">
-            <label class="form-label" for="report-delivery-addr">Delivery Address for Baggage Return <span class="required-star">*</span></label>
+            <label class="form-label" for="report-delivery-addr">Delivery Address for Baggage Return <span class="required-star" aria-hidden="true">*</span></label>
             <div class="input-with-icon">
-              <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-              <input type="text" id="report-delivery-addr" class="auth-input" placeholder="Hotel name or residential street address" required>
+              <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <input type="text" id="report-delivery-addr" class="auth-input" placeholder="Hotel name or residential street address" required aria-required="true" aria-describedby="err-report-addr" autocomplete="street-address">
             </div>
-            <span class="field-error-msg" id="err-report-addr"></span>
+            <span class="field-error-msg" id="err-report-addr" role="alert" aria-live="polite"></span>
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="report-contact-phone">Contact Phone Number <span class="required-star">*</span></label>
+            <label class="form-label" for="report-contact-phone">Contact Phone Number <span class="required-star" aria-hidden="true">*</span></label>
             <div class="input-with-icon">
-              <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-              <input type="tel" id="report-contact-phone" class="auth-input" placeholder="+1 555-019-2834" required>
+              <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <input type="tel" id="report-contact-phone" class="auth-input" placeholder="+1 555-019-2834" required aria-required="true" aria-describedby="err-report-phone" autocomplete="tel">
             </div>
-            <span class="field-error-msg" id="err-report-phone"></span>
+            <span class="field-error-msg" id="err-report-phone" role="alert" aria-live="polite"></span>
           </div>
         </div>
 
@@ -172,18 +178,18 @@
         <div class="form-group">
           <label class="form-label" for="report-filename">Optional Photo or Stub File Attachment</label>
           <div class="input-with-icon">
-            <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
-            <input type="text" id="report-filename" class="auth-input" placeholder="e.g. damaged_zipper_photo.jpg or claim_stub_scan.pdf">
+            <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+            <input type="text" id="report-filename" class="auth-input" placeholder="e.g. damaged_zipper_photo.jpg or claim_stub_scan.pdf" aria-describedby="report-filename-hint">
           </div>
-          <span style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; display: block;">Simulation prototype: Enter mock attachment filename for verification record.</span>
+          <span id="report-filename-hint" style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; display: block;">Simulation prototype: Enter mock attachment filename for verification record.</span>
         </div>
 
         <div class="wizard-actions-row">
           <button type="button" class="btn-stage-nav" id="btn-back-step-2">
-            &larr; Back
+            <span aria-hidden="true">&larr;</span> <span>Back</span>
           </button>
           <button type="button" class="btn-primary-action" id="btn-next-step-2">
-            Next: Review Claim &rarr;
+            <span>Next: Review Claim</span> <span aria-hidden="true">&rarr;</span>
           </button>
         </div>
       </div>
@@ -223,27 +229,27 @@
 
         <div class="form-group" style="margin-top: 1.25rem;">
           <label class="checkbox-label-row">
-            <input type="checkbox" id="chk-certify" required>
+            <input type="checkbox" id="chk-certify" required aria-required="true" aria-describedby="err-report-certify">
             <span>I certify under penalty of airline terms that the baggage details provided above are true, accurate, and relate to my ticketed journey.</span>
           </label>
-          <span class="field-error-msg" id="err-report-certify"></span>
+          <span class="field-error-msg" id="err-report-certify" role="alert" aria-live="polite"></span>
         </div>
 
         <div class="wizard-actions-row">
           <button type="button" class="btn-stage-nav" id="btn-back-step-3">
-            &larr; Back
+            <span aria-hidden="true">&larr;</span> <span>Back</span>
           </button>
           <button type="button" class="btn-primary-action" id="btn-submit-claim">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            SUBMIT OFFICIAL CLAIM
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>SUBMIT OFFICIAL CLAIM</span>
           </button>
         </div>
       </div>
 
-      <!-- Confirmation Screen Pane -->
-      <div class="wizard-pane" id="pane-confirmation" style="text-align: center; padding: 20px 0;">
+      <!-- Confirmation Screen Pane with live region announcement -->
+      <div class="wizard-pane" id="pane-confirmation" role="status" aria-live="polite" style="text-align: center; padding: 20px 0;">
         <div class="confirmation-check-circle">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" aria-hidden="true" focusable="false">
             <polyline points="20 6 9 17 4 12"></polyline>
           </svg>
         </div>
@@ -275,7 +281,8 @@
     <div class="content-card" style="margin-top: 3rem;">
       <div class="card-section-header">
         <div class="feature-icon-wrapper">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          <!-- Decorative table icon hidden from screen readers -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
         </div>
         <div>
           <h2 class="card-section-title">Your Filed Irregularity Reports</h2>
@@ -285,14 +292,15 @@
 
       <div class="table-responsive-wrapper">
         <table class="reports-table" id="reports-table">
+          <caption class="visually-hidden">History of your submitted baggage irregularity reports</caption>
           <thead>
             <tr>
-              <th>Reference ID</th>
-              <th>Baggage Tag</th>
-              <th>Issue Type</th>
-              <th>Date Filed</th>
-              <th>Status</th>
-              <th>Delivery Destination</th>
+              <th scope="col">Reference ID</th>
+              <th scope="col">Baggage Tag</th>
+              <th scope="col">Issue Type</th>
+              <th scope="col">Date Filed</th>
+              <th scope="col">Status</th>
+              <th scope="col">Delivery Destination</th>
             </tr>
           </thead>
           <tbody id="reports-table-body">
@@ -301,7 +309,7 @@
         </table>
       </div>
 
-      <div id="reports-empty-state" style="display: none; padding: 30px; text-align: center; color: var(--text-secondary);">
+      <div id="reports-empty-state" role="status" aria-live="polite" style="display: none; padding: 30px; text-align: center; color: var(--text-secondary);">
         No irregularity reports filed yet. If you encounter baggage issues, use the wizard above to lodge a claim.
       </div>
     </div>
@@ -358,17 +366,22 @@
 
       function goToStep(step) {
         [p1, p2, p3, pConf].forEach(p => p.classList.remove('active'));
-        [n1, n2, n3].forEach(n => n.classList.remove('active', 'completed'));
+        [n1, n2, n3].forEach(n => {
+          n.classList.remove('active', 'completed');
+          n.removeAttribute('aria-current');
+        });
         [c1, c2].forEach(c => c.classList.remove('active'));
 
         if (step === 1) {
           p1.classList.add('active');
           n1.classList.add('active');
+          n1.setAttribute('aria-current', 'step');
         } else if (step === 2) {
           p2.classList.add('active');
           n1.classList.add('completed');
           c1.classList.add('active');
           n2.classList.add('active');
+          n2.setAttribute('aria-current', 'step');
         } else if (step === 3) {
           p3.classList.add('active');
           n1.classList.add('completed');
@@ -376,6 +389,7 @@
           n2.classList.add('completed');
           c2.classList.add('active');
           n3.classList.add('active');
+          n3.setAttribute('aria-current', 'step');
         } else if (step === 4) {
           pConf.classList.add('active');
           n1.classList.add('completed');
@@ -399,7 +413,12 @@
       // Step 2 -> Step 3
       document.getElementById('btn-next-step-2').addEventListener('click', () => {
         let valid = true;
+        let firstInvalid = null;
         document.querySelectorAll('.field-error-msg').forEach(el => el.textContent = '');
+        ['report-desc', 'report-delivery-addr', 'report-contact-phone'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.removeAttribute('aria-invalid');
+        });
 
         const desc = document.getElementById('report-desc').value.trim();
         const addr = document.getElementById('report-delivery-addr').value.trim();
@@ -407,20 +426,27 @@
 
         if (desc.length < 10) {
           document.getElementById('err-report-desc').textContent = 'Please describe the issue in detail (at least 10 characters).';
+          document.getElementById('report-desc').setAttribute('aria-invalid', 'true');
+          if (!firstInvalid) firstInvalid = document.getElementById('report-desc');
           valid = false;
         }
 
         if (addr.length < 5) {
           document.getElementById('err-report-addr').textContent = 'Please provide a valid delivery address.';
+          document.getElementById('report-delivery-addr').setAttribute('aria-invalid', 'true');
+          if (!firstInvalid) firstInvalid = document.getElementById('report-delivery-addr');
           valid = false;
         }
 
         if (!/^\+?[\d\s-]{8,18}$/.test(phone)) {
           document.getElementById('err-report-phone').textContent = 'Please provide a valid contact phone number.';
+          document.getElementById('report-contact-phone').setAttribute('aria-invalid', 'true');
+          if (!firstInvalid) firstInvalid = document.getElementById('report-contact-phone');
           valid = false;
         }
 
         if (!valid) {
+          if (firstInvalid) firstInvalid.focus();
           if (typeof window.showToast === 'function') {
             window.showToast('Please complete all required report fields.');
           }
@@ -452,9 +478,12 @@
         const certify = document.getElementById('chk-certify').checked;
         const certErr = document.getElementById('err-report-certify');
         certErr.textContent = '';
+        document.getElementById('chk-certify').removeAttribute('aria-invalid');
 
         if (!certify) {
           certErr.textContent = 'You must certify the accuracy of your statement.';
+          document.getElementById('chk-certify').setAttribute('aria-invalid', 'true');
+          document.getElementById('chk-certify').focus();
           if (typeof window.showToast === 'function') {
             window.showToast('Please check the certification box to submit.');
           }
@@ -550,7 +579,7 @@
             <td><span class="badge-tag-id">${rep.tagId}</span></td>
             <td><strong>${rep.issueType}</strong></td>
             <td>${rep.dateFiled}</td>
-            <td><span class="status-badge-inprogress" style="font-size: 0.76rem;">â— ${rep.status}</span></td>
+            <td><span class="status-badge-inprogress" style="font-size: 0.76rem;">● ${rep.status}</span></td>
             <td style="font-size: 0.85rem; color: var(--text-secondary);">${rep.deliveryAddress}</td>
           </tr>
         `).join('');

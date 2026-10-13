@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -54,7 +54,8 @@
   </style>
 </head>
 <body>
-  <a href="#main-content" class="skip-to-content">Skip to content</a>
+  <!-- Skip link: lets keyboard users jump past the header/menu directly to main content -->
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
   <div class="page-bg bg-terminal"></div>
   <div class="page-overlay page-overlay-subtle"></div>
 
@@ -64,7 +65,7 @@
   <main id="main-content" class="main-content">
     <div class="offline-container">
       <div class="offline-icon-circle" aria-hidden="true">
-        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
           <line x1="1" y1="1" x2="23" y2="23"></line>
           <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path>
           <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path>
@@ -82,15 +83,15 @@
       </p>
 
       <div class="offline-actions">
-        <button type="button" class="btn-primary-action" onclick="window.location.reload();" style="display: inline-flex; align-items: center; gap: 8px;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <button type="button" class="btn-primary-action" onclick="window.location.reload();" style="display: inline-flex; align-items: center; gap: 8px;" aria-label="Retry network connection and reload page">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             <polyline points="23 4 23 10 17 10"></polyline>
             <polyline points="1 20 1 14 7 14"></polyline>
             <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
           </svg>
           Retry Connection
         </button>
-        <a href="my-bags.html" class="btn-secondary-action">
+        <a href="my-bags.html" class="btn-secondary-action" aria-label="View cached tracked bags in offline mode">
           Open My Tracked Bags
         </a>
       </div>

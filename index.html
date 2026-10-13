@@ -18,24 +18,31 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
 </head>
 <body>
+  <!-- Skip link: lets keyboard users jump past the menu directly to main content -->
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
   <!-- Background Image with Gradient Overlay -->
-  <div class="page-bg bg-tarmac"></div>
-  <div class="page-overlay"></div>
+  <div class="page-bg bg-tarmac" aria-hidden="true"></div>
+  <div class="page-overlay" aria-hidden="true"></div>
 
   <!-- Shared Header Navigation -->
   <div id="site-header"></div>
 
   <!-- Main Hero Content -->
   <main id="main-content" class="main-content">
-    <div class="hero-section">
-      <div class="badge-pill" data-i18n="home_badge">Standard IATA Baggage Telemetry Simulation</div>
-      <h1 class="hero-title" data-i18n="home_hero_title">NEVER LOSE TRACK OF YOUR BAGS</h1>
+    <!-- <section>: hero section grouping main title, tracking search, and live ticker -->
+    <section class="hero-section" aria-labelledby="hero-title">
+      <p class="badge-pill" data-i18n="home_badge">Standard IATA Baggage Telemetry Simulation</p>
+      <h1 class="hero-title" id="hero-title" data-i18n="home_hero_title">NEVER LOSE TRACK OF YOUR BAGS</h1>
       <p class="hero-subtitle" data-i18n="home_hero_sub">
         Track your baggage in real-time and stay informed at every step of the journey.
       </p>
 
+      <!-- <aside>: simulated project disclaimer notice -->
+      <aside class="simulation-note" style="margin-top: 8px; font-size: 0.85rem; color: var(--text-muted, #94a3b8);">This is a simulated demo with sample data.</aside>
+
       <a href="track.html" class="btn-cta-track" id="hero-cta-btn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
@@ -45,16 +52,20 @@
       <!-- Baggage ID Search Card -->
       <div class="search-card-wrapper">
         <div class="search-label-group">
-          <svg class="search-icon-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="search-icon-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             <rect x="4" y="6" width="16" height="15" rx="3"></rect>
             <path d="M9 6V4a3 3 0 0 1 6 0v2"></path>
             <circle cx="9" cy="18" r="1"></circle>
             <circle cx="15" cy="18" r="1"></circle>
           </svg>
-          <span class="search-label-text">Enter Baggage Tag ID</span>
+          <!-- Explicit label for accessibility -->
+          <label for="landing-tag-input" class="search-label-text">Enter Baggage Tag ID</label>
         </div>
 
-        <form class="baggage-search-form" id="landing-search-form">
+        <!-- <form role="search">: landmark search form with connected label, hint, and submit -->
+        <form class="baggage-search-form" id="landing-search-form" role="search" aria-label="Track baggage" novalidate>
+          <!-- Accessible hint for input format -->
+          <span id="landing-tag-hint" class="input-hint-text">Format: 3-letter airport code + hyphen + 6 digits (e.g. LHR-123456)</span>
           <div class="search-form-row">
             <input 
               type="text" 
@@ -63,292 +74,374 @@
               placeholder="e.g. LHR-123456" 
               value="LHR-123456"
               required
+              aria-required="true"
+              aria-describedby="landing-tag-hint landing-input-error"
+              autocomplete="off"
             >
-            <button type="submit" class="btn-search-action" id="btn-landing-track" data-i18n="home_track_btn">
+            <button type="submit" class="btn-search-action" id="btn-landing-track" data-i18n="home_track_btn" aria-label="Track baggage tag">
               TRACK
             </button>
           </div>
+          <!-- Role alert for validation error messages -->
+          <div class="input-error-msg" id="landing-input-error" role="alert" aria-live="assertive" style="display: none;"></div>
+          <!-- Live announcer: screen reader announces results immediately on submit -->
+          <div id="landing-live-announcer" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
         </form>
       </div>
 
-      <!-- Live Operations Ticker -->
-      <div class="live-ops-ticker-bar" role="region" aria-label="Simulated Live Operations Telemetry Feed">
-        <div class="live-ops-badge">
+      <!-- <aside>: Live Operations Ticker -->
+      <aside class="live-ops-ticker-bar" role="region" aria-label="Simulated Live Operations Telemetry Feed">
+        <span class="live-ops-badge">
           <span class="live-ops-pulse-dot" aria-hidden="true"></span>
           <span data-i18n="home_live_ops">LIVE OPERATIONS</span>
-        </div>
+        </span>
         <div class="live-ops-ticker-content" id="live-ops-ticker" aria-live="polite">
           <span class="live-ops-text" id="live-ops-text">Bag DEL-557201 scanned at X-ray sortation – 1 min ago</span>
         </div>
-      </div>
-    </div>
+      </aside>
+    </section>
 
-    <!-- 3 Feature Cards Grid at Bottom -->
-    <div class="features-grid">
-      <!-- Card 1 -->
-      <div class="feature-card">
-        <div class="feature-icon-wrapper">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <polyline points="12 6 12 12 16 14"></polyline>
-          </svg>
-        </div>
-        <h3 class="feature-title">Real-time Updates</h3>
-        <p class="feature-desc">Get the latest status of your baggage at every stage.</p>
-      </div>
+    <!-- <section>: groups core simulator capability cards under its own heading -->
+    <section class="features-section" aria-labelledby="features-heading">
+      <h2 id="features-heading" class="visually-hidden">Core Simulator Capabilities</h2>
 
-      <!-- Card 2 -->
-      <div class="feature-card">
-        <div class="feature-icon-wrapper">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            <polyline points="9 12 11 14 15 10"></polyline>
-          </svg>
-        </div>
-        <h3 class="feature-title">Simulated Secure Tracking</h3>
-        <p class="feature-desc">Simulated secure tracking – all data stays in your browser.</p>
-      </div>
+      <!-- <ul>: semantic list containing <article> cards -->
+      <ul class="features-grid" role="list">
+        <!-- Card 1 -->
+        <li style="display: contents;">
+          <article class="feature-card">
+            <div class="feature-icon-wrapper" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <h3 class="feature-title">Real-time Updates</h3>
+            <p class="feature-desc">Get the latest status of your baggage at every stage.</p>
+          </article>
+        </li>
 
-      <!-- Card 3 -->
-      <div class="feature-card">
-        <div class="feature-icon-wrapper">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-          </svg>
-        </div>
-        <h3 class="feature-title">Easy &amp; Fast</h3>
-        <p class="feature-desc">Simple search, instant results.</p>
-      </div>
-    </div>
+        <!-- Card 2 -->
+        <li style="display: contents;">
+          <article class="feature-card">
+            <div class="feature-icon-wrapper" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <polyline points="9 12 11 14 15 10"></polyline>
+              </svg>
+            </div>
+            <h3 class="feature-title">Simulated Secure Tracking</h3>
+            <p class="feature-desc">Simulated secure tracking – all data stays in your browser.</p>
+          </article>
+        </li>
+
+        <!-- Card 3 -->
+        <li style="display: contents;">
+          <article class="feature-card">
+            <div class="feature-icon-wrapper" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+            </div>
+            <h3 class="feature-title">Easy &amp; Fast</h3>
+            <p class="feature-desc">Simple search, instant results.</p>
+          </article>
+        </li>
+      </ul>
+    </section>
 
     <!-- =========================================================================
          (a) "HOW IT WORKS" 6-STAGE HORIZONTAL STRIP
          ========================================================================= -->
+    <!-- <section>: groups the 6-stage lifecycle under its own heading -->
     <section class="home-section-container" aria-labelledby="section-how-title">
-      <div class="section-heading-center">
-        <span class="badge-pill">IATA Baggage Lifecycle</span>
+      <header class="section-heading-center">
+        <p class="badge-pill">IATA Baggage Lifecycle</p>
         <h2 class="section-title" id="section-how-title">How It Works</h2>
         <p class="section-subtitle">
           Follow your luggage through the 6 standard airport handling stages from check-in to arrival carousel.
         </p>
-      </div>
+      </header>
 
-      <div class="how-it-works-strip">
+      <!-- <ol>: ordered list representing sequential baggage stages -->
+      <ol class="how-it-works-strip" role="list">
         <!-- Step 1 -->
-        <a href="how-it-works.html" class="strip-step-card">
-          <span class="strip-step-num">01</span>
-          <div class="strip-step-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="m9 15 2 2 4-4"></path></svg>
-          </div>
-          <h3 class="strip-step-title">Check-in Complete</h3>
-          <p class="strip-step-desc">Luggage tagged with standard IATA barcode.</p>
-        </a>
+        <li style="display: contents;">
+          <article class="strip-step-article" style="display: contents;">
+            <a href="how-it-works.html" class="strip-step-card" aria-label="Stage 1: Check-in Complete">
+              <span class="strip-step-num" aria-hidden="true">01</span>
+              <div class="strip-step-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="m9 15 2 2 4-4"></path></svg>
+              </div>
+              <h3 class="strip-step-title">Check-in Complete</h3>
+              <p class="strip-step-desc">Luggage tagged with standard IATA barcode.</p>
+            </a>
+          </article>
+        </li>
 
         <!-- Step 2 -->
-        <a href="how-it-works.html" class="strip-step-card">
-          <span class="strip-step-num">02</span>
-          <div class="strip-step-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="12" rx="2"></rect><circle cx="7" cy="18" r="2"></circle><circle cx="17" cy="18" r="2"></circle><path d="M7 6V4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"></path></svg>
-          </div>
-          <h3 class="strip-step-title">Baggage Handling</h3>
-          <p class="strip-step-desc">Automated X-ray screening and conveyor sorting.</p>
-        </a>
+        <li style="display: contents;">
+          <article class="strip-step-article" style="display: contents;">
+            <a href="how-it-works.html" class="strip-step-card" aria-label="Stage 2: Baggage Handling">
+              <span class="strip-step-num" aria-hidden="true">02</span>
+              <div class="strip-step-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" focusable="false"><rect x="3" y="6" width="18" height="12" rx="2"></rect><circle cx="7" cy="18" r="2"></circle><circle cx="17" cy="18" r="2"></circle><path d="M7 6V4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"></path></svg>
+              </div>
+              <h3 class="strip-step-title">Baggage Handling</h3>
+              <p class="strip-step-desc">Automated X-ray screening and conveyor sorting.</p>
+            </a>
+          </article>
+        </li>
 
         <!-- Step 3 -->
-        <a href="how-it-works.html" class="strip-step-card">
-          <span class="strip-step-num">03</span>
-          <div class="strip-step-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z"></path></svg>
-          </div>
-          <h3 class="strip-step-title">Aircraft Loading</h3>
-          <p class="strip-step-desc">Positive baggage match and cargo hold stowage.</p>
-        </a>
+        <li style="display: contents;">
+          <article class="strip-step-article" style="display: contents;">
+            <a href="how-it-works.html" class="strip-step-card" aria-label="Stage 3: Aircraft Loading">
+              <span class="strip-step-num" aria-hidden="true">03</span>
+              <div class="strip-step-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" focusable="false"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z"></path></svg>
+              </div>
+              <h3 class="strip-step-title">Aircraft Loading</h3>
+              <p class="strip-step-desc">Positive baggage match and cargo hold stowage.</p>
+            </a>
+          </article>
+        </li>
 
         <!-- Step 4 -->
-        <a href="how-it-works.html" class="strip-step-card">
-          <span class="strip-step-num">04</span>
-          <div class="strip-step-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path></svg>
-          </div>
-          <h3 class="strip-step-title">Flight In Transit</h3>
-          <p class="strip-step-desc">En-route in climate-controlled aircraft hold.</p>
-        </a>
+        <li style="display: contents;">
+          <article class="strip-step-article" style="display: contents;">
+            <a href="how-it-works.html" class="strip-step-card" aria-label="Stage 4: Flight In Transit">
+              <span class="strip-step-num" aria-hidden="true">04</span>
+              <div class="strip-step-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" focusable="false"><path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path></svg>
+              </div>
+              <h3 class="strip-step-title">Flight In Transit</h3>
+              <p class="strip-step-desc">En-route in climate-controlled aircraft hold.</p>
+            </a>
+          </article>
+        </li>
 
         <!-- Step 5 -->
-        <a href="how-it-works.html" class="strip-step-card">
-          <span class="strip-step-num">05</span>
-          <div class="strip-step-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 16 10-4 10 4-10 4z"></path><path d="M12 12V3"></path><path d="m8 7 4-4 4 4"></path></svg>
-          </div>
-          <h3 class="strip-step-title">Aircraft Unloading</h3>
-          <p class="strip-step-desc">Ground crew marshals containers to arrivals.</p>
-        </a>
+        <li style="display: contents;">
+          <article class="strip-step-article" style="display: contents;">
+            <a href="how-it-works.html" class="strip-step-card" aria-label="Stage 5: Aircraft Unloading">
+              <span class="strip-step-num" aria-hidden="true">05</span>
+              <div class="strip-step-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" focusable="false"><path d="m2 16 10-4 10 4-10 4z"></path><path d="M12 12V3"></path><path d="m8 7 4-4 4 4"></path></svg>
+              </div>
+              <h3 class="strip-step-title">Aircraft Unloading</h3>
+              <p class="strip-step-desc">Ground crew marshals containers to arrivals.</p>
+            </a>
+          </article>
+        </li>
 
         <!-- Step 6 -->
-        <a href="how-it-works.html" class="strip-step-card">
-          <span class="strip-step-num">06</span>
-          <div class="strip-step-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="6" width="16" height="15" rx="3"></rect><path d="M9 6V4a3 3 0 0 1 6 0v2"></path><circle cx="9" cy="18" r="1"></circle><circle cx="15" cy="18" r="1"></circle></svg>
-          </div>
-          <h3 class="strip-step-title">Arrival Claim Stage</h3>
-          <p class="strip-step-desc">Delivered to designated baggage carousel.</p>
-        </a>
-      </div>
+        <li style="display: contents;">
+          <article class="strip-step-article" style="display: contents;">
+            <a href="how-it-works.html" class="strip-step-card" aria-label="Stage 6: Arrival Claim Stage">
+              <span class="strip-step-num" aria-hidden="true">06</span>
+              <div class="strip-step-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" focusable="false"><rect x="4" y="6" width="16" height="15" rx="3"></rect><path d="M9 6V4a3 3 0 0 1 6 0v2"></path><circle cx="9" cy="18" r="1"></circle><circle cx="15" cy="18" r="1"></circle></svg>
+              </div>
+              <h3 class="strip-step-title">Arrival Claim Stage</h3>
+              <p class="strip-step-desc">Delivered to designated baggage carousel.</p>
+            </a>
+          </article>
+        </li>
+      </ol>
     </section>
 
     <!-- =========================================================================
          (b) ANIMATED STATS BAND (SIMULATED DATA)
          ========================================================================= -->
-    <section class="home-section-container" aria-label="Simulated Statistics">
-      <div class="section-heading-center" style="margin-bottom: 1.5rem;">
-        <span class="badge-pill">Simulated Performance Metrics</span>
-      </div>
-      <div class="stats-counter-grid" id="home-stats-counter">
-        <div class="stat-counter-card">
-          <div class="stat-counter-number" data-target="6">0</div>
-          <div class="stat-counter-label">IATA Stages Tracked</div>
-          <div class="stat-counter-caption">Simulated end-to-end model</div>
-        </div>
-        <div class="stat-counter-card">
-          <div class="stat-counter-number" data-target="120">0</div>
-          <div class="stat-counter-suffix">+</div>
-          <div class="stat-counter-label">Airports Simulated</div>
-          <div class="stat-counter-caption">Global simulated hub network</div>
-        </div>
-        <div class="stat-counter-card">
-          <div class="stat-counter-number" data-target="99.9" data-decimal="1">0</div>
-          <div class="stat-counter-suffix">%</div>
-          <div class="stat-counter-label">On-Time Handling Rate</div>
-          <div class="stat-counter-caption">Clearly labeled as simulated data</div>
-        </div>
-      </div>
+    <!-- <section>: groups simulated metrics with heading -->
+    <section class="home-section-container" aria-labelledby="section-stats-title">
+      <header class="section-heading-center" style="margin-bottom: 1.5rem;">
+        <p class="badge-pill">Simulated Performance Metrics</p>
+        <h2 id="section-stats-title" class="visually-hidden">Simulated Performance Statistics</h2>
+      </header>
+
+      <!-- <ul>: semantic list for metrics data -->
+      <ul class="stats-counter-grid" id="home-stats-counter" role="list">
+        <!-- Stat contains final value by default for screen readers; JS enhances with animation -->
+        <li class="stat-counter-card" aria-label="6 IATA stages tracked (simulated data)">
+          <div class="stat-counter-number" data-target="6">6</div>
+          <p class="stat-counter-label">IATA Stages Tracked</p>
+          <p class="stat-counter-caption">Simulated end-to-end model</p>
+        </li>
+        <li class="stat-counter-card" aria-label="Over 120 airports simulated (simulated data)">
+          <div class="stat-counter-number" data-target="120">120</div>
+          <div class="stat-counter-suffix" aria-hidden="true">+</div>
+          <p class="stat-counter-label">Airports Simulated</p>
+          <p class="stat-counter-caption">Global simulated hub network</p>
+        </li>
+        <li class="stat-counter-card" aria-label="99.9 percent on-time handling rate (simulated data)">
+          <div class="stat-counter-number" data-target="99.9" data-decimal="1">99.9</div>
+          <div class="stat-counter-suffix" aria-hidden="true">%</div>
+          <p class="stat-counter-label">On-Time Handling Rate</p>
+          <p class="stat-counter-caption">Clearly labeled as simulated data</p>
+        </li>
+      </ul>
     </section>
 
     <!-- =========================================================================
          (c) SUPPORTED AIRPORTS
          ========================================================================= -->
+    <!-- <section>: supported airports hub network -->
     <section class="home-section-container" aria-labelledby="section-airports-title">
-      <div class="section-heading-center">
-        <span class="badge-pill">Global Route Hubs</span>
+      <header class="section-heading-center">
+        <p class="badge-pill">Global Route Hubs</p>
         <h2 class="section-title" id="section-airports-title">Supported Airports</h2>
         <p class="section-subtitle">
           Real-time baggage telemetry available across our simulated international airport network.
         </p>
-      </div>
+      </header>
 
-      <div class="airports-grid">
+      <!-- <ul>: list of supported airports with <article> cards -->
+      <ul class="airports-grid" role="list">
         <!-- LHR -->
-        <a href="journey.html?tag=LHR-123456" class="airport-card" title="Track baggage at London Heathrow">
-          <span class="airport-live-badge"><span class="airport-live-dot"></span> Live Telemetry</span>
-          <span class="airport-code">LHR</span>
-          <span class="airport-city">London</span>
-          <span class="airport-name">Heathrow Terminal 2</span>
-        </a>
+        <li style="display: contents;">
+          <article class="airport-card-article" style="display: contents;">
+            <a href="journey.html?tag=LHR-123456" class="airport-card" aria-label="Track baggage at London Heathrow Terminal 2">
+              <span class="airport-live-badge" aria-hidden="true"><span class="airport-live-dot"></span> Live Telemetry</span>
+              <span class="airport-code"><abbr title="London Heathrow">LHR</abbr></span>
+              <h3 class="airport-city">London</h3>
+              <p class="airport-name">Heathrow Terminal 2</p>
+            </a>
+          </article>
+        </li>
 
         <!-- JFK -->
-        <a href="journey.html?tag=JFK-882194" class="airport-card" title="Track baggage at New York JFK">
-          <span class="airport-live-badge"><span class="airport-live-dot"></span> Live Telemetry</span>
-          <span class="airport-code">JFK</span>
-          <span class="airport-city">New York</span>
-          <span class="airport-name">John F. Kennedy T4</span>
-        </a>
+        <li style="display: contents;">
+          <article class="airport-card-article" style="display: contents;">
+            <a href="journey.html?tag=JFK-882194" class="airport-card" aria-label="Track baggage at New York John F. Kennedy Terminal 4">
+              <span class="airport-live-badge" aria-hidden="true"><span class="airport-live-dot"></span> Live Telemetry</span>
+              <span class="airport-code"><abbr title="John F. Kennedy International Airport">JFK</abbr></span>
+              <h3 class="airport-city">New York</h3>
+              <p class="airport-name">John F. Kennedy T4</p>
+            </a>
+          </article>
+        </li>
 
         <!-- DXB -->
-        <a href="journey.html?tag=DXB-309481" class="airport-card" title="Track baggage at Dubai International">
-          <span class="airport-live-badge"><span class="airport-live-dot"></span> Live Telemetry</span>
-          <span class="airport-code">DXB</span>
-          <span class="airport-city">Dubai</span>
-          <span class="airport-name">Dubai International</span>
-        </a>
+        <li style="display: contents;">
+          <article class="airport-card-article" style="display: contents;">
+            <a href="journey.html?tag=DXB-309481" class="airport-card" aria-label="Track baggage at Dubai International Airport">
+              <span class="airport-live-badge" aria-hidden="true"><span class="airport-live-dot"></span> Live Telemetry</span>
+              <span class="airport-code"><abbr title="Dubai International Airport">DXB</abbr></span>
+              <h3 class="airport-city">Dubai</h3>
+              <p class="airport-name">Dubai International</p>
+            </a>
+          </article>
+        </li>
 
         <!-- DEL -->
-        <a href="journey.html?tag=DEL-557201" class="airport-card" title="Track baggage at Delhi Indira Gandhi">
-          <span class="airport-live-badge"><span class="airport-live-dot"></span> Live Telemetry</span>
-          <span class="airport-code">DEL</span>
-          <span class="airport-city">Delhi</span>
-          <span class="airport-name">Indira Gandhi T3</span>
-        </a>
+        <li style="display: contents;">
+          <article class="airport-card-article" style="display: contents;">
+            <a href="journey.html?tag=DEL-557201" class="airport-card" aria-label="Track baggage at Delhi Indira Gandhi Terminal 3">
+              <span class="airport-live-badge" aria-hidden="true"><span class="airport-live-dot"></span> Live Telemetry</span>
+              <span class="airport-code"><abbr title="Indira Gandhi International Airport">DEL</abbr></span>
+              <h3 class="airport-city">Delhi</h3>
+              <p class="airport-name">Indira Gandhi T3</p>
+            </a>
+          </article>
+        </li>
 
         <!-- SIN -->
-        <a href="journey.html?tag=SIN-440918" class="airport-card" title="Track baggage at Singapore Changi">
-          <span class="airport-live-badge"><span class="airport-live-dot"></span> Live Telemetry</span>
-          <span class="airport-code">SIN</span>
-          <span class="airport-city">Singapore</span>
-          <span class="airport-name">Changi Terminal 3</span>
-        </a>
+        <li style="display: contents;">
+          <article class="airport-card-article" style="display: contents;">
+            <a href="journey.html?tag=SIN-440918" class="airport-card" aria-label="Track baggage at Singapore Changi Terminal 3">
+              <span class="airport-live-badge" aria-hidden="true"><span class="airport-live-dot"></span> Live Telemetry</span>
+              <span class="airport-code"><abbr title="Singapore Changi Airport">SIN</abbr></span>
+              <h3 class="airport-city">Singapore</h3>
+              <p class="airport-name">Changi Terminal 3</p>
+            </a>
+          </article>
+        </li>
 
         <!-- IDR -->
-        <a href="journey.html?tag=IDR-100245" class="airport-card" title="Track baggage at Indore Devi Ahilya">
-          <span class="airport-live-badge"><span class="airport-live-dot"></span> Live Telemetry</span>
-          <span class="airport-code">IDR</span>
-          <span class="airport-city">Indore</span>
-          <span class="airport-name">Devi Ahilyabai Holkar</span>
-        </a>
-      </div>
+        <li style="display: contents;">
+          <article class="airport-card-article" style="display: contents;">
+            <a href="journey.html?tag=IDR-100245" class="airport-card" aria-label="Track baggage at Indore Devi Ahilyabai Holkar Airport">
+              <span class="airport-live-badge" aria-hidden="true"><span class="airport-live-dot"></span> Live Telemetry</span>
+              <span class="airport-code"><abbr title="Devi Ahilyabai Holkar Airport">IDR</abbr></span>
+              <h3 class="airport-city">Indore</h3>
+              <p class="airport-name">Devi Ahilyabai Holkar</p>
+            </a>
+          </article>
+        </li>
+      </ul>
     </section>
 
     <!-- =========================================================================
          (d) TESTIMONIALS CAROUSEL (SIMULATED REVIEWS)
          ========================================================================= -->
+    <!-- <section>: testimonials region with heading -->
     <section class="home-section-container" aria-labelledby="section-testimonials-title">
-      <div class="section-heading-center">
-        <span class="badge-pill">Simulated Reviews</span>
+      <header class="section-heading-center">
+        <p class="badge-pill">Simulated Reviews</p>
         <h2 class="section-title" id="section-testimonials-title">What Users Say</h2>
         <p class="section-subtitle">Simulated testimonials from travelers and aviation engineering students.</p>
-      </div>
+      </header>
 
       <div class="testimonials-carousel-wrapper" id="home-testimonials-carousel" role="region" aria-roledescription="carousel" aria-label="Simulated Passenger Reviews">
         <div class="testimonial-track" aria-live="polite">
-          <!-- Slide 1 -->
-          <div class="testimonial-slide active" data-slide="0" role="group" aria-roledescription="slide" aria-label="Slide 1 of 3 (Simulated Review)">
-            <svg class="testimonial-quote-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <!-- Slide 1: <figure> containing <blockquote> and <figcaption> -->
+          <figure class="testimonial-slide active" data-slide="0" role="group" aria-roledescription="slide" aria-label="Slide 1 of 3 (Simulated Review)">
+            <svg class="testimonial-quote-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
               <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
             </svg>
-            <p class="testimonial-quote-text">
-              "AeroSim's stage-by-stage baggage telemetry gave me total confidence during my connection through Frankfurt. Seeing my bag loaded onto LH247 in real-time was revolutionary."
-            </p>
-            <div class="testimonial-author-row">
-              <div class="testimonial-author-avatar">SJ</div>
+            <blockquote>
+              <p class="testimonial-quote-text">
+                "AeroSim's stage-by-stage baggage telemetry gave me total confidence during my connection through Frankfurt. Seeing my bag loaded onto LH247 in real-time was revolutionary."
+              </p>
+            </blockquote>
+            <figcaption class="testimonial-author-row">
+              <span class="testimonial-author-avatar" aria-hidden="true">SJ</span>
               <div class="testimonial-author-meta">
-                <div class="testimonial-author-name">Sarah Jenkins</div>
-                <div class="testimonial-author-role">Frequent Flyer • London Heathrow (Simulated)</div>
+                <cite class="testimonial-author-name">Sarah Jenkins</cite>
+                <span class="testimonial-author-role">Frequent Flyer &bull; London Heathrow (Simulated)</span>
               </div>
-            </div>
-          </div>
+            </figcaption>
+          </figure>
 
           <!-- Slide 2 -->
-          <div class="testimonial-slide" data-slide="1" role="group" aria-roledescription="slide" aria-label="Slide 2 of 3 (Simulated Review)">
-            <svg class="testimonial-quote-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <figure class="testimonial-slide" data-slide="1" role="group" aria-roledescription="slide" aria-label="Slide 2 of 3 (Simulated Review)">
+            <svg class="testimonial-quote-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
               <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
             </svg>
-            <p class="testimonial-quote-text">
-              "As an aviation management student, this simulator made the abstract logistics of conveyor sortation and ULD load sheets crystal clear. Outstanding educational tool!"
-            </p>
-            <div class="testimonial-author-row">
-              <div class="testimonial-author-avatar">MC</div>
+            <blockquote>
+              <p class="testimonial-quote-text">
+                "As an aviation management student, this simulator made the abstract logistics of conveyor sortation and ULD load sheets crystal clear. Outstanding educational tool!"
+              </p>
+            </blockquote>
+            <figcaption class="testimonial-author-row">
+              <span class="testimonial-author-avatar" aria-hidden="true">MC</span>
               <div class="testimonial-author-meta">
-                <div class="testimonial-author-name">Marcus Chen</div>
-                <div class="testimonial-author-role">Aerospace Engineering Undergrad • Singapore (Simulated)</div>
+                <cite class="testimonial-author-name">Marcus Chen</cite>
+                <span class="testimonial-author-role">Aerospace Engineering Undergrad &bull; Singapore (Simulated)</span>
               </div>
-            </div>
-          </div>
+            </figcaption>
+          </figure>
 
           <!-- Slide 3 -->
-          <div class="testimonial-slide" data-slide="2" role="group" aria-roledescription="slide" aria-label="Slide 3 of 3 (Simulated Review)">
-            <svg class="testimonial-quote-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <figure class="testimonial-slide" data-slide="2" role="group" aria-roledescription="slide" aria-label="Slide 3 of 3 (Simulated Review)">
+            <svg class="testimonial-quote-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
               <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
             </svg>
-            <p class="testimonial-quote-text">
-              "The instant Property Irregularity Report generator and live timeline saved hours of confusion when testing delayed bag scenarios. Intuitive and beautifully designed."
-            </p>
-            <div class="testimonial-author-row">
-              <div class="testimonial-author-avatar">PS</div>
+            <blockquote>
+              <p class="testimonial-quote-text">
+                "The instant Property Irregularity Report generator and live timeline saved hours of confusion when testing delayed bag scenarios. Intuitive and beautifully designed."
+              </p>
+            </blockquote>
+            <figcaption class="testimonial-author-row">
+              <span class="testimonial-author-avatar" aria-hidden="true">PS</span>
               <div class="testimonial-author-meta">
-                <div class="testimonial-author-name">Priya Sharma</div>
-                <div class="testimonial-author-role">Flight Operations Trainee • Delhi IGI (Simulated)</div>
+                <cite class="testimonial-author-name">Priya Sharma</cite>
+                <span class="testimonial-author-role">Flight Operations Trainee &bull; Delhi IGI (Simulated)</span>
               </div>
-            </div>
-          </div>
+            </figcaption>
+          </figure>
         </div>
 
         <!-- Carousel Dots -->
@@ -363,38 +456,46 @@
     <!-- =========================================================================
          (e) FAQ PREVIEW (3 ITEMS)
          ========================================================================= -->
+    <!-- <section>: FAQ preview section -->
     <section class="home-section-container" aria-labelledby="section-faq-preview-title">
-      <div class="section-heading-center">
-        <span class="badge-pill">Common Inquiries</span>
+      <header class="section-heading-center">
+        <p class="badge-pill">Common Inquiries</p>
         <h2 class="section-title" id="section-faq-preview-title">Frequently Asked Questions</h2>
         <p class="section-subtitle">Quick answers to common questions about baggage tags and arrival delivery.</p>
-      </div>
+      </header>
 
-      <div class="faq-preview-grid">
-        <div class="faq-preview-card">
-          <h3 class="faq-preview-question">Where can I find my baggage tag number?</h3>
-          <p class="faq-preview-snippet">
-            When you check in at the counter or bag drop, a sticker receipt with a barcode (tag format: 3 airport letters and 6 digits, e.g. LHR-123456) is handed to you or attached to your boarding pass.
-          </p>
-          <a href="faq.html" class="faq-preview-link">Read full answer &rarr;</a>
-        </div>
+      <!-- <ul> with <article> for each FAQ preview card -->
+      <ul class="faq-preview-grid" role="list">
+        <li style="display: contents;">
+          <article class="faq-preview-card">
+            <h3 class="faq-preview-question">Where can I find my baggage tag number?</h3>
+            <p class="faq-preview-snippet">
+              When you check in at the counter or bag drop, a sticker receipt with a barcode (tag format: 3 airport letters and 6 digits, e.g. LHR-123456) is handed to you or attached to your boarding pass.
+            </p>
+            <a href="faq.html" class="faq-preview-link" aria-label="Read full answer: Where can I find my baggage tag number">Read full answer <span aria-hidden="true">&rarr;</span></a>
+          </article>
+        </li>
 
-        <div class="faq-preview-card">
-          <h3 class="faq-preview-question">What does "Flight in Transit" status indicate?</h3>
-          <p class="faq-preview-snippet">
-            Stage 4 confirms your suitcase has been positively matched with the passenger manifest, loaded into the aircraft hold, and the flight has departed.
-          </p>
-          <a href="faq.html" class="faq-preview-link">Read full answer &rarr;</a>
-        </div>
+        <li style="display: contents;">
+          <article class="faq-preview-card">
+            <h3 class="faq-preview-question">What does "Flight in Transit" status indicate?</h3>
+            <p class="faq-preview-snippet">
+              Stage 4 confirms your suitcase has been positively matched with the passenger manifest, loaded into the aircraft hold, and the flight has departed.
+            </p>
+            <a href="faq.html" class="faq-preview-link" aria-label="Read full answer: What does Flight in Transit status indicate">Read full answer <span aria-hidden="true">&rarr;</span></a>
+          </article>
+        </li>
 
-        <div class="faq-preview-card">
-          <h3 class="faq-preview-question">What if my bag does not appear on the carousel?</h3>
-          <p class="faq-preview-snippet">
-            Immediately visit the Baggage Service Office inside the reclaim hall to file a Property Irregularity Report (PIR), or file an instant claim on AeroSim.
-          </p>
-          <a href="faq.html" class="faq-preview-link">Read full answer &rarr;</a>
-        </div>
-      </div>
+        <li style="display: contents;">
+          <article class="faq-preview-card">
+            <h3 class="faq-preview-question">What if my bag does not appear on the carousel?</h3>
+            <p class="faq-preview-snippet">
+              Immediately visit the Baggage Service Office inside the reclaim hall to file a Property Irregularity Report (PIR), or file an instant claim on AeroSim.
+            </p>
+            <a href="faq.html" class="faq-preview-link" aria-label="Read full answer: What if my bag does not appear on the carousel">Read full answer <span aria-hidden="true">&rarr;</span></a>
+          </article>
+        </li>
+      </ul>
 
       <div style="text-align: center; margin-top: 2rem;">
         <a href="faq.html" class="btn-stage-nav" style="padding: 12px 28px;">
@@ -406,21 +507,22 @@
     <!-- =========================================================================
          (f) FINAL CTA BANNER
          ========================================================================= -->
-    <section class="home-section-container" style="margin-bottom: 5rem;">
+    <!-- <section>: call to action banner -->
+    <section class="home-section-container" aria-labelledby="cta-banner-heading" style="margin-bottom: 5rem;">
       <div class="cta-banner-card">
         <div class="cta-banner-content">
-          <h2 class="cta-banner-title">Ready to Track Your Baggage?</h2>
+          <h2 class="cta-banner-title" id="cta-banner-heading">Ready to Track Your Baggage?</h2>
           <p class="cta-banner-desc">
             Enter your baggage tag ID or launch our live interactive simulator to follow your luggage across every airport handling stage in real-time.
           </p>
           <div class="cta-banner-actions">
             <a href="track.html" class="btn-cta-track" style="margin: 0;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" focusable="false">
                 <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
               </svg>
               TRACK BAGGAGE NOW
             </a>
-            <a href="how-it-works.html" class="btn-nav-outline" style="background: rgba(255,255,255,0.85); color: var(--navy); border-color: #cbdcf4;">
+            <a href="how-it-works.html" class="btn-nav-outline" style="background: #ffffff; color: #0b2246; border-color: #cbdcf4;">
               Explore How It Works
             </a>
           </div>
@@ -503,6 +605,7 @@
       let animated = false;
 
       function animateCounters() {
+        if (prefersReducedMotion) return; // Skip counter animation for reduced motion preference
         counters.forEach(counter => {
           const target = parseFloat(counter.getAttribute('data-target'));
           const isDecimal = counter.getAttribute('data-decimal');
@@ -522,18 +625,20 @@
         });
       }
 
-      if (statsSection && 'IntersectionObserver' in window) {
-        const obs = new IntersectionObserver((entries) => {
-          entries.forEach(e => {
-            if (e.isIntersecting && !animated) {
-              animated = true;
-              animateCounters();
-            }
-          });
-        }, { threshold: 0.25 });
-        obs.observe(statsSection);
-      } else {
-        animateCounters();
+      if (!prefersReducedMotion) {
+        if (statsSection && 'IntersectionObserver' in window) {
+          const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+              if (e.isIntersecting && !animated) {
+                animated = true;
+                animateCounters();
+              }
+            });
+          }, { threshold: 0.25 });
+          obs.observe(statsSection);
+        } else {
+          animateCounters();
+        }
       }
 
       // Live Operations Ticker Rotator

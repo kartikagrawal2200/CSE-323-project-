@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -18,9 +18,12 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
 </head>
 <body>
+  <!-- Skip link: lets keyboard users jump past the header/menu directly to main content -->
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
   <!-- Background with Airplane in climb & tarmac overlay -->
   <div class="page-bg bg-climb"></div>
-  <div class="page-overlay page-overlay-subtle"></div>
+  <div class="page-overlay page-overlay-subtle" aria-hidden="true"></div>
 
   <!-- Shared Header Navigation -->
   <div id="site-header"></div>
@@ -32,14 +35,20 @@
       <p class="dashboard-subtitle">Your baggage journey, in your hands.</p>
     </div>
 
+    <!-- Live status announcer: speaks stage advancement automatically -->
+    <div id="journey-live-status" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
     <!-- 2 Column Layout Matching Screenshot -->
     <div class="dashboard-layout">
       <!-- Left Column: User Profile & Baggage Specs -->
       <div class="dashboard-left-col">
+        <!-- Hidden h2 provides section context for screen readers -->
+        <h2 class="visually-hidden">Passenger and Baggage Details</h2>
+
         <!-- User Profile Card -->
         <div class="user-profile-card">
-          <div class="user-profile-avatar">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <div class="user-profile-avatar" aria-hidden="true">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
               <circle cx="12" cy="7" r="4"></circle>
             </svg>
@@ -55,8 +64,8 @@
           <!-- Top Row with Bag ID & Completed badge -->
           <div class="bag-summary-header">
             <div class="bag-id-group">
-              <div class="bag-icon-box">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <div class="bag-icon-box" aria-hidden="true">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
                   <rect x="4" y="6" width="16" height="15" rx="3"></rect>
                   <path d="M9 6V4a3 3 0 0 1 6 0v2"></path>
                   <circle cx="9" cy="18" r="1"></circle>
@@ -70,10 +79,10 @@
             </div>
 
             <span class="status-badge-completed" id="journey-bag-status-badge">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
-              Completed
+              <span class="status-text">Completed</span>
             </span>
           </div>
 
@@ -81,7 +90,7 @@
           <div class="bag-details-list">
             <!-- Row 1: Baggage Tag ID -->
             <div class="bag-detail-row">
-              <svg class="bag-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="bag-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                 <path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"></path>
                 <circle cx="7.5" cy="7.5" r=".5" fill="currentColor"></circle>
               </svg>
@@ -93,43 +102,43 @@
 
             <!-- Row 2: Airline & Flight -->
             <div class="bag-detail-row">
-              <svg class="bag-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="bag-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                 <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z"></path>
               </svg>
               <div class="bag-detail-content">
                 <span class="bag-detail-title">Airline &amp; Flight</span>
-                <span class="bag-detail-info" id="journey-airline-flight">Lufthansa â€¢ LH247</span>
+                <span class="bag-detail-info" id="journey-airline-flight">Lufthansa &bull; LH247</span>
               </div>
             </div>
 
             <!-- Row 3: Route -->
             <div class="bag-detail-row">
-              <svg class="bag-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="bag-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="2" y1="12" x2="22" y2="12"></line>
                 <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
               </svg>
               <div class="bag-detail-content">
                 <span class="bag-detail-title">Flight Route</span>
-                <span class="bag-detail-info" id="journey-route-text">LHR (London) &rarr; FRA (Frankfurt)</span>
+                <span class="bag-detail-info" id="journey-route-text">LHR (London) <span aria-hidden="true">&rarr;</span> FRA (Frankfurt)</span>
               </div>
             </div>
 
             <!-- Row 4: Passenger & Weight -->
             <div class="bag-detail-row">
-              <svg class="bag-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="bag-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                 <rect x="4" y="6" width="16" height="15" rx="3"></rect>
                 <path d="M9 6V4a3 3 0 0 1 6 0v2"></path>
               </svg>
               <div class="bag-detail-content">
                 <span class="bag-detail-title">Passenger &amp; Weight</span>
-                <span class="bag-detail-info" id="journey-passenger-weight">R*** S. â€¢ 23.5 kg (Navy Blue)</span>
+                <span class="bag-detail-info" id="journey-passenger-weight">R*** S. &bull; 23.5 kg (Navy Blue)</span>
               </div>
             </div>
 
             <!-- Row 5: Gate & Carousel -->
             <div class="bag-detail-row">
-              <svg class="bag-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="bag-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                 <line x1="16" y1="2" x2="16" y2="6"></line>
                 <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -137,30 +146,30 @@
               </svg>
               <div class="bag-detail-content">
                 <span class="bag-detail-title">Departure &amp; Arrival</span>
-                <span class="bag-detail-info" id="journey-gate-carousel">Gate B22 &rarr; Carousel Belt 4</span>
+                <span class="bag-detail-info" id="journey-gate-carousel">Gate B22 <span aria-hidden="true">&rarr;</span> Carousel Belt 4</span>
               </div>
             </div>
           </div>
 
           <!-- Utility Action Buttons -->
           <div class="bag-actions-row">
-            <button type="button" class="btn-action-small" id="btn-copy-tracking-link">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <button type="button" class="btn-action-small" id="btn-copy-tracking-link" aria-label="Copy tracking link to clipboard">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
               </svg>
               Copy Link
             </button>
-            <button type="button" class="btn-action-small" id="btn-print-receipt">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <button type="button" class="btn-action-small" id="btn-print-receipt" aria-label="Print official baggage tracking receipt">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                 <polyline points="6 9 6 2 18 2 18 9"></polyline>
                 <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
                 <rect x="6" y="14" width="12" height="8"></rect>
               </svg>
               Print Receipt
             </button>
-            <button type="button" class="btn-action-small" id="btn-download-summary">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <button type="button" class="btn-action-small" id="btn-download-summary" aria-label="Download baggage journey telemetry summary as text file">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                 <polyline points="7 10 12 15 17 10"></polyline>
                 <line x1="12" y1="15" x2="12" y2="3"></line>
@@ -177,19 +186,19 @@
         <div class="route-map-card" id="flight-route-map-card">
           <div class="route-map-header">
             <div class="route-map-title-group">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                 <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
               </svg>
-              <h3 class="route-map-heading">Live Telemetry Route Map</h3>
+              <h2 class="route-map-heading" style="font-size: 1.1rem; margin: 0;">Live Telemetry Route Map</h2>
             </div>
-            <div class="flight-live-status-pill" id="route-map-stage-label">
+            <div class="flight-live-status-pill" id="route-map-stage-label" aria-live="polite">
               In Transit
             </div>
           </div>
 
-          <!-- SVG Visual Arc Display -->
+          <!-- SVG Visual Arc Display with accessible role and label -->
           <div class="route-map-svg-wrapper">
-            <svg id="route-map-svg" viewBox="0 0 680 180" class="flight-svg-canvas">
+            <svg id="route-map-svg" viewBox="0 0 680 180" class="flight-svg-canvas" role="img" aria-label="Simulated flight telemetry route map between origin and destination airports">
               <defs>
                 <linearGradient id="routeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stop-color="#1672ec" stop-opacity="0.3"/>
@@ -252,12 +261,12 @@
         <!-- Live Simulation Mode Controller Banner -->
         <div class="live-sim-banner">
           <div class="live-sim-left">
-            <div class="live-sim-icon-pulse">
+            <div class="live-sim-icon-pulse" aria-hidden="true">
               <span class="pulse-ring"></span>
               <span class="pulse-dot"></span>
             </div>
             <div>
-              <div class="live-sim-title">Live Simulator Engine</div>
+              <h3 class="live-sim-title" style="margin: 0; font-size: 1rem;">Live Simulator Engine</h3>
               <div class="live-sim-desc" id="live-sim-desc">Automate stage transitions every 8 seconds with real-time alerts.</div>
             </div>
           </div>
@@ -272,7 +281,7 @@
         </div>
 
         <!-- Live Simulation Progress Bar (visible when active) -->
-        <div class="sim-progress-container" id="sim-progress-bar-wrapper" style="display: none;">
+        <div class="sim-progress-container" id="sim-progress-bar-wrapper" style="display: none;" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Auto-advance countdown">
           <div class="sim-progress-info">
             <span id="sim-progress-label">Next stage auto-advance:</span>
             <span id="sim-countdown-label">8s</span>
@@ -286,7 +295,7 @@
         <div class="journey-main-card">
           <div class="journey-card-header">
             <div class="journey-card-title-group">
-              <svg class="journey-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="journey-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                 <rect x="4" y="6" width="16" height="15" rx="3"></rect>
                 <path d="M9 6V4a3 3 0 0 1 6 0v2"></path>
               </svg>
@@ -295,20 +304,20 @@
             <span class="journey-card-subtitle-small">Click any stage to view complete operational telemetry</span>
           </div>
 
-          <!-- Dynamic Timeline Mount Point -->
-          <div class="timeline-container" id="baggage-timeline" aria-live="polite">
-            <!-- Rendered dynamically by app.js -->
-          </div>
+          <!-- Dynamic Timeline Mount Point: semantic ordered list for stages -->
+          <ol class="timeline-container" id="baggage-timeline" role="list">
+            <!-- Rendered dynamically by app.js as <li> items -->
+          </ol>
 
           <!-- Interactive Simulator Controls for presentation / grading -->
           <div class="timeline-actions-bar">
-            <button type="button" class="btn-secondary-action" id="btn-advance-step">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <button type="button" class="btn-secondary-action" id="btn-advance-step" aria-label="Simulate next handling stage">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
               Simulate Next Stage
             </button>
 
-            <button type="button" class="btn-secondary-action" id="btn-reset-step">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+            <button type="button" class="btn-secondary-action" id="btn-reset-step" aria-label="Restart simulation from origin check-in">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
               Restart from Origin
             </button>
           </div>
@@ -322,15 +331,15 @@
     <div class="receipt-paper" id="receipt-paper">
       <div class="receipt-header">
         <div class="receipt-logo">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="#1672ec"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="#1672ec" aria-hidden="true" focusable="false"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
           <strong>AeroSim Aviation</strong>
         </div>
         <div class="receipt-doc-title">OFFICIAL BAGGAGE TRACKING RECEIPT</div>
       </div>
 
       <div class="receipt-barcode-row">
-        <!-- SVG Barcode Representation -->
-        <svg class="receipt-barcode-svg" viewBox="0 0 300 60" preserveAspectRatio="none">
+        <!-- SVG Barcode Representation: decorative barcode visual -->
+        <svg class="receipt-barcode-svg" viewBox="0 0 300 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
           <rect x="0" y="0" width="4" height="60" fill="#000"/>
           <rect x="8" y="0" width="8" height="60" fill="#000"/>
           <rect x="20" y="0" width="4" height="60" fill="#000"/>
@@ -369,7 +378,7 @@
         </div>
         <div class="receipt-cell">
           <span class="receipt-lbl">ROUTING</span>
-          <span class="receipt-val" id="receipt-route">LHR &rarr; FRA</span>
+          <span class="receipt-val" id="receipt-route">LHR <span aria-hidden="true">&rarr;</span> FRA</span>
         </div>
         <div class="receipt-cell">
           <span class="receipt-lbl">BAG WEIGHT</span>
@@ -386,8 +395,8 @@
       </div>
 
       <div class="receipt-qr-section">
-        <!-- SVG QR Code Placeholder -->
-        <svg class="receipt-qr-svg" viewBox="0 0 100 100">
+        <!-- SVG QR Code Placeholder: decorative qr visual -->
+        <svg class="receipt-qr-svg" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
           <rect x="0" y="0" width="100" height="100" fill="#fff"/>
           <rect x="10" y="10" width="25" height="25" fill="#000"/>
           <rect x="14" y="14" width="17" height="17" fill="#fff"/>
@@ -421,7 +430,7 @@
 
       <div class="receipt-footer-buttons">
         <button type="button" class="btn-primary-action" onclick="window.print()">Print Now</button>
-        <button type="button" class="btn-secondary-action" id="btn-close-receipt">Close</button>
+        <button type="button" class="btn-secondary-action" id="btn-close-receipt" aria-label="Close baggage receipt dialog">Close</button>
       </div>
     </div>
   </div>

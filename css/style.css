@@ -90,6 +90,16 @@
   box-sizing: border-box;
 }
 
+figure, blockquote, dl, dt, dd, fieldset, legend {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+ul, ol {
+  list-style: none;
+}
+
 html {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   color: var(--text-primary);
@@ -1919,11 +1929,12 @@ body {
   position: fixed;
   bottom: 28px;
   right: 28px;
-  background: #ffffff;
-  color: var(--navy);
+  background: #0b2246;
+  color: #ffffff;
+  max-width: min(420px, calc(100vw - 40px));
   padding: 14px 22px;
   border-radius: var(--radius-md);
-  border: 1px solid var(--card-border);
+  border: 1px solid #2f5da8;
   box-shadow: var(--shadow-lg);
   display: flex;
   align-items: center;
@@ -1945,7 +1956,8 @@ body {
 .toast-icon {
   width: 20px;
   height: 20px;
-  color: var(--primary);
+  flex-shrink: 0;
+  color: #7db4ff;
 }
 
 /* Animations */
@@ -2373,16 +2385,16 @@ body {
   align-items: flex-start;
   gap: 12px;
   padding: 12px 16px;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid var(--card-border);
   transition: background 0.15s ease;
 }
 
 .notif-item:hover {
-  background: #f8fafc;
+  background: var(--gray-bg);
 }
 
 .notif-item.unread {
-  background: #eff6ff;
+  background: var(--primary-light);
 }
 
 .notif-item-icon {
@@ -2808,6 +2820,10 @@ body {
   --input-text: #ffffff;
   --input-placeholder: #94a3b8;
   --input-bg: #0a172c;
+  /* Dark-mode surfaces: light tints become dark blue tints so white text stays readable */
+  --primary-light: rgba(22, 114, 236, 0.20);
+  --surface-bg: #16294a;
+  --border-color: #264574;
   background-color: #071326;
 }
 
@@ -2825,6 +2841,9 @@ body {
     --input-text: #ffffff;
     --input-placeholder: #94a3b8;
     --input-bg: #0a172c;
+    --primary-light: rgba(22, 114, 236, 0.20);
+    --surface-bg: #16294a;
+    --border-color: #264574;
     background-color: #071326;
   }
 }
@@ -3346,7 +3365,7 @@ body {
 
 /* CTA Banner Card */
 .cta-banner-card {
-  background: linear-gradient(135deg, var(--navy-dark) 0%, #0d2754 100%);
+  background: linear-gradient(135deg, #071731 0%, #0d2754 100%);
   border-radius: var(--radius-xl);
   padding: 48px 40px;
   color: #ffffff;
@@ -6631,3 +6650,126 @@ textarea:focus-visible,
 }
 
 
+
+
+/* ==========================================================================
+   DARK MODE CONTRAST FIXES
+   Problem: some boxes kept a light background in dark mode while their text
+   turned white. Here those boxes get dark backgrounds (or dark text) so every
+   piece of text stays readable (WCAG AA 4.5:1).
+   ========================================================================== */
+
+/* Small blue chips / badges: light-blue text on the dark-blue tint */
+[data-theme="dark"] .notif-item-icon,
+[data-theme="dark"] .tech-badge,
+[data-theme="dark"] .timeline-duration-chip,
+[data-theme="dark"] .contact-info-icon,
+[data-theme="dark"] .badge-tag-id,
+[data-theme="dark"] .strip-step-icon,
+[data-theme="dark"] .testimonial-author-avatar,
+[data-theme="dark"] .user-avatar-circle,
+[data-theme="dark"] .profile-header-avatar,
+[data-theme="dark"] .recent-chip-btn:hover,
+[data-theme="dark"] .mobile-nav-link:hover,
+[data-theme="dark"] .mobile-nav-link.active,
+[data-theme="dark"] .toc-link:hover,
+[data-theme="dark"] .toc-link.active,
+[data-theme="dark"] .social-icon-btn:hover,
+[data-theme="dark"] .btn-dark-toggle:hover,
+[data-theme="dark"] .btn-nav-notif:hover,
+[data-theme="dark"] .dropdown-item:hover {
+  color: #93c5fd;
+}
+
+/* Recent searches chips (e.g. LHR-123456) */
+[data-theme="dark"] .recent-chip-btn {
+  background: #16294a;
+  border-color: #264574;
+  color: #e2e8f0;
+}
+
+/* Baggage issue type cards: selected card keeps white title + light description */
+[data-theme="dark"] .issue-type-card {
+  background: #0b182d;
+  border-color: #1e3860;
+}
+[data-theme="dark"] .issue-type-card.active {
+  background: #12305c;
+  border-color: var(--primary);
+}
+[data-theme="dark"] .issue-type-card.active .issue-title { color: #ffffff; }
+[data-theme="dark"] .issue-type-card.active .issue-desc { color: #dbeafe; }
+[data-theme="dark"] .issue-icon-wrap { color: #7db4ff; }
+
+/* Reference number box after filing a claim */
+[data-theme="dark"] .ref-badge-display {
+  background: #12305c;
+  border-color: #2f5da8;
+}
+[data-theme="dark"] .ref-badge-display > span:first-child { color: #cbd5e1 !important; }
+[data-theme="dark"] .ref-code-huge { color: #7db4ff; }
+
+/* Notifications */
+[data-theme="dark"] .notif-item.unread { background: #12305c; }
+[data-theme="dark"] .notif-item.unread .notif-item-title { color: #ffffff; }
+[data-theme="dark"] .notif-item.unread .notif-item-msg { color: #dbeafe; }
+[data-theme="dark"] .notif-item.unread .notif-item-time { color: #bfdbfe; }
+
+/* Boxes that had a light background and inherited white text */
+[data-theme="dark"] .account-btn:hover,
+[data-theme="dark"] .user-pill:hover,
+[data-theme="dark"] .horizontal-stepper-wrapper,
+[data-theme="dark"] .stage-subcard,
+[data-theme="dark"] .my-bag-meta-grid,
+[data-theme="dark"] .receipt-grid,
+[data-theme="dark"] .danger-zone-card,
+[data-theme="dark"] .contact-success-box,
+[data-theme="dark"] .bag-icon-box,
+[data-theme="dark"] .reports-table tr:hover,
+[data-theme="dark"] .btn-cookie-decline:hover,
+[data-theme="dark"] .btn-stage-nav:hover {
+  background: #0b182d;
+  border-color: #1e3860;
+  color: #f8fafc;
+}
+[data-theme="dark"] .bag-icon-box { color: #7db4ff; }
+[data-theme="dark"] .btn-stage-nav:hover { color: #93c5fd; }
+[data-theme="dark"] .h-step-circle { background: #11223e; border-color: #1e3860; color: #93c5fd; }
+[data-theme="dark"] .h-step-item.active .h-step-circle { background: #12305c; color: #ffffff; }
+[data-theme="dark"] .step-icon-badge.pending,
+[data-theme="dark"] .status-pill.pending,
+[data-theme="dark"] .status-badge-pending { background: #1e293b; color: #cbd5e1; }
+[data-theme="dark"] .step-icon-badge.in-progress,
+[data-theme="dark"] .status-pill.in-progress,
+[data-theme="dark"] .stage-status-pill.in-progress { background: #12305c; color: #bfdbfe; }
+[data-theme="dark"] .btn-stage-nav:disabled,
+[data-theme="dark"] .btn-stage-nav.disabled { background: #1e293b; color: #94a3b8 !important; }
+[data-theme="dark"] .btn-danger-outline { background: transparent; color: #fca5a5; border-color: #f87171; }
+[data-theme="dark"] .sample-tag-btn,
+[data-theme="dark"] .btn-suggestion-chip:hover { background: #12305c; color: #bfdbfe; }
+[data-theme="dark"] .btn-secondary-action { background: #12305c; color: #bfdbfe; }
+
+/* Demo OTP box on Register / Forgot Password pages (readable in both themes) */
+.otp-demo-box {
+  margin-top: 10px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background: #ecfdf5;
+  border: 1.5px solid #34d399;
+  color: #064e3b;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.otp-demo-box[hidden] { display: none; }
+.otp-demo-code {
+  display: inline-block;
+  margin: 0 4px;
+  padding: 2px 10px;
+  border-radius: 8px;
+  background: #064e3b;
+  color: #ffffff;
+  font-family: 'Courier New', monospace;
+  font-size: 1.25rem;
+  letter-spacing: 0.25em;
+}

@@ -517,8 +517,9 @@
         '</div></li>';
     }
 
+    const existingSkip = document.querySelector('.skip-to-content');
     const headerHtml =
-      '<a href="#main-content" class="skip-to-content">Skip to main content</a>' +
+      (existingSkip ? '' : '<a href="#main-content" class="skip-to-content">Skip to main content</a>') +
 
       // Semantic <header> wraps the <nav>
       '<header class="navbar" id="site-header-bar" role="banner">' +
@@ -788,15 +789,15 @@
                 '</div>' +
               '</a>' +
               '<p class="footer-blurb">Real-time baggage handling simulation system. Modeling standard IATA bag journeys from check-in to aircraft loading and arrival carousels.</p>' +
-              '<div class="footer-social-row" aria-label="Social links">' +
+              '<nav class="footer-social-row" aria-label="Social media links">' +
                 '<a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="AeroSim on GitHub"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>' +
                 '<a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="AeroSim on X / Twitter"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg></a>' +
                 '<a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="AeroSim on LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>' +
-              '</div>' +
+              '</nav>' +
             '</div>' +
 
-            // Col 2: Quick Links
-            '<div class="footer-col">' +
+            // Col 2: Quick Links (semantic <nav>)
+            '<nav class="footer-col" aria-label="Quick links">' +
               '<h4 class="footer-heading">' + dict.quick_links + '</h4>' +
               '<ul class="footer-links-list">' +
                 '<li><a href="index.html">' + dict.nav_home + '</a></li>' +
@@ -805,10 +806,10 @@
                 '<li><a href="about.html">About AeroSim</a></li>' +
                 '<li><a href="my-bags.html">' + dict.nav_my_bags + '</a></li>' +
               '</ul>' +
-            '</div>' +
+            '</nav>' +
 
-            // Col 3: Support
-            '<div class="footer-col">' +
+            // Col 3: Support (semantic <nav>)
+            '<nav class="footer-col" aria-label="Support navigation">' +
               '<h4 class="footer-heading">' + dict.support_heading + '</h4>' +
               '<ul class="footer-links-list">' +
                 '<li><a href="faq.html">' + dict.nav_faq + '</a></li>' +
@@ -816,10 +817,10 @@
                 '<li><a href="report-issue.html">Report Lost / Delayed Bag</a></li>' +
                 '<li><a href="stage.html?step=1">Simulation Stages 1–6</a></li>' +
               '</ul>' +
-            '</div>' +
+            '</nav>' +
 
-            // Col 4: Legal
-            '<div class="footer-col">' +
+            // Col 4: Legal (semantic <nav>)
+            '<nav class="footer-col" aria-label="Legal navigation">' +
               '<h4 class="footer-heading">' + dict.legal_heading + '</h4>' +
               '<ul class="footer-links-list">' +
                 '<li><a href="terms.html">Terms of Service</a></li>' +
@@ -827,7 +828,7 @@
                 '<li><span class="footer-badge-academic">Academic Project</span></li>' +
                 '<li><span class="footer-version-tag">Build v2.8.0 · Vanilla JS</span></li>' +
               '</ul>' +
-            '</div>' +
+            '</nav>' +
           '</div>' +
 
           '<div class="footer-bottom-bar">' +

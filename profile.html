@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -18,6 +18,9 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
 </head>
 <body>
+  <!-- Skip link: lets keyboard and screen reader users bypass header navigation -->
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
   <div class="page-bg bg-terminal"></div>
   <div class="page-overlay page-overlay-subtle"></div>
 
@@ -25,22 +28,23 @@
   <div id="site-header"></div>
 
   <main id="main-content" class="main-content">
-    <!-- Breadcrumb Bar -->
-    <div class="breadcrumb-bar">
+    <!-- Breadcrumb Bar with semantic nav -->
+    <nav class="breadcrumb-bar" aria-label="Breadcrumb">
       <a href="index.html" class="breadcrumb-link" title="Home">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
           <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
           <polyline points="9 22 9 12 15 12 15 22"></polyline>
         </svg>
       </a>
-      <span class="breadcrumb-separator">&gt;</span>
-      <span class="breadcrumb-current">Account Profile</span>
-    </div>
+      <span class="breadcrumb-separator" aria-hidden="true">&gt;</span>
+      <span class="breadcrumb-current" aria-current="page">Account Profile</span>
+    </nav>
 
     <!-- Profile Header Banner -->
     <div class="profile-header-banner">
       <div class="profile-header-avatar">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <!-- Decorative avatar icon hidden from screen readers -->
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
           <circle cx="12" cy="7" r="4"></circle>
         </svg>
@@ -48,7 +52,7 @@
       <div>
         <div class="badge-pill" style="margin-bottom: 4px;">Verified Account</div>
         <h1 class="profile-user-display" id="profile-display-username">User2244</h1>
-        <p class="profile-user-sub">Member since 2026 â€¢ Simulated Passenger ID #AS-99214</p>
+        <p class="profile-user-sub">Member since 2026 • Simulated Passenger ID #AS-99214</p>
       </div>
     </div>
 
@@ -59,7 +63,7 @@
         <div class="content-card">
           <div class="card-section-header">
             <div class="feature-icon-wrapper">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
             </div>
             <div>
               <h2 class="card-section-title">Personal Information</h2>
@@ -70,36 +74,36 @@
           <form id="form-profile-details">
             <div class="form-row-2col">
               <div class="form-group">
-                <label class="form-label" for="prof-display-name">Display Name</label>
+                <label class="form-label" for="prof-display-name">Display Name <span class="required-star" aria-hidden="true">*</span></label>
                 <div class="input-with-icon">
-                  <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                  <input type="text" id="prof-display-name" class="auth-input" required>
+                  <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                  <input type="text" id="prof-display-name" class="auth-input" required aria-required="true" autocomplete="name">
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="form-label" for="prof-userid">User ID (Permanent)</label>
                 <div class="input-with-icon">
-                  <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                  <input type="text" id="prof-userid" class="auth-input" disabled style="background: #f1f5f9; cursor: not-allowed;">
+                  <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                  <input type="text" id="prof-userid" class="auth-input" readonly aria-disabled="true" style="background: var(--gray-bg); cursor: not-allowed;">
                 </div>
               </div>
             </div>
 
             <div class="form-row-2col">
               <div class="form-group">
-                <label class="form-label" for="prof-email">Email Address</label>
+                <label class="form-label" for="prof-email">Email Address <span class="required-star" aria-hidden="true">*</span></label>
                 <div class="input-with-icon">
-                  <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                  <input type="email" id="prof-email" class="auth-input" required>
+                  <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                  <input type="email" id="prof-email" class="auth-input" required aria-required="true" autocomplete="email">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="prof-phone">Phone Number</label>
+                <label class="form-label" for="prof-phone">Phone Number <span class="required-star" aria-hidden="true">*</span></label>
                 <div class="input-with-icon">
-                  <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
-                  <input type="tel" id="prof-phone" class="auth-input" required>
+                  <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                  <input type="tel" id="prof-phone" class="auth-input" required aria-required="true" autocomplete="tel">
                 </div>
               </div>
             </div>
@@ -125,10 +129,10 @@
           <form id="form-profile-password">
             <!-- Current Password -->
             <div class="form-group">
-              <label class="form-label" for="prof-curr-pass">Current Password</label>
+              <label class="form-label" for="prof-curr-pass">Current Password <span class="required-star" aria-hidden="true">*</span></label>
               <div class="input-with-icon">
-                <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                <input type="password" id="prof-curr-pass" class="auth-input" placeholder="Current password" required>
+                <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <input type="password" id="prof-curr-pass" class="auth-input" placeholder="Current password" required aria-required="true" autocomplete="current-password">
                 <button type="button" class="btn-toggle-eye" aria-label="Toggle password visibility">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                 </button>
@@ -137,31 +141,31 @@
 
             <!-- New Password & Strength Meter -->
             <div class="form-group">
-              <label class="form-label" for="prof-new-pass">New Password</label>
+              <label class="form-label" for="prof-new-pass">New Password <span class="required-star" aria-hidden="true">*</span></label>
               <div class="input-with-icon">
                 <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                <input type="password" id="prof-new-pass" class="auth-input" placeholder="Min. 8 chars (Uppercase, lowercase, digit)" required>
+                <input type="password" id="prof-new-pass" class="auth-input" placeholder="Min. 8 chars (Uppercase, lowercase, digit)" required aria-required="true" aria-describedby="prof-strength-text" autocomplete="new-password">
                 <button type="button" class="btn-toggle-eye" aria-label="Toggle password visibility">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                 </button>
               </div>
               <!-- Strength meter bar -->
               <div class="password-strength-wrap" style="margin-top: 8px;">
-                <div class="strength-bar-track">
+                <div class="strength-bar-track" aria-hidden="true">
                   <div id="prof-strength-bar" class="strength-bar-fill"></div>
                 </div>
-                <span id="prof-strength-text" class="strength-label">Enter password</span>
+                <span id="prof-strength-text" class="strength-label" aria-live="polite">Enter password</span>
               </div>
             </div>
 
             <!-- Confirm New Password -->
             <div class="form-group">
-              <label class="form-label" for="prof-confirm-pass">Confirm New Password</label>
+              <label class="form-label" for="prof-confirm-pass">Confirm New Password <span class="required-star" aria-hidden="true">*</span></label>
               <div class="input-with-icon">
-                <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                <input type="password" id="prof-confirm-pass" class="auth-input" placeholder="Repeat new password" required>
+                <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <input type="password" id="prof-confirm-pass" class="auth-input" placeholder="Repeat new password" required aria-required="true" aria-describedby="prof-pass-error" autocomplete="new-password">
               </div>
-              <span class="field-error-msg" id="prof-pass-error"></span>
+              <span class="field-error-msg" id="prof-pass-error" role="alert" aria-live="polite"></span>
             </div>
 
             <button type="submit" class="btn-primary-action" style="margin-top: 6px;">
@@ -184,9 +188,9 @@
                 <div class="pref-toggle-title">SMS Notifications</div>
                 <div class="pref-toggle-desc">Receive instant text alerts for carousel belt changes</div>
               </div>
-              <label class="switch-toggle" for="pref-sms">
+              <label class="switch-toggle" for="pref-sms" aria-label="Toggle SMS Notifications">
                 <input type="checkbox" id="pref-sms" checked>
-                <span class="slider-round"></span>
+                <span class="slider-round" aria-hidden="true"></span>
               </label>
             </div>
 
@@ -195,9 +199,9 @@
                 <div class="pref-toggle-title">Email Journey Summaries</div>
                 <div class="pref-toggle-desc">Detailed timestamp receipts sent to your registered email</div>
               </div>
-              <label class="switch-toggle" for="pref-email">
+              <label class="switch-toggle" for="pref-email" aria-label="Toggle Email Journey Summaries">
                 <input type="checkbox" id="pref-email" checked>
-                <span class="slider-round"></span>
+                <span class="slider-round" aria-hidden="true"></span>
               </label>
             </div>
 
@@ -206,9 +210,9 @@
                 <div class="pref-toggle-title">In-App Live Alerts</div>
                 <div class="pref-toggle-desc">Notification bell alerts when simulator advances stages</div>
               </div>
-              <label class="switch-toggle" for="pref-push">
+              <label class="switch-toggle" for="pref-push" aria-label="Toggle In-App Live Alerts">
                 <input type="checkbox" id="pref-push" checked>
-                <span class="slider-round"></span>
+                <span class="slider-round" aria-hidden="true"></span>
               </label>
             </div>
           </div>
@@ -340,6 +344,10 @@
         e.preventDefault();
         const errEl = document.getElementById('prof-pass-error');
         errEl.textContent = '';
+        ['prof-curr-pass', 'prof-new-pass', 'prof-confirm-pass'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.removeAttribute('aria-invalid');
+        });
 
         const curr = document.getElementById('prof-curr-pass').value;
         const newPass = newPassInput.value;
@@ -347,16 +355,22 @@
 
         if (newPass.length < 8) {
           errEl.textContent = 'New password must be at least 8 characters.';
+          newPassInput.setAttribute('aria-invalid', 'true');
+          newPassInput.focus();
           return;
         }
 
         if (!(/[A-Z]/.test(newPass) && /[a-z]/.test(newPass) && /\d/.test(newPass))) {
           errEl.textContent = 'Password must include uppercase, lowercase, and a number.';
+          newPassInput.setAttribute('aria-invalid', 'true');
+          newPassInput.focus();
           return;
         }
 
         if (newPass !== confirmPass) {
           errEl.textContent = 'New passwords do not match.';
+          document.getElementById('prof-confirm-pass').setAttribute('aria-invalid', 'true');
+          document.getElementById('prof-confirm-pass').focus();
           return;
         }
 

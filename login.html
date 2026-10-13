@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -18,6 +18,9 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231672ec'><path d='M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z'/></svg>">
 </head>
 <body>
+  <!-- Skip link: lets keyboard and screen reader users bypass header navigation -->
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
   <!-- Background Image with Gradient Overlay -->
   <div class="page-bg bg-tarmac"></div>
   <div class="page-overlay"></div>
@@ -34,16 +37,16 @@
 
         <!-- Demo Note -->
         <div class="demo-disclaimer-note" role="note">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
             <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>
           </svg>
           <span><strong>Demo Notice:</strong> This is an academic simulator running exclusively in your browser using local storage. No external servers or real credentials are used.</span>
         </div>
 
         <form id="form-login" novalidate>
-          <!-- Lockout alert banner (shown after 3 failed attempts) -->
-          <div id="login-lockout-banner" class="auth-lockout-alert" style="display: none;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <!-- Lockout alert banner (shown after 3 failed attempts) with role=alert -->
+          <div id="login-lockout-banner" class="auth-lockout-alert" role="alert" aria-live="polite" style="display: none;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true" focusable="false">
               <circle cx="12" cy="12" r="10"></circle>
               <line x1="12" y1="8" x2="12" y2="12"></line>
               <line x1="12" y1="16" x2="12.01" y2="16"></line>
@@ -51,8 +54,8 @@
             <span id="login-lockout-text">Too many attempts. Form locked for 30s.</span>
           </div>
 
-          <!-- Inline error alert -->
-          <div id="login-error-msg" class="auth-inline-error" style="display: none;"></div>
+          <!-- Inline error alert with role=alert -->
+          <div id="login-error-msg" class="auth-inline-error" role="alert" aria-live="polite" style="display: none;"></div>
 
           <!-- Demo Account Quick Fill Card -->
           <div class="demo-credentials-card" id="demo-login-card">
@@ -60,15 +63,16 @@
               <span class="demo-badge">DEMO ACCOUNT</span>
               <span class="demo-cred-text">ID: <strong>User2244</strong> &bull; Pass: <strong>password123</strong></span>
             </div>
-            <button type="button" class="btn-demo-fill" id="btn-fill-demo-login">
+            <button type="button" class="btn-demo-fill" id="btn-fill-demo-login" aria-label="Auto fill demo credentials for User2244">
               Auto Fill Demo
             </button>
           </div>
 
-          <!-- User ID Field -->
+          <!-- User ID Field with explicit label -->
           <div class="form-group">
+            <label for="login-userid" class="form-label">User ID or Phone <span class="required-star" aria-hidden="true">*</span></label>
             <div class="input-with-icon">
-              <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
@@ -78,15 +82,17 @@
                 id="login-userid" 
                 placeholder="User ID or Phone" 
                 required
+                aria-required="true"
                 autocomplete="username"
               >
             </div>
           </div>
 
-          <!-- Password Field -->
+          <!-- Password Field with explicit label -->
           <div class="form-group">
+            <label for="login-password" class="form-label">Password <span class="required-star" aria-hidden="true">*</span></label>
             <div class="input-with-icon">
-              <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
               </svg>
@@ -96,10 +102,11 @@
                 id="login-password" 
                 placeholder="Password" 
                 required
+                aria-required="true"
                 autocomplete="current-password"
               >
               <button type="button" class="btn-toggle-eye" aria-label="Toggle password visibility">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                   <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                   <circle cx="12" cy="12" r="3"></circle>
                 </svg>
@@ -128,8 +135,8 @@
         </form>
       </div>
 
-      <!-- Airplane decorative graphic trail on bottom left matching image -->
-      <div class="decor-airplane-trail">
+      <!-- Airplane decorative graphic trail hidden from screen readers -->
+      <div class="decor-airplane-trail" aria-hidden="true">
         <svg width="34" height="34" viewBox="0 0 24 24" fill="#1672ec" opacity="0.8">
           <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
         </svg>

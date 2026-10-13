@@ -33,14 +33,13 @@ An authentic, fully responsive, multi-page web application modeling the end-to-e
 ## 📂 Project Structure Tree
 
 ```
-CSE326 CA2/
+CSE-323-project-/
 ├── 404.html                   # 404 Diverted Flight error page
 ├── LICENSE                    # MIT Open Source License
 ├── README.md                  # Project documentation & features
 ├── about.html                 # Mission, team, and system architecture
 ├── assets/                    # Royalty-free high-res aviation imagery
 │   ├── airplane_climb.jpg
-│   ├── airport_bg.jpg
 │   ├── stage1.jpg ... stage6.jpg
 │   └── terminal_bg.jpg
 ├── contact.html               # Airport operations support desk form

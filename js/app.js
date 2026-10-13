@@ -717,6 +717,7 @@
     const errorEl = document.getElementById('register-error-msg');
     const submitBtn = document.getElementById('btn-register-submit');
     const fillDemoRegBtn = document.getElementById('btn-fill-demo-reg');
+    let otpTimerId = null;   // holds the resend countdown timer
 
     // Auto Fill Demo Registration Details
     if (fillDemoRegBtn) {
@@ -727,11 +728,17 @@
           passInput.value = 'SkyTrack@2026';
           passInput.dispatchEvent(new Event('input'));
         }
-        // Auto trigger send OTP for complete convenience
-        if (sendOtpBtn && !sendOtpBtn.disabled) {
+        // Auto trigger send OTP for complete convenience.
+        // (Old code showed a second toast right after this, which replaced the OTP message.)
+        if (sendOtpBtn) {
+          sendOtpBtn.disabled = false;   // allow a fresh OTP even if the resend timer is running
           sendOtpBtn.click();
         }
-        window.showToast('Demo registration details loaded! Check the toast for your OTP.');
+        // Demo shortcut: also type the OTP into the box so the user can press Register directly
+        try {
+          const saved = JSON.parse(sessionStorage.getItem('aerosim_reg_otp') || 'null');
+          if (saved && otpInput) otpInput.value = saved.code;
+        } catch (err) { /* ignore */ }
       });
     }
 
@@ -793,16 +800,28 @@
         };
         sessionStorage.setItem('aerosim_reg_otp', JSON.stringify(otpRecord));
 
-        // Display ONLY in toast
-        window.showToast(`Verification OTP: ${otpCode} (Expires in 60s)`, 6000);
+        // Show the demo OTP on the page (stays visible) and also in a toast
+        const otpBox = document.getElementById('reg-otp-display');
+        if (otpBox) {
+          // Built with textContent (not innerHTML) so typed phone text can never inject HTML
+          otpBox.textContent = '';
+          const codeEl = document.createElement('span');
+          codeEl.className = 'otp-demo-code';
+          codeEl.textContent = otpCode;
+          otpBox.append('Demo OTP: ', codeEl, ' (valid for 60 seconds. This is a demo, no real SMS is sent.)');
+          otpBox.hidden = false;
+        }
+        window.showToast(`Demo OTP: ${otpCode} (valid for 60s)`, 10000);
         showAuthError(errorEl, '');
+        if (otpInput) otpInput.focus();
 
         // 60-second timer on button
+        if (otpTimerId) clearInterval(otpTimerId);   // never run two timers at once
         let countdown = 60;
         sendOtpBtn.disabled = true;
         sendOtpBtn.textContent = `${countdown}s`;
 
-        const interval = setInterval(() => {
+        const interval = otpTimerId = setInterval(() => {
           countdown--;
           if (countdown <= 0) {
             clearInterval(interval);
