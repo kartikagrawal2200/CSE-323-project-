@@ -1,5 +1,6 @@
 # ✈️ AeroSim Aviation – Airport Baggage Handling Simulator
 
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kartikagrawal2200/CSE-323-project-)
 [![Live App](https://img.shields.io/badge/Live_App-PWA_Ready-1672ec?style=for-the-badge&logo=googlechrome&logoColor=white)](https://kartikagrawal2200.github.io/CSE-323-project-/)
 [![Mobile Install](https://img.shields.io/badge/Mobile_Install-Android_%26_iOS-22c55e?style=for-the-badge&logo=pwa&logoColor=white)](https://kartikagrawal2200.github.io/CSE-323-project-/)
 [![License](https://img.shields.io/badge/License-MIT-gray?style=for-the-badge)](LICENSE)
@@ -78,6 +79,9 @@ Anyone can open and install AeroSim Aviation directly onto their smartphone or t
 ### 🔗 **Live Website URL**:
 👉 **[https://kartikagrawal2200.github.io/CSE-323-project-/](https://kartikagrawal2200.github.io/CSE-323-project-/)**
 
+### 📂 **GitHub Repository**:
+👉 **[https://github.com/kartikagrawal2200/CSE-323-project-](https://github.com/kartikagrawal2200/CSE-323-project-)**
+
 ### 📱 How to Install on Mobile Devices:
 
 #### **Android (Google Chrome / Brave / Edge)**
@@ -96,9 +100,14 @@ Anyone can open and install AeroSim Aviation directly onto their smartphone or t
 
 ## 🚀 Quick Start / How to Run Locally
 
-1. **No installation, no Node.js, and no build tools needed.**
-2. Double-click or open `index.html` directly in any desktop or mobile web browser (Chrome, Edge, Firefox, Safari).
-3. Alternatively, launch a lightweight local HTTP server:
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/kartikagrawal2200/CSE-323-project-.git
+   cd CSE-323-project-
+   ```
+2. **No installation, no Node.js, and no build tools needed.**
+3. Double-click or open `index.html` directly in any desktop or mobile web browser (Chrome, Edge, Firefox, Safari).
+4. Alternatively, launch a lightweight local HTTP server:
    ```bash
    # Using Python 3
    python -m http.server 8000
@@ -106,7 +115,7 @@ Anyone can open and install AeroSim Aviation directly onto their smartphone or t
    # Or using npx
    npx serve .
    ```
-4. Access locally at `http://localhost:8000/`.
+5. Access locally at `http://localhost:8000/`.
 
 ---
 
